@@ -338,7 +338,7 @@ updateEligibilityRates <- function(o, constants) {
 
   ni <- constants$ni
   # f_jk: examinees who took a feasible test
-  # f_jk: only available in ELIGIBILITY method
+  # f_jk: only available in hard-constraint exposure control methods
   # nf_ijk: correction term for administering infeasible tests
   if (is.null(o$f_jk)) {
     nf_ijk <- matrix(1              , n_segment, ni)
@@ -370,7 +370,7 @@ updateEligibilityRates <- function(o, constants) {
 
   ns <- constants$ns
   # f_jk: examinees who took a feasible test
-  # f_jk: only available in ELIGIBILITY method
+  # f_jk: only available in hard-constraint exposure control methods
   # nf_ijk: correction term for administering infeasible tests
   if (is.null(o$f_jk)) {
     nf_sjk <- matrix(1              , n_segment, ns)
@@ -481,6 +481,30 @@ parseDiagnosticStats <- function(
     }
 
   }
+
+  return(o)
+
+}
+
+#' @noRd
+updateEligibilityRatesRestricted <- function(o, constants) {
+
+  max_exposure_rate <- constants$max_exposure_rate
+  n_segment         <- constants$n_segment
+
+  ni <- constants$ni
+  p_a_ijk <- o$a_ijk / matrix(o$n_jk, n_segment, ni)
+  p_a_ijk[is.na(p_a_ijk)] <- 0
+  o$p_e_i <- (p_a_ijk < max_exposure_rate) * 1
+
+  if (!constants$set_based) {
+    return(o)
+  }
+
+  ns <- constants$ns
+  p_a_sjk <- o$a_sjk / matrix(o$n_jk, n_segment, ns)
+  p_a_sjk[is.na(p_a_sjk)] <- 0
+  o$p_e_s <- (p_a_sjk < max_exposure_rate) * 1
 
   return(o)
 

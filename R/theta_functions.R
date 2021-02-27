@@ -1078,9 +1078,9 @@ parseThetaSegment <- function(current_theta, position, exposure_control, constan
     return(segment)
   }
 
-  if (constants$exposure_control_method %in%
-    c("NONE", "ELIGIBILITY", "BIGM", "ALPHA-STRATIFICATION")
-  ) {
+  if (constants$exposure_control_method %in% c(
+    setdiff(supported_exposure_control_method_list(), "BIGM-BAYESIAN")
+  )) {
     segment <- find_segment(current_theta$theta, segment_cut)
     return(segment)
   }

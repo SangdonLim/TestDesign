@@ -146,17 +146,11 @@ setMethod(
     }
 
     # Initialize exposure rate control
-    if (constants$exposure_control_method %in% c(
-      supported_exposure_control_method_list()
-    )) {
-
-      segment_record           <- initializeSegmentRecord(constants)
-      exposure_record          <- initializeExposureRecord(config@exposure_control, constants)
-      exposure_record_detailed <- initializeExposureRecordSegmentwise(constants)
-      if (!is.null(config@exposure_control$initial_eligibility_stats)) {
-        exposure_record <- config@exposure_control$initial_eligibility_stats
-      }
-
+    segment_record           <- initializeSegmentRecord(constants)
+    exposure_record          <- initializeExposureRecord(config@exposure_control, constants)
+    exposure_record_detailed <- initializeExposureRecordSegmentwise(constants)
+    if (!is.null(config@exposure_control$initial_eligibility_stats)) {
+      exposure_record <- config@exposure_control$initial_eligibility_stats
     }
 
     # Initialize usage matrix

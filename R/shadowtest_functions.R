@@ -80,6 +80,38 @@ assembleShadowTest <- function(
 
   }
 
+  if (constants$use_eligibility_control && constants$exposure_control_method %in% c("PROGRESSIVE-RESTRICTED")) {
+
+    # Progressive component
+    weight <- (position - 1) / constants$min_ni
+    # numerator is the number of previous items; weight is 0 for the first item
+    # TODO: prevent doing this when min_ni != max_ni
+    info_unused <- info
+    info_unused[o@administered_item_index, ] <- 0
+    max_info_of_unused_items <- max(info_unused)
+    # unused items are items excluding items administered to this examinee
+    random_component <- runif(constants$ni, 0, max_info_of_unused_items)
+    weighted_info <- (weight * info) + ((1 - weight) * random_component)
+
+    # Restricted component
+    xdata_elg  <- applyEligibilityConstraintsToXdata(xdata, eligible_flag_in_current_theta_segment, constants, constraints)
+
+    # Main assembly
+    shadowtest <- runAssembly(config, constraints, xdata = xdata_elg, objective = weighted_info)
+    is_optimal <- isShadowtestOptimal(shadowtest)
+
+    if (is_optimal) {
+      shadowtest$feasible <- TRUE
+      return(shadowtest)
+    }
+
+    # If not optimal, retry without xmat
+    shadowtest <- runAssembly(config, constraints, xdata = xdata, objective = weighted_info)
+    shadowtest$feasible <- FALSE
+    return(shadowtest)
+
+  }
+
   if (!constants$use_eligibility_control) {
 
     shadowtest <- runAssembly(config, constraints, xdata = xdata, objective = info)
