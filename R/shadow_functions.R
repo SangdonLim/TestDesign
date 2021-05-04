@@ -273,6 +273,7 @@ setMethod(
               exclude_index,
               stimulus_record,
               info_current_theta,
+              exposure_record,
               config,
               constants,
               constraints

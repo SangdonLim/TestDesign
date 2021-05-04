@@ -509,3 +509,30 @@ updateEligibilityRatesRestricted <- function(o, constants) {
   return(o)
 
 }
+
+#' @noRd
+getMultipleObjectiveWeight <- function(o, constants) {
+
+  # starts from 1.0 at zero exposure rate
+  # linearly decreases to 0.0 at target exposure rate
+  # stays at 0.0 for higher exposure rates
+
+  max_exposure_rate <- constants$max_exposure_rate
+  n_segment         <- constants$n_segment
+
+  ni <- constants$ni
+  p_a_ijk <- o$a_ijk / matrix(o$n_jk, n_segment, ni)
+  p_a_ijk[is.na(p_a_ijk)] <- 0
+
+  w <- matrix(NA, n_segment, ni)
+  for (segment in 1:n_segment) {
+    idx_underexposed <- p_a_ijk[segment, ] <= max_exposure_rate[segment]
+    w[segment, idx_underexposed] <-
+      (max_exposure_rate[segment] - p_a_ijk[segment, idx_underexposed]) / max_exposure_rate[segment]
+    idx_overexposed <- !idx_underexposed
+    w[segment, idx_overexposed] <- 0
+  }
+
+  return(w)
+
+}

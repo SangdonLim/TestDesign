@@ -8,6 +8,7 @@ assembleShadowTest <- function(
   exclude_index,
   stimulus_record,
   info,
+  exposure_record,
   config,
   constants,
   constraints
@@ -109,6 +110,18 @@ assembleShadowTest <- function(
     # If not optimal, retry without xmat
     shadowtest <- runAssembly(config, constraints, xdata = xdata, objective = weighted_info)
     shadowtest$feasible <- FALSE
+    return(shadowtest)
+
+  }
+
+  if (constants$use_eligibility_control && constants$exposure_control_method %in% c("MULTIPLE-OBJECTIVE")) {
+
+    weight <- getMultipleObjectiveWeight(exposure_record, constants)
+    weight <- weight[current_segment, ]
+    weighted_info <- weight * info
+
+    shadowtest <- runAssembly(config, constraints, xdata = xdata, objective = weighted_info)
+    shadowtest$feasible <- TRUE
     return(shadowtest)
 
   }
