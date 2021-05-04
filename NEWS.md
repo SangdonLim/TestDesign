@@ -1,3 +1,9 @@
+# TestDesign 1.3.0.9000
+
+## New features
+* Added segment-wise Progressive-Restricted exposure control with fading.
+* `loadConstraints()` now explicitly errors when the test length constraint has different LB and UB values.
+
 # TestDesign 1.2.7
 
 ## Updates
