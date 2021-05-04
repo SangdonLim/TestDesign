@@ -25,6 +25,7 @@ assembleShadowTest <- function(
     current_segment <- o@theta_segment_index[position]
     eligible_flag_in_current_theta_segment <- getEligibleFlagInSegment(eligible_flag, current_segment, constants)
     eligible_flag_in_current_theta_segment <- flagAdministeredAsEligible(eligible_flag_in_current_theta_segment, o, position, constants)
+    # Allow administered items to be selected, because otherwise constraints will contradict each other
 
   }
 
