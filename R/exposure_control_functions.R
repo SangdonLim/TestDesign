@@ -129,6 +129,24 @@ doExposureControl <- function(
 
   }
 
+  if (constants$exposure_control_method %in% c("HYBRID")) {
+
+    segments_to_apply <- getSegmentsToApply(constants$n_segment, segment_of$final_theta_est)
+    exposure_record   <- applyFading(exposure_record, segments_to_apply, constants)
+    segment_prob      <- 1
+    segment_feasible  <- unique(o@theta_segment_index[o@shadow_test_feasible == TRUE])
+    theta_is_feasible <- segment_of$final_theta_est %in% segment_feasible
+    exposure_record   <- incrementN(exposure_record, segments_to_apply, segment_prob, constants)
+    exposure_record   <- incrementPhi(exposure_record, segments_to_apply, segment_prob, theta_is_feasible)
+    exposure_record   <- incrementAlpha(exposure_record, segments_to_apply, segment_prob, o, constants)
+    exposure_record   <- incrementRho(exposure_record, segments_to_apply, segment_prob, eligible_flag, theta_is_feasible, constants)
+    exposure_record   <- adjustAlphaToReduceSpike(exposure_record, segment_prob, segment_of$visited, eligible_flag_in_final_theta_segment, o, constants)
+    exposure_record   <- updateEligibilityRates(exposure_record, constants)
+    exposure_record   <- clipEligibilityRates(exposure_record, constants)
+    return(exposure_record)
+
+  }
+
 }
 
 #' @noRd
@@ -178,7 +196,7 @@ initializeExposureRecord <- function(exposure_control, constants) {
   n_segment <- constants$n_segment
 
   o$n_jk  <- numeric(n_segment)
-  if (toupper(exposure_control$method) %in% c("ELIGIBILITY", "PROGRESSIVE-RESTRICTED")) {
+  if (toupper(exposure_control$method) %in% c("ELIGIBILITY", "PROGRESSIVE-RESTRICTED", "HYBRID")) {
     o$f_jk  <- numeric(n_segment)
   }
 

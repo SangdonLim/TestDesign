@@ -536,3 +536,17 @@ getMultipleObjectiveWeight <- function(o, constants) {
   return(w)
 
 }
+
+#' @noRd
+applyStratificationToInfo <- function(info, stratification_flag, constants) {
+
+  if (is.null(constants$M)) {
+    info[stratification_flag, ] <- info[stratification_flag, ] - constants$max_info
+    return(info)
+  }
+  if (!is.null(constants$M)) {
+    info[stratification_flag, ] <- info[stratification_flag, ] - constants$M
+    return(info)
+  }
+
+}

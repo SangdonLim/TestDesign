@@ -133,14 +133,15 @@ setClass("config_Shadow",
     ),
     exposure_control = list(
       method                    = "ELIGIBILITY",
-      M                         = NULL,
       max_exposure_rate         = 0.25,
-      acceleration_factor       = 1.0,
       n_segment                 = 7,
       first_segment             = NULL,
       segment_cut               = c(-Inf, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, Inf),
-      initial_eligibility_stats = NULL,
+      M                         = NULL,
       fading_factor             = 0.999,
+      acceleration_factor       = 1.0,
+      n_strata                  = 2,
+      initial_eligibility_stats = NULL,
       diagnostic_stats          = FALSE
     ),
     stopping_criterion = list(

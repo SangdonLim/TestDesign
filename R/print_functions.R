@@ -204,19 +204,19 @@ setMethod("print", "config_Shadow", function(x) {
   cat("\n")
   cat("  exposure_control \n")
   cat("    method                    :", x@exposure_control$method, "\n")
-  cat("    M                         :", x@exposure_control$M, "\n")
   if (length(unique(x@exposure_control$max_exposure_rate)) == 1) {
     tmp <- unique(x@exposure_control$max_exposure_rate)
   } else {
     tmp <- x@exposure_control$max_exposure_rate
   }
   cat("    max_exposure_rate         :", tmp, "\n")
-  cat("    acceleration_factor       :", x@exposure_control$acceleration_factor, "\n")
   cat("    n_segment                 :", x@exposure_control$n_segment, "\n")
   cat("    first_segment             :", x@exposure_control$first_segment, "\n")
   cat("    segment_cut               :", x@exposure_control$segment_cut, "\n")
-  cat("    initial_eligibility_stats :", !is.null(x@exposure_control$initial_eligibility_stats), "\n")
+  cat("    M                         :", x@exposure_control$M, "\n")
   cat("    fading_factor             :", x@exposure_control$fading_factor, "\n")
+  cat("    acceleration_factor       :", x@exposure_control$acceleration_factor, "\n")
+  cat("    initial_eligibility_stats :", !is.null(x@exposure_control$initial_eligibility_stats), "\n")
   cat("    diagnostic_stats          :", x@exposure_control$diagnostic_stats, "\n")
   cat("\n")
   cat("  stopping_criterion \n")

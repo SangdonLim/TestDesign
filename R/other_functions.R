@@ -60,12 +60,14 @@ getConstants <- function(constraints, config, arg_data, true_theta, max_info) {
   }
 
   o$max_exposure_rate   <- config@exposure_control$max_exposure_rate
-  o$fading_factor       <- config@exposure_control$fading_factor
-  o$acceleration_factor <- config@exposure_control$acceleration_factor
   o$n_segment           <- config@exposure_control$n_segment
   o$segment_cut         <- config@exposure_control$segment_cut
   o$cut_lower           <- o$segment_cut[(1:o$n_segment)]
   o$cut_upper           <- o$segment_cut[(1:o$n_segment) + 1]
+  o$M                   <- config@exposure_control$M
+  o$fading_factor       <- config@exposure_control$fading_factor
+  o$acceleration_factor <- config@exposure_control$acceleration_factor
+  o$n_strata            <- config@exposure_control$n_strata
 
   if (!length(o$max_exposure_rate) %in% c(1, o$n_segment)) {
     stop("length(max_exposure_rate) must be 1 or n_segment")

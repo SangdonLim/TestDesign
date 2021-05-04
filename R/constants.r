@@ -30,7 +30,8 @@ supported_exposure_control_method_list <- function() {
     "BIGM", "BIGM-BAYESIAN",
     "ALPHA-STRATIFICATION",
     "PROGRESSIVE-RESTRICTED",
-    "MULTIPLE-OBJECTIVE"
+    "MULTIPLE-OBJECTIVE",
+    "HYBRID"
   )
   return(x)
 }
