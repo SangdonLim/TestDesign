@@ -195,12 +195,7 @@ aggregateBinsToStrata <- function(solution_per_bin, bin_targets) {
 }
 
 #' @noRd
-applyStratificationConstraintsToXdata <- function(xdata, idx_stratum, o, constraints) {
-
-  idx_exclude <- constraints@item_attrib@data$STRATUM != idx_stratum
-
-  # don't exclude administered items; otherwise it leads to incompatible constraints
-  idx_exclude[na.omit(o@administered_item_index)] <- FALSE
+applyStratificationConstraintsToXdata <- function(xdata, idx_exclude, constraints) {
 
   # augment constraints
   xmat_augment <- matrix(0, 1, constraints@nv)
@@ -218,7 +213,7 @@ applyStratificationConstraintsToXdata <- function(xdata, idx_stratum, o, constra
 }
 
 #' @noRd
-getStratumForCurrentPosition <- function(position, constants, constraints) {
+getStratumForCurrentPosition <- function(position, constants) {
 
   n_strata <- constants$n_strata
   stratum_size <- constants$test_length / n_strata
@@ -228,3 +223,16 @@ getStratumForCurrentPosition <- function(position, constants, constraints) {
   return(idx_stratum)
 
 }
+
+#' @noRd
+getStratificationFilter <- function(idx_stratum, o, constraints) {
+
+  idx_exclude <- constraints@item_attrib@data$STRATUM != idx_stratum
+
+  # don't exclude administered items; otherwise it leads to incompatible constraints
+  idx_exclude[na.omit(o@administered_item_index)] <- FALSE
+
+  return(idx_exclude)
+
+}
+

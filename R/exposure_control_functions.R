@@ -6,7 +6,7 @@ doExposureControl <- function(
   exposure_record, segment_record,
   o, j,
   current_theta,
-  eligible_flag,
+  eligible_flag, stratification_filter,
   config,
   constants
 ) {
@@ -139,8 +139,14 @@ doExposureControl <- function(
     exposure_record   <- incrementN(exposure_record, segments_to_apply, segment_prob, constants)
     exposure_record   <- incrementPhi(exposure_record, segments_to_apply, segment_prob, theta_is_feasible)
     exposure_record   <- incrementAlpha(exposure_record, segments_to_apply, segment_prob, o, constants)
-    exposure_record   <- incrementRho(exposure_record, segments_to_apply, segment_prob, eligible_flag, theta_is_feasible, constants)
-    exposure_record   <- adjustAlphaToReduceSpike(exposure_record, segment_prob, segment_of$visited, eligible_flag_in_final_theta_segment, o, constants)
+
+    eligible_flag_stratified <- eligible_flag
+    eligible_flag_stratified$i[stratification_filter] <- 0
+    eligible_flag_in_final_theta_segment_stratified <- eligible_flag_in_final_theta_segment
+    eligible_flag_in_final_theta_segment_stratified$i[stratification_filter] <- 0
+
+    exposure_record   <- incrementRho(exposure_record, segments_to_apply, segment_prob, eligible_flag_stratified, theta_is_feasible, constants)
+    exposure_record   <- adjustAlphaToReduceSpike(exposure_record, segment_prob, segment_of$visited, eligible_flag_in_final_theta_segment_stratified, o, constants)
     exposure_record   <- updateEligibilityRates(exposure_record, constants)
     exposure_record   <- clipEligibilityRates(exposure_record, constants)
     return(exposure_record)

@@ -4,7 +4,7 @@ NULL
 #' @noRd
 assembleShadowTest <- function(
   j, position, o,
-  eligible_flag,
+  eligible_flag, stratification_filter,
   exclude_index,
   stimulus_record,
   info,
@@ -64,8 +64,7 @@ assembleShadowTest <- function(
   if (constants$use_eligibility_control && constants$exposure_control_method %in% c("ALPHA-STRATIFICATION")) {
 
     # Do alpha-stratification
-    idx_stratum   <- getStratumForCurrentPosition(position, constants, constraints)
-    xdata_str     <- applyStratificationConstraintsToXdata(xdata, idx_stratum, o, constraints)
+    xdata_str <- applyStratificationConstraintsToXdata(xdata, stratification_filter, constraints)
 
     shadowtest <- runAssembly(config, constraints, xdata = xdata_str, objective = info)
     is_optimal <- isShadowtestOptimal(shadowtest)
@@ -129,12 +128,10 @@ assembleShadowTest <- function(
   if (constants$use_eligibility_control && constants$exposure_control_method %in% c("HYBRID")) {
 
     xdata_elg     <- applyEligibilityConstraintsToXdata(xdata, eligible_flag_in_current_theta_segment, constants, constraints)
-    idx_stratum   <- getStratumForCurrentPosition(position, constants, constraints)
-    xdata_elg_str <- applyStratificationConstraintsToXdata(xdata_elg, idx_stratum, o, constraints)
+    xdata_elg_str <- applyStratificationConstraintsToXdata(xdata_elg, stratification_filter, constraints)
 
     shadowtest <- runAssembly(config, constraints, xdata = xdata_elg_str, objective = info)
     is_optimal <- isShadowtestOptimal(shadowtest)
-
     if (is_optimal) {
       shadowtest$feasible <- TRUE
       return(shadowtest)

@@ -229,6 +229,7 @@ setMethod(
       if (constants$use_eligibility_control) {
         eligible_flag <- flagIneligible(exposure_record, constants, constraints@item_index_by_stimulus, seed, j)
       }
+      stratification_filter <- NULL
 
       # Simulee: create augmented pool if applicable
 
@@ -264,12 +265,17 @@ setMethod(
             theta_change, constants, stimulus_record
           )) {
 
+            if (constants$exposure_control_method %in% c("ALPHA-STRATIFICATION", "HYBRID")) {
+              idx_stratum <- getStratumForCurrentPosition(position, constants)
+              idx_exclude <- getStratificationFilter(idx_stratum, o, constraints)
+            }
+
             if (!is.null(seed)) {
               set.seed(seed * 234 + j)
             }
             shadowtest <- assembleShadowTest(
               j, position, o,
-              eligible_flag,
+              eligible_flag, idx_exclude,
               exclude_index,
               stimulus_record,
               info_current_theta,
@@ -454,7 +460,7 @@ setMethod(
         exposure_record, segment_record,
         o, j,
         current_theta,
-        eligible_flag,
+        eligible_flag, idx_exclude,
         config,
         constants
       )
