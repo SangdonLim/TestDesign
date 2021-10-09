@@ -767,6 +767,7 @@ setMethod(
   signature = c("item_3PL"),
   definition = function(object) {
     # Birnbaum 1968, p. 464
+    # theta with the maximum location, slightly above the b-value
     location <- object@difficulty +
       (log(0.5 + sqrt(1 + 8 * object@guessing) / 2)) / object@slope
     return(location)
