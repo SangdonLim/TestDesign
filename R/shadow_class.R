@@ -186,8 +186,12 @@ setClass("config_Shadow",
   ),
   validity = function(object) {
     err <- NULL
-    if (!toupper(object@MIP$solver) %in% c("LPSYMPHONY", "RSYMPHONY", "LPSOLVE", "GUROBI", "RGLPK")) {
-      msg <- sprintf("config@MIP: unrecognized $solver '%s' (accepts LPSYMPHONY, RSYMPHONY, LPSOLVE, GUROBI, RGLPK)", object@MIP$solver)
+    if (!toupper(object@MIP$solver) %in% supported_solver_list()) {
+      msg <- sprintf(
+        "config@MIP: unrecognized $solver '%s' (accepts %s)",
+        object@MIP$solver,
+        accepts_from_list(supported_solver_list())
+      )
       err <- c(err, msg)
     }
 
@@ -200,8 +204,12 @@ setClass("config_Shadow",
       }
     }
 
-    if (!toupper(object@item_selection$method) %in% c("MFI", "MPWI", "EB", "FB", "GFI", "FIXED")) {
-      msg <- sprintf("config@item_selection: unrecognized $method '%s' (accepts MFI, MPWI, EB, FB, GFI, or FIXED)", object@item_selection$method)
+    if (!toupper(object@item_selection$method) %in% supported_item_selection_method_list()) {
+      msg <- sprintf(
+        "config@item_selection: unrecognized $method '%s' (accepts %s)",
+        object@item_selection$method,
+        accepts_from_list(supported_item_selection_method_list())
+      )
       err <- c(err, msg)
     }
     if (toupper(object@item_selection$method) %in% c("FIXED")) {
@@ -215,13 +223,20 @@ setClass("config_Shadow",
       msg <- sprintf("config@content_balancing: unrecognized $method '%s' (accepts NONE, or STA)", object@content_balancing$method)
       err <- c(err, msg)
     }
-    if (!object@refresh_policy$method %in%
-      c("ALWAYS", "POSITION", "INTERVAL", "THRESHOLD", "INTERVAL-THRESHOLD", "STIMULUS", "SET", "PASSAGE")) {
-      msg <- sprintf("config@refresh_policy: unrecognized $method '%s'", object@refresh_policy$method)
+    if (!object@refresh_policy$method %in% supported_refresh_policy_list()) {
+      msg <- sprintf(
+        "config@refresh_policy: unrecognized $method '%s' (accepts %s)",
+        object@refresh_policy$method,
+        accepts_from_list(supported_refresh_policy_list())
+      )
       err <- c(err, msg)
     }
-    if (!object@exposure_control$method %in% c("NONE", "ELIGIBILITY", "BIGM", "BIGM-BAYESIAN")) {
-      msg <- sprintf("config@exposure_control: unrecognized $method '%s' (accepts NONE, ELIGIBILITY, BIGM, or BIGM-BAYESIAN)", object@exposure_control$method)
+    if (!object@exposure_control$method %in% supported_exposure_control_method_list()) {
+      msg <- sprintf(
+        "config@exposure_control: unrecognized $method '%s' (accepts %s)",
+        object@exposure_control$method,
+        accepts_from_list(supported_exposure_control_method_list())
+      )
       err <- c(err, msg)
     }
     if (toupper(object@item_selection$method) %in% c("GFI") &
@@ -245,23 +260,37 @@ setClass("config_Shadow",
       msg <- sprintf("config@stopping_criterion: unrecognized $method '%s'", object@stopping_criterion$method)
       err <- c(err, msg)
     }
-    if (!object@interim_theta$method %in% c("EAP", "MLE", "MLEF", "EB", "FB")) {
-      msg <- sprintf("config@interim_theta: unrecognized $method '%s' (accepts EAP, MLE, MLEF, EB, or FB)", object@interim_theta$method)
+    if (!object@interim_theta$method %in% supported_theta_estimation_method_list()) {
+      msg <- sprintf(
+        "config@interim_theta: unrecognized $method '%s' (accepts %s)",
+        object@interim_theta$method,
+        accepts_from_list(supported_theta_estimation_method_list())
+      )
       err <- c(err, msg)
     }
-    if (!object@interim_theta$prior_dist %in% c("NORMAL", "UNIFORM")) {
-      msg <- sprintf("config@interim_theta: unrecognized $prior_dist '%s' (accepts NORMAL or UNIFORM)", object@interim_theta$prior_dist)
+    if (!object@interim_theta$prior_dist %in% supported_prior_distribution_list()) {
+      msg <- sprintf(
+        "config@interim_theta: unrecognized $prior_dist '%s' (accepts %s)",
+        object@interim_theta$prior_dist,
+        accepts_from_list(supported_prior_distribution_list())
+      )
       err <- c(err, msg)
     }
-    if (!object@final_theta$method %in% c("EAP", "MLE", "MLEF", "EB", "FB")) {
-      msg <- sprintf("config@final_theta: unrecognized $method '%s' (accepts EAP, MLE, MLEF, EB, or FB)", object@final_theta$method)
+    if (!object@final_theta$method %in% supported_theta_estimation_method_list()) {
+      msg <- sprintf(
+        "config@final_theta: unrecognized $method '%s' (accepts %s)",
+        object@final_theta$method,
+        accepts_from_list(supported_theta_estimation_method_list())
+      )
       err <- c(err, msg)
     }
-    if (toupper(object@final_theta$method) == "EAP") {
-      if (!toupper(object@final_theta$prior_dist) %in% c("NORMAL", "UNIFORM")) {
-        msg <- sprintf("config@final_theta: unrecognized $prior_dist '%s' (when $method is EAP, accepts NORMAL or UNIFORM)", object@final_theta$prior_dist)
-        err <- c(err, msg)
-      }
+    if (!toupper(object@final_theta$prior_dist) %in% supported_prior_distribution_list()) {
+      msg <- sprintf(
+        "config@final_theta: unrecognized $prior_dist '%s' (accepts %s)",
+        object@final_theta$prior_dist,
+        accepts_from_list(supported_prior_distribution_list())
+      )
+      err <- c(err, msg)
     }
     if ((object@exposure_control$method == c("BIGM-BAYESIAN")) &&
       (!object@interim_theta$method %in% c("EB", "FB"))) {

@@ -63,6 +63,7 @@ Collate:
     'static_functions.R'
     'shadow_functions.R'
     'bayes_functions.R'
+    'constants.r'
     'constraint_functions.R'
     'cpp_documents.R'
     'datasets.R'

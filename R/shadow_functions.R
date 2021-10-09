@@ -146,7 +146,9 @@ setMethod(
     }
 
     # Initialize exposure rate control
-    if (constants$exposure_control_method %in% c("NONE", "ELIGIBILITY", "BIGM", "BIGM-BAYESIAN")) {
+    if (constants$exposure_control_method %in% c(
+      supported_exposure_control_method_list()
+    )) {
 
       segment_record           <- initializeSegmentRecord(constants)
       exposure_record          <- initializeExposureRecord(config@exposure_control, constants)

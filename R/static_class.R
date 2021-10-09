@@ -60,8 +60,12 @@ setClass("config_Static",
       msg <- sprintf("config@item_selection: unexpected $info_type '%s' (accepts FISHER)", toupper(object@item_selection$info_type))
       err <- c(err, msg)
     }
-    if (!toupper(object@MIP$solver) %in% c("LPSYMPHONY", "RSYMPHONY", "GUROBI", "LPSOLVE", "RGLPK")) {
-      msg <- sprintf("config@MIP: unexpected $solver (accepts lpsymphony, Rsymphony, gurobi, lpSolve, or Rglpk)", object@MIP$solver)
+    if (!toupper(object@MIP$solver) %in% supported_solver_list()) {
+      msg <- sprintf(
+        "config@MIP: unrecognized $solver '%s' (accepts %s)",
+        object@MIP$solver,
+        accepts_from_list(supported_solver_list())
+      )
       err <- c(err, msg)
     }
 
