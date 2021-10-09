@@ -231,7 +231,7 @@ setClass("config_Shadow",
       )
       err <- c(err, msg)
     }
-    if (!object@exposure_control$method %in% supported_exposure_control_method_list()) {
+    if (!toupper(object@exposure_control$method) %in% supported_exposure_control_method_list()) {
       msg <- sprintf(
         "config@exposure_control: unrecognized $method '%s' (accepts %s)",
         object@exposure_control$method,
