@@ -59,6 +59,27 @@ assembleShadowTest <- function(
 
   }
 
+  if (constants$use_eligibility_control && constants$exposure_control_method %in% c("ALPHA-STRATIFICATION")) {
+
+    # Do alpha-stratification
+    idx_stratum   <- getStratumForCurrentPosition(position, constants, constraints)
+    xdata_str     <- applyStratificationConstraintsToXdata(xdata, idx_stratum, o, constraints)
+
+    shadowtest <- runAssembly(config, constraints, xdata = xdata_str, objective = info)
+    is_optimal <- isShadowtestOptimal(shadowtest)
+
+    if (is_optimal) {
+      shadowtest$feasible <- TRUE
+      return(shadowtest)
+    }
+
+    # If not optimal, retry without str
+    shadowtest <- runAssembly(config, constraints, xdata = xdata, objective = info)
+    shadowtest$feasible <- FALSE
+    return(shadowtest)
+
+  }
+
   if (!constants$use_eligibility_control) {
 
     shadowtest <- runAssembly(config, constraints, xdata = xdata, objective = info)

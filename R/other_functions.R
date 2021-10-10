@@ -73,6 +73,10 @@ getConstants <- function(constraints, config, arg_data, true_theta, max_info) {
 
   o$max_info <- max_info
 
+  if ("STRATUM" %in% colnames(constraints@item_attrib@data)) {
+    o$n_strata <- length(unique(constraints@item_attrib@data$STRATUM))
+  }
+
   return(o)
 
 }

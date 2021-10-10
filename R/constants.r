@@ -27,7 +27,8 @@ supported_refresh_policy_list <- function() {
 supported_exposure_control_method_list <- function() {
   x <- c(
     "NONE", "ELIGIBILITY",
-    "BIGM", "BIGM-BAYESIAN"
+    "BIGM", "BIGM-BAYESIAN",
+    "ALPHA-STRATIFICATION"
   )
   return(x)
 }
