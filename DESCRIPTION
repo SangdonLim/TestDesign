@@ -80,6 +80,7 @@ Collate:
     'shadowtest_functions.R'
     'summary_functions.R'
     'show_functions.R'
+    'stratification_functions.R'
     'test_operators.R'
     'theta_functions.R'
     'xdata_functions.R'
