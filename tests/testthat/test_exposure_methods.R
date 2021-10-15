@@ -109,20 +109,4 @@ test_that("exposure control works", {
     max(exposure_rate), 0.35
   )
 
-  cfg <- createShadowTestConfig(
-    MIP = list(solver = "LPSOLVE"),
-    exposure_control = list(
-      method = "HYBRID",
-      n_strata = 2,
-      M = 100
-    )
-  )
-  set.seed(1)
-  solution <- Shadow(cfg, constraints_bayes, true_theta, data = resp_bayes)
-  exposure_rate <- solution@exposure_rate[, 2]
-
-  expect_lt(
-    max(exposure_rate), 0.35
-  )
-
 })
