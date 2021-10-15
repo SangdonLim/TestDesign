@@ -38,12 +38,14 @@ assembleShadowTest <- function(
 
     if (is_optimal) {
       shadowtest$feasible <- TRUE
+      shadowtest$feasible_detail <- 0
       return(shadowtest)
     }
 
     # If not optimal, retry without xmat
     shadowtest <- runAssembly(config, constraints, xdata = xdata, objective = info)
     shadowtest$feasible <- FALSE
+    shadowtest$feasible_detail <- 1
     return(shadowtest)
 
   }
@@ -57,6 +59,7 @@ assembleShadowTest <- function(
 
     shadowtest <- runAssembly(config, constraints, xdata = xdata, objective = info)
     shadowtest$feasible <- TRUE
+    shadowtest$feasible_detail <- 0
     return(shadowtest)
 
   }
@@ -71,12 +74,14 @@ assembleShadowTest <- function(
 
     if (is_optimal) {
       shadowtest$feasible <- TRUE
+      shadowtest$feasible_detail <- 0
       return(shadowtest)
     }
 
     # If not optimal, retry without str
     shadowtest <- runAssembly(config, constraints, xdata = xdata, objective = info)
     shadowtest$feasible <- FALSE
+    shadowtest$feasible_detail <- 1
     return(shadowtest)
 
   }
@@ -100,15 +105,16 @@ assembleShadowTest <- function(
     # Main assembly
     shadowtest <- runAssembly(config, constraints, xdata = xdata_elg, objective = weighted_info)
     is_optimal <- isShadowtestOptimal(shadowtest)
-
     if (is_optimal) {
       shadowtest$feasible <- TRUE
+      shadowtest$feasible_detail <- 0
       return(shadowtest)
     }
 
     # If not optimal, retry without xmat
     shadowtest <- runAssembly(config, constraints, xdata = xdata, objective = weighted_info)
     shadowtest$feasible <- FALSE
+    shadowtest$feasible_detail <- 1
     return(shadowtest)
 
   }
@@ -121,6 +127,7 @@ assembleShadowTest <- function(
 
     shadowtest <- runAssembly(config, constraints, xdata = xdata, objective = weighted_info)
     shadowtest$feasible <- TRUE
+    shadowtest$feasible_detail <- 0
     return(shadowtest)
 
   }
@@ -135,6 +142,7 @@ assembleShadowTest <- function(
     is_optimal <- isShadowtestOptimal(shadowtest)
     if (is_optimal) {
       shadowtest$feasible <- TRUE
+      shadowtest$feasible_detail <- 0
       return(shadowtest)
     }
 
@@ -144,12 +152,15 @@ assembleShadowTest <- function(
     is_optimal <- isShadowtestOptimal(shadowtest)
     if (is_optimal) {
       shadowtest$feasible <- FALSE
+      shadowtest$feasible_detail <- 1
       return(shadowtest)
     }
 
     # If not optimal, retry without elg
     shadowtest <- runAssembly(config, constraints, xdata = xdata, objective = info)
     shadowtest$feasible <- FALSE
+    shadowtest$feasible_detail <- 2
+    return(shadowtest)
 
   }
 
@@ -172,12 +183,14 @@ assembleShadowTest <- function(
     is_optimal <- isShadowtestOptimal(shadowtest)
     if (is_optimal) {
       shadowtest$feasible <- FALSE
+      shadowtest$feasible_detail <- 1
       return(shadowtest)
     }
 
     # If not optimal, retry without str
     shadowtest <- runAssembly(config, constraints, xdata = xdata, objective = info)
     shadowtest$feasible <- FALSE
+    shadowtest$feasible_detail <- 2
     return(shadowtest)
 
   }
@@ -186,6 +199,7 @@ assembleShadowTest <- function(
 
     shadowtest <- runAssembly(config, constraints, xdata = xdata, objective = info)
     shadowtest$feasible <- TRUE
+    shadowtest$feasible_detail <- 0
     return(shadowtest)
 
   }

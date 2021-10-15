@@ -214,8 +214,9 @@ setMethod(
       # Simulee: initialize shadow test record
 
       if (constants$use_shadow) {
-        o@shadow_test_feasible  <- logical(constants$test_length)
-        o@shadow_test_refreshed <- logical(constants$test_length)
+        o@shadow_test_feasible        <- logical(constants$test_length)
+        o@shadow_test_feasible_detail <- numeric(constants$test_length)
+        o@shadow_test_refreshed       <- logical(constants$test_length)
       }
 
       posterior_record$likelihood <- rep(1, constants$nq)
@@ -296,11 +297,13 @@ setMethod(
             o@solve_time[position] <- shadowtest$solve_time
 
             o@shadow_test_feasible[position] <- shadowtest$feasible
+            o@shadow_test_feasible_detail[position] <- shadowtest$feasible_detail
 
           } else {
 
             o@shadow_test_refreshed[position] <- FALSE
             o@shadow_test_feasible[position]  <- o@shadow_test_feasible[position - 1]
+            o@shadow_test_feasible_detail[position]  <- o@shadow_test_feasible_detail[position - 1]
 
           }
 
