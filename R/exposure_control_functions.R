@@ -129,7 +129,7 @@ doExposureControl <- function(
 
   }
 
-  if (constants$exposure_control_method %in% c("HYBRID")) {
+  if (constants$exposure_control_method %in% c("HYBRID-SE", "HYBRID-ES")) {
 
     segments_to_apply <- getSegmentsToApply(constants$n_segment, segment_of$final_theta_est)
     exposure_record   <- applyFading(exposure_record, segments_to_apply, constants)
@@ -202,7 +202,7 @@ initializeExposureRecord <- function(exposure_control, constants) {
   n_segment <- constants$n_segment
 
   o$n_jk  <- numeric(n_segment)
-  if (toupper(exposure_control$method) %in% c("ELIGIBILITY", "PROGRESSIVE-RESTRICTED", "HYBRID")) {
+  if (toupper(exposure_control$method) %in% c("ELIGIBILITY", "PROGRESSIVE-RESTRICTED", "HYBRID-SE", "HYBRID-ES")) {
     o$f_jk  <- numeric(n_segment)
   }
 

@@ -265,7 +265,7 @@ setMethod(
             theta_change, constants, stimulus_record
           )) {
 
-            if (constants$exposure_control_method %in% c("ALPHA-STRATIFICATION", "HYBRID")) {
+            if (constants$exposure_control_method %in% c("ALPHA-STRATIFICATION", "HYBRID-SE", "HYBRID-ES")) {
               idx_stratum <- getStratumForCurrentPosition(position, constants)
               idx_exclude <- getStratificationFilter(idx_stratum, o, constraints)
             }

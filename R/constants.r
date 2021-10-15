@@ -31,7 +31,8 @@ supported_exposure_control_method_list <- function() {
     "ALPHA-STRATIFICATION",
     "PROGRESSIVE-RESTRICTED",
     "MULTIPLE-OBJECTIVE",
-    "HYBRID"
+    "HYBRID-SE",
+    "HYBRID-ES"
   )
   return(x)
 }

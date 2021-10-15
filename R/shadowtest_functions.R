@@ -125,8 +125,9 @@ assembleShadowTest <- function(
 
   }
 
-  if (constants$use_eligibility_control && constants$exposure_control_method %in% c("HYBRID")) {
+  if (constants$use_eligibility_control && constants$exposure_control_method %in% c("HYBRID-SE")) {
 
+    # hybrid_se : relax stratification then eligibility
     xdata_elg     <- applyEligibilityConstraintsToXdata(xdata, eligible_flag_in_current_theta_segment, constants, constraints)
     xdata_elg_str <- applyStratificationConstraintsToXdata(xdata_elg, stratification_filter, constraints)
 
@@ -147,6 +148,34 @@ assembleShadowTest <- function(
     }
 
     # If not optimal, retry without elg
+    shadowtest <- runAssembly(config, constraints, xdata = xdata, objective = info)
+    shadowtest$feasible <- FALSE
+
+  }
+
+  if (constants$use_eligibility_control && constants$exposure_control_method %in% c("HYBRID-ES")) {
+
+    # hybrid_se : relax eligibility then stratification
+    xdata_str <- applyStratificationConstraintsToXdata(xdata, stratification_filter, constraints)
+    xdata_str_elg <- applyEligibilityConstraintsToXdata(xdata_str, eligible_flag_in_current_theta_segment, constants, constraints)
+
+    shadowtest <- runAssembly(config, constraints, xdata = xdata_str_elg, objective = info)
+    is_optimal <- isShadowtestOptimal(shadowtest)
+    if (is_optimal) {
+      shadowtest$feasible <- TRUE
+      shadowtest$feasible_detail <- 0
+      return(shadowtest)
+    }
+
+    # If not optimal, retry without elg
+    shadowtest <- runAssembly(config, constraints, xdata = xdata_str, objective = info)
+    is_optimal <- isShadowtestOptimal(shadowtest)
+    if (is_optimal) {
+      shadowtest$feasible <- FALSE
+      return(shadowtest)
+    }
+
+    # If not optimal, retry without str
     shadowtest <- runAssembly(config, constraints, xdata = xdata, objective = info)
     shadowtest$feasible <- FALSE
     return(shadowtest)
