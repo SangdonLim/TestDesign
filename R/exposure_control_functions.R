@@ -81,8 +81,12 @@ doExposureControl <- function(
     exposure_record   <- incrementAlpha(exposure_record, segments_to_apply, segment_prob, o, constants)
 
     eligible_flag_stratified <- eligible_flag
+    eligible_flag_stratified$i <-
+    eligible_flag_stratified$i * 0 + 1 # ignore existing eligibility flag because this method does not use it
     eligible_flag_stratified$i[stratification_filter] <- 0
     eligible_flag_in_final_theta_segment_stratified <- eligible_flag_in_final_theta_segment
+    eligible_flag_in_final_theta_segment_stratified$i <-
+    eligible_flag_in_final_theta_segment_stratified$i * 0 + 1 # ignore existing eligibility flag because this method does not use it
     eligible_flag_in_final_theta_segment_stratified$i[stratification_filter] <- 0
 
     exposure_record   <- incrementRho(exposure_record, segments_to_apply, segment_prob, eligible_flag_stratified, theta_is_feasible, constants)
