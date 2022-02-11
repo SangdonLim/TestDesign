@@ -71,27 +71,6 @@ doExposureControl <- function(
 
   if (constants$exposure_control_method %in% c("ALPHA-STRATIFICATION")) {
 
-    segments_to_apply <- getSegmentsToApply(constants$n_segment, segment_of$final_theta_est)
-    exposure_record   <- applyFading(exposure_record, segments_to_apply, constants)
-    segment_prob      <- 1
-    segment_feasible  <- unique(o@theta_segment_index[o@shadow_test_feasible == TRUE])
-    theta_is_feasible <- segment_of$final_theta_est %in% segment_feasible
-    exposure_record   <- incrementN(exposure_record, segments_to_apply, segment_prob, constants)
-    exposure_record   <- incrementPhi(exposure_record, segments_to_apply, segment_prob, theta_is_feasible)
-    exposure_record   <- incrementAlpha(exposure_record, segments_to_apply, segment_prob, o, constants)
-
-    eligible_flag_stratified <- eligible_flag
-    eligible_flag_stratified$i <-
-    eligible_flag_stratified$i * 0 + 1 # ignore existing eligibility flag because this method does not use it
-    eligible_flag_stratified$i[stratification_filter] <- 0
-    eligible_flag_in_final_theta_segment_stratified <- eligible_flag_in_final_theta_segment
-    eligible_flag_in_final_theta_segment_stratified$i <-
-    eligible_flag_in_final_theta_segment_stratified$i * 0 + 1 # ignore existing eligibility flag because this method does not use it
-    eligible_flag_in_final_theta_segment_stratified$i[stratification_filter] <- 0
-
-    exposure_record   <- incrementRho(exposure_record, segments_to_apply, segment_prob, eligible_flag_stratified, theta_is_feasible, constants)
-    exposure_record   <- adjustAlphaToReduceSpike(exposure_record, segment_prob, segment_of$visited, eligible_flag_in_final_theta_segment_stratified, o, constants)
-    exposure_record   <- updateEligibilityRates(exposure_record, constants)
     exposure_record   <- clipEligibilityRates(exposure_record, constants)
 
     return(exposure_record)
