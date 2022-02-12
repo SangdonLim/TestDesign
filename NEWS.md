@@ -4,8 +4,11 @@ temporary note for me: this is the branch state before cherry-picking commits fr
 TODO: remove this note after hybrid-old branch is cleaned up
 
 ## New features
-* Added segment-wise Progressive-Restricted exposure control with fading.
-* `loadConstraints()` now explicitly errors when the test length constraint has different LB and UB values.
+* Added segment-wise progressive-restricted method for exposure control.
+* Added segment-wise multiple objective method for exposure control. Currently uses a fixed weight function.
+* Added segment-wise alpha-stratification method for exposure control.
+* Added linear stratification method for creating item pool strata.
+* Added segment-wise hybrid method for exposure control. This method is a combination of eligibility method and the alpha-stratification method.
 
 # TestDesign 1.2.7
 
