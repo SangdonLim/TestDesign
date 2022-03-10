@@ -125,7 +125,6 @@ doExposureControl <- function(
     exposure_record   <- incrementN(exposure_record, segments_to_apply, segment_prob, constants)
   # exposure_record   <- incrementPhi(exposure_record, segments_to_apply, segment_prob, TRUE) # is not called for the purpose of code optimization; see comments in incrementPhi()
     exposure_record   <- incrementAlpha(exposure_record, segments_to_apply, segment_prob, o, constants)
-    exposure_record   <- incrementRho(exposure_record, segments_to_apply, segment_prob, eligible_flag, TRUE, constants)
     return(exposure_record)
 
   }
