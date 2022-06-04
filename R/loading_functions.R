@@ -147,6 +147,12 @@ loadItemPool <- function(ipar, ipar_se = NULL, unique = FALSE) {
 
       }
 
+      if (multidimensional) {
+
+        next
+
+      }
+
     }
 
     if (model[i] == 2 | model[i] == "2PL") {
@@ -167,6 +173,28 @@ loadItemPool <- function(ipar, ipar_se = NULL, unique = FALSE) {
 
         item_pool@ipar[i, 1:2] <- c(a   , b)
         item_pool@se[  i, 1:2] <- c(a_se, b_se)
+
+        next
+
+      }
+
+      if (multidimensional) {
+
+        NCAT[i] <- 2
+        nd <- ipar[i, n_nonpars]
+        a    <- as.numeric(ipar[   i, n_nonpars + 1:nd])
+        d    <- as.numeric(ipar[   i, n_nonpars + nd + 1])
+        a_se <- as.numeric(ipar_se[i, n_nonpars + 1:nd])
+        d_se <- as.numeric(ipar_se[i, n_nonpars + nd + 1])
+
+        if (any(a < 0)) { valid[i] <- FALSE; next }
+        valid[i] <- TRUE
+
+        item_pool@model[i] <- "item_M2PL"
+        parms[[i]] <- new("item_M2PL", slope = a, intercept = d)
+
+        item_pool@ipar[i, 1:n_pars[i]] <- c(a   , d)
+        item_pool@se[  i, 1:n_pars[i]] <- c(a_se, d_se)
 
         next
 
@@ -201,6 +229,32 @@ loadItemPool <- function(ipar, ipar_se = NULL, unique = FALSE) {
 
       }
 
+      if (multidimensional) {
+
+        NCAT[i] <- 2
+        nd <- ipar[i, n_nonpars]
+        a    <- as.numeric(ipar[   i, n_nonpars + 1:nd])
+        d    <- as.numeric(ipar[   i, n_nonpars + nd + 1])
+        c    <- as.numeric(ipar[   i, n_nonpars + nd + 2])
+        a_se <- as.numeric(ipar_se[i, n_nonpars + 1:nd])
+        d_se <- as.numeric(ipar_se[i, n_nonpars + nd + 1])
+        c_se <- as.numeric(ipar_se[i, n_nonpars + nd + 2])
+
+        if (any(a < 0)) { valid[i] <- FALSE; next }
+        if (c < 0)      { valid[i] <- FALSE; next }
+        if (c >=  1)    { valid[i] <- FALSE; next }
+        valid[i] <- TRUE
+
+        item_pool@model[i] <- "item_M3PL"
+        parms[[i]] <- new("item_M3PL", slope = a, intercept = d, guessing = c)
+
+        item_pool@ipar[i, 1:n_pars[i]] <- c(a   , d   , c)
+        item_pool@se[  i, 1:n_pars[i]] <- c(a_se, d_se, c_se)
+
+        next
+
+      }
+
     }
 
     if (model[i] == 4 | model[i] == "PC") {
@@ -218,6 +272,12 @@ loadItemPool <- function(ipar, ipar_se = NULL, unique = FALSE) {
 
         item_pool@ipar[i, 1:n_pars[i]] <- b
         item_pool@se[  i, 1:n_pars[i]] <- b_se
+
+        next
+
+      }
+
+      if (multidimensional) {
 
         next
 
@@ -243,6 +303,28 @@ loadItemPool <- function(ipar, ipar_se = NULL, unique = FALSE) {
 
         item_pool@ipar[i, 1:n_pars[i]] <- c(a   , b)
         item_pool@se[  i, 1:n_pars[i]] <- c(a_se, b_se)
+
+        next
+
+      }
+
+      if (multidimensional) {
+
+        nd <- ipar[i, n_nonpars]
+        NCAT[i] <- (n_pars[i] - nd) + 1
+        a    <- as.numeric(ipar[   i, n_nonpars + 1:nd])
+        d    <- as.numeric(ipar[   i, n_nonpars + (nd + 1):n_pars[i]])
+        a_se <- as.numeric(ipar_se[i, n_nonpars + 1:nd])
+        d_se <- as.numeric(ipar_se[i, n_nonpars + (nd + 1):n_pars[i]])
+
+        if (any(a < 0)) { valid[i] <- FALSE; next }
+        valid[i] <- TRUE
+
+        item_pool@model[i] <- "item_MGPC"
+        parms[[i]] <- new("item_MGPC", slope = a, intercept = d, ncat = NCAT[i])
+
+        item_pool@ipar[i, 1:n_pars[i]] <- c(a   , d)
+        item_pool@se[  i, 1:n_pars[i]] <- c(a_se, d_se)
 
         next
 
@@ -274,6 +356,29 @@ loadItemPool <- function(ipar, ipar_se = NULL, unique = FALSE) {
 
       }
 
+      if (multidimensional) {
+
+        nd <- ipar[i, n_nonpars]
+        NCAT[i] <- (n_pars[i] - nd) + 1
+        a    <- as.numeric(ipar[   i, n_nonpars + 1:nd])
+        d    <- as.numeric(ipar[   i, n_nonpars + (nd + 1):n_pars[i]])
+        a_se <- as.numeric(ipar_se[i, n_nonpars + 1:nd])
+        d_se <- as.numeric(ipar_se[i, n_nonpars + (nd + 1):n_pars[i]])
+
+        if (a <= 0)         { valid[i] <- FALSE; next }
+        if (is.unsorted(d)) { valid[i] <- FALSE; next }
+        valid[i] <- TRUE
+
+        item_pool@model[i] <- "item_MGR"
+        parms[[i]] <- new("item_MGR", slope = a, intercept = d, ncat = NCAT[i])
+
+        item_pool@ipar[i, 1:n_pars[i]] <- c(a   , d)
+        item_pool@se[  i, 1:n_pars[i]] <- c(a_se, d_se)
+
+        next
+
+      }
+
     }
 
     stop(
@@ -284,6 +389,7 @@ loadItemPool <- function(ipar, ipar_se = NULL, unique = FALSE) {
     )
 
   }
+
   if (sum(!valid) > 0) {
     stop(paste("Check the parameters for the following item(s):", paste((1:ni)[!valid], collapse = ", "), "\n"))
   }
