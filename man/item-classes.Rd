@@ -6,10 +6,14 @@
 \alias{item}
 \alias{item_1PL-class}
 \alias{item_2PL-class}
+\alias{item_M2PL-class}
 \alias{item_3PL-class}
+\alias{item_M3PL-class}
 \alias{item_PC-class}
 \alias{item_GPC-class}
+\alias{item_MGPC-class}
 \alias{item_GR-class}
+\alias{item_MGR-class}
 \title{Item classes}
 \description{
 \itemize{

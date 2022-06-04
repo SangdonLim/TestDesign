@@ -7,6 +7,14 @@ validateDifficulty <- function(object) {
     return("@difficulty must not be empty")
   }
 }
+
+#' @noRd
+validateIntercept <- function(object) {
+  if (length(object@intercept) == 0) {
+    return("@intercept must not be empty")
+  }
+}
+
 #' @noRd
 validateSlope <- function(object) {
   if (object@slope <= 0) {
@@ -129,6 +137,24 @@ setClass("item_2PL",
 )
 
 #' @rdname item-classes
+setClass("item_M2PL",
+  slots = c(
+    slope     = "numeric",
+    intercept = "numeric"
+  ),
+  prototype = list(
+    slope     = numeric(0),
+    intercept = numeric(0)
+  ),
+  validity = function(object) {
+    e <- character()
+    e <- c(e, validateSlope(object))
+    e <- c(e, validateIntercept(object))
+    return(returnErrors(e))
+  }
+)
+
+#' @rdname item-classes
 setClass("item_3PL",
   slots = c(
     slope      = "numeric",
@@ -144,6 +170,27 @@ setClass("item_3PL",
     e <- character()
     e <- c(e, validateDifficulty(object))
     e <- c(e, validateSlope(object))
+    e <- c(e, validateGuessing(object))
+    return(returnErrors(e))
+  }
+)
+
+#' @rdname item-classes
+setClass("item_M3PL",
+  slots = c(
+    slope     = "numeric",
+    intercept = "numeric",
+    guessing  = "numeric"
+  ),
+  prototype = list(
+    slope     = numeric(0),
+    intercept = numeric(0),
+    guessing  = numeric(0)
+  ),
+  validity = function(object) {
+    e <- character()
+    e <- c(e, validateSlope(object))
+    e <- c(e, validateIntercept(object))
     e <- c(e, validateGuessing(object))
     return(returnErrors(e))
   }
@@ -187,6 +234,26 @@ setClass("item_GPC",
   }
 )
 
+#' @rdname item-classes
+setClass("item_MGPC",
+  slots = c(
+    slope     = "numeric",
+    intercept = "numeric",
+    ncat      = "numeric"
+  ),
+  prototype = list(
+    slope     = numeric(0),
+    intercept = numeric(0),
+    ncat      = numeric(0)
+  ),
+  validity = function(object) {
+    e <- character()
+    e <- c(e, validateNcat(object))
+    e <- c(e, validateSlope(object))
+    e <- c(e, validateIntercept(object))
+    return(returnErrors(e))
+  }
+)
 
 #' @rdname item-classes
 setClass("item_GR",
@@ -205,6 +272,28 @@ setClass("item_GR",
     e <- c(e, validateNcat(object))
     e <- c(e, validateSlope(object))
     e <- c(e, validateCategory(object))
+    e <- c(e, validateOrder(object))
+    return(returnErrors(e))
+  }
+)
+
+#' @rdname item-classes
+setClass("item_MGR",
+  slots = c(
+    slope     = "numeric",
+    intercept = "numeric",
+    ncat      = "numeric"
+  ),
+  prototype = list(
+    slope     = numeric(0),
+    intercept = numeric(0),
+    ncat      = numeric(0)
+  ),
+  validity = function(object) {
+    e <- character()
+    e <- c(e, validateNcat(object))
+    e <- c(e, validateSlope(object))
+    e <- c(e, validateIntercept(object))
     e <- c(e, validateOrder(object))
     return(returnErrors(e))
   }
