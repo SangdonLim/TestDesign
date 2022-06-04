@@ -129,6 +129,8 @@ loadItemPool <- function(ipar, ipar_se = NULL, unique = FALSE) {
 
     if (model[i] == 1 | model[i] == "1PL") {
 
+      if (!multidimensional) {
+
         NCAT[i] <- 2
         b    <- ipar[   i, n_nonpars + 1]
         b_se <- ipar_se[i, n_nonpars + 1]
@@ -143,9 +145,13 @@ loadItemPool <- function(ipar, ipar_se = NULL, unique = FALSE) {
 
         next
 
+      }
+
     }
 
     if (model[i] == 2 | model[i] == "2PL") {
+
+      if (!multidimensional) {
 
         NCAT[i] <- 2
         a    <- ipar[   i, n_nonpars + 1]
@@ -164,9 +170,13 @@ loadItemPool <- function(ipar, ipar_se = NULL, unique = FALSE) {
 
         next
 
+      }
+
     }
 
     if (model[i] == 3 | model[i] == "3PL") {
+
+      if (!multidimensional) {
 
         NCAT[i] <- 2
         a    <- ipar[   i, n_nonpars + 1]
@@ -189,9 +199,13 @@ loadItemPool <- function(ipar, ipar_se = NULL, unique = FALSE) {
 
         next
 
+      }
+
     }
 
     if (model[i] == 4 | model[i] == "PC") {
+
+      if (!multidimensional) {
 
         NCAT[i] <- n_pars[i] + 1
         b    <- as.numeric(ipar[   i, n_nonpars + 1:n_pars[i]])
@@ -207,9 +221,13 @@ loadItemPool <- function(ipar, ipar_se = NULL, unique = FALSE) {
 
         next
 
+      }
+
     }
 
     if (model[i] == 5 | model[i] == "GPC") {
+
+      if (!multidimensional) {
 
         NCAT[i] <- (n_pars[i] - 1) + 1
         a    <- as.numeric(ipar[   i, n_nonpars + 1])
@@ -228,9 +246,13 @@ loadItemPool <- function(ipar, ipar_se = NULL, unique = FALSE) {
 
         next
 
+      }
+
     }
 
     if (model[i] == 6 | model[i] == "GR") {
+
+      if (!multidimensional) {
 
         NCAT[i] <- (n_pars[i] - 1) + 1
         a    <- as.numeric(ipar[   i, n_nonpars + 1])
@@ -249,6 +271,8 @@ loadItemPool <- function(ipar, ipar_se = NULL, unique = FALSE) {
         item_pool@se[  i, 1:n_pars[i]] <- c(a_se, b_se)
 
         next
+
+      }
 
     }
 
