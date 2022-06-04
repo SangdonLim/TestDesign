@@ -87,10 +87,19 @@ loadItemPool <- function(ipar, ipar_se = NULL, unique = FALSE) {
   model           <- ipar[[2]]
   NCAT            <- numeric(ni)
   parms           <- vector(mode = "list", length = ni)
-  n_values        <- rowSums(!is.na(ipar))
-  n_nonpars       <- 2
-  n_pars          <- n_values - n_nonpars
   valid           <- logical(ni)
+
+  n_values        <- rowSums(!is.na(ipar))
+
+  multidimensional <- FALSE
+  n_nonpars        <- 2
+  if ("NDIM" %in% names(ipar)) {
+    multidimensional <- TRUE
+    n_nonpars        <- 3
+  }
+
+  n_pars     <- n_values - n_nonpars
+
   item_pool@ipar  <- matrix(NA, nrow = ni, ncol = max(n_pars))
   item_pool@se    <- matrix(NA, nrow = ni, ncol = max(n_pars))
 
@@ -261,7 +270,7 @@ loadItemPool <- function(ipar, ipar_se = NULL, unique = FALSE) {
   item_pool@parms <- parms
 
   tmp <- item_pool@raw
-  tmp[, 2 + 1:max(n_pars)] <- item_pool@se
+  tmp[, n_nonpars + 1:max(n_pars)] <- item_pool@se
   item_pool@raw_se <- tmp
 
   item_pool@unique <- unique
