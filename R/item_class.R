@@ -17,7 +17,7 @@ validateIntercept <- function(object) {
 
 #' @noRd
 validateSlope <- function(object) {
-  if (object@slope <= 0) {
+  if (any(object@slope < 0)) {
     return("@slope must be non-negative")
   }
 }
