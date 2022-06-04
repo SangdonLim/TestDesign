@@ -129,126 +129,126 @@ loadItemPool <- function(ipar, ipar_se = NULL, unique = FALSE) {
 
     if (model[i] == 1 | model[i] == "1PL") {
 
-      NCAT[i] <- 2
-      b    <- ipar[   i, n_nonpars + 1]
-      b_se <- ipar_se[i, n_nonpars + 1]
+        NCAT[i] <- 2
+        b    <- ipar[   i, n_nonpars + 1]
+        b_se <- ipar_se[i, n_nonpars + 1]
 
-      valid[i] <- TRUE
+        valid[i] <- TRUE
 
-      item_pool@model[i] <- "item_1PL"
-      parms[[i]] <- new("item_1PL", difficulty = b)
+        item_pool@model[i] <- "item_1PL"
+        parms[[i]] <- new("item_1PL", difficulty = b)
 
-      item_pool@ipar[i, 1] <- b
-      item_pool@se[  i, 1] <- b_se
+        item_pool@ipar[i, 1] <- b
+        item_pool@se[  i, 1] <- b_se
 
-      next
+        next
 
     }
 
     if (model[i] == 2 | model[i] == "2PL") {
 
-      NCAT[i] <- 2
-      a    <- ipar[   i, n_nonpars + 1]
-      b    <- ipar[   i, n_nonpars + 2]
-      a_se <- ipar_se[i, n_nonpars + 1]
-      b_se <- ipar_se[i, n_nonpars + 2]
+        NCAT[i] <- 2
+        a    <- ipar[   i, n_nonpars + 1]
+        b    <- ipar[   i, n_nonpars + 2]
+        a_se <- ipar_se[i, n_nonpars + 1]
+        b_se <- ipar_se[i, n_nonpars + 2]
 
-      if (a <= 0) { valid[i] <- FALSE; next }
-      valid[i] <- TRUE
+        if (a <= 0) { valid[i] <- FALSE; next }
+        valid[i] <- TRUE
 
-      item_pool@model[i] <- "item_2PL"
-      parms[[i]] <- new("item_2PL", slope = a, difficulty = b)
+        item_pool@model[i] <- "item_2PL"
+        parms[[i]] <- new("item_2PL", slope = a, difficulty = b)
 
-      item_pool@ipar[i, 1:2] <- c(a   , b)
-      item_pool@se[  i, 1:2] <- c(a_se, b_se)
+        item_pool@ipar[i, 1:2] <- c(a   , b)
+        item_pool@se[  i, 1:2] <- c(a_se, b_se)
 
-      next
+        next
 
     }
 
     if (model[i] == 3 | model[i] == "3PL") {
 
-      NCAT[i] <- 2
-      a    <- ipar[   i, n_nonpars + 1]
-      b    <- ipar[   i, n_nonpars + 2]
-      c    <- ipar[   i, n_nonpars + 3]
-      a_se <- ipar_se[i, n_nonpars + 1]
-      b_se <- ipar_se[i, n_nonpars + 2]
-      c_se <- ipar_se[i, n_nonpars + 3]
+        NCAT[i] <- 2
+        a    <- ipar[   i, n_nonpars + 1]
+        b    <- ipar[   i, n_nonpars + 2]
+        c    <- ipar[   i, n_nonpars + 3]
+        a_se <- ipar_se[i, n_nonpars + 1]
+        b_se <- ipar_se[i, n_nonpars + 2]
+        c_se <- ipar_se[i, n_nonpars + 3]
 
-      if (a <= 0) { valid[i] <- FALSE; next }
-      if (c <  0) { valid[i] <- FALSE; next }
-      if (c >= 1) { valid[i] <- FALSE; next }
-      valid[i] <- TRUE
+        if (a <= 0) { valid[i] <- FALSE; next }
+        if (c <  0) { valid[i] <- FALSE; next }
+        if (c >= 1) { valid[i] <- FALSE; next }
+        valid[i] <- TRUE
 
-      item_pool@model[i] <- "item_3PL"
-      parms[[i]] <- new("item_3PL", slope = a, difficulty = b, guessing = c)
+        item_pool@model[i] <- "item_3PL"
+        parms[[i]] <- new("item_3PL", slope = a, difficulty = b, guessing = c)
 
-      item_pool@ipar[i, 1:3] <- c(a   , b   , c)
-      item_pool@se[  i, 1:3] <- c(a_se, b_se, c_se)
+        item_pool@ipar[i, 1:3] <- c(a   , b   , c)
+        item_pool@se[  i, 1:3] <- c(a_se, b_se, c_se)
 
-      next
+        next
 
     }
 
     if (model[i] == 4 | model[i] == "PC") {
 
-      NCAT[i] <- n_pars[i] + 1
-      b    <- as.numeric(ipar[   i, n_nonpars + 1:n_pars[i]])
-      b_se <- as.numeric(ipar_se[i, n_nonpars + 1:n_pars[i]])
+        NCAT[i] <- n_pars[i] + 1
+        b    <- as.numeric(ipar[   i, n_nonpars + 1:n_pars[i]])
+        b_se <- as.numeric(ipar_se[i, n_nonpars + 1:n_pars[i]])
 
-      valid[i] <- TRUE
+        valid[i] <- TRUE
 
-      item_pool@model[i] <- "item_PC"
-      parms[[i]] <- new("item_PC", threshold = b, ncat = NCAT[i])
+        item_pool@model[i] <- "item_PC"
+        parms[[i]] <- new("item_PC", threshold = b, ncat = NCAT[i])
 
-      item_pool@ipar[i, 1:n_pars[i]] <- b
-      item_pool@se[  i, 1:n_pars[i]] <- b_se
+        item_pool@ipar[i, 1:n_pars[i]] <- b
+        item_pool@se[  i, 1:n_pars[i]] <- b_se
 
-      next
+        next
 
     }
 
     if (model[i] == 5 | model[i] == "GPC") {
 
-      NCAT[i] <- (n_pars[i] - 1) + 1
-      a    <- as.numeric(ipar[   i, n_nonpars + 1])
-      b    <- as.numeric(ipar[   i, n_nonpars + 2:n_pars[i]])
-      a_se <- as.numeric(ipar_se[i, n_nonpars + 1])
-      b_se <- as.numeric(ipar_se[i, n_nonpars + 2:n_pars[i]])
+        NCAT[i] <- (n_pars[i] - 1) + 1
+        a    <- as.numeric(ipar[   i, n_nonpars + 1])
+        b    <- as.numeric(ipar[   i, n_nonpars + 2:n_pars[i]])
+        a_se <- as.numeric(ipar_se[i, n_nonpars + 1])
+        b_se <- as.numeric(ipar_se[i, n_nonpars + 2:n_pars[i]])
 
-      if (a <= 0) { valid[i] <- FALSE; next }
-      valid[i] <- TRUE
+        if (a <= 0) { valid[i] <- FALSE; next }
+        valid[i] <- TRUE
 
-      item_pool@model[i] <- "item_GPC"
-      parms[[i]] <- new("item_GPC", slope = a, threshold = b, ncat = NCAT[i])
+        item_pool@model[i] <- "item_GPC"
+        parms[[i]] <- new("item_GPC", slope = a, threshold = b, ncat = NCAT[i])
 
-      item_pool@ipar[i, 1:n_pars[i]] <- c(a   , b)
-      item_pool@se[  i, 1:n_pars[i]] <- c(a_se, b_se)
+        item_pool@ipar[i, 1:n_pars[i]] <- c(a   , b)
+        item_pool@se[  i, 1:n_pars[i]] <- c(a_se, b_se)
 
-      next
+        next
 
     }
 
     if (model[i] == 6 | model[i] == "GR") {
 
-      NCAT[i] <- (n_pars[i] - 1) + 1
-      a    <- as.numeric(ipar[   i, n_nonpars + 1])
-      b    <- as.numeric(ipar[   i, n_nonpars + 2:n_pars[i]])
-      a_se <- as.numeric(ipar_se[i, n_nonpars + 1])
-      b_se <- as.numeric(ipar_se[i, n_nonpars + 2:n_pars[i]])
+        NCAT[i] <- (n_pars[i] - 1) + 1
+        a    <- as.numeric(ipar[   i, n_nonpars + 1])
+        b    <- as.numeric(ipar[   i, n_nonpars + 2:n_pars[i]])
+        a_se <- as.numeric(ipar_se[i, n_nonpars + 1])
+        b_se <- as.numeric(ipar_se[i, n_nonpars + 2:n_pars[i]])
 
-      if (a <= 0)         { valid[i] <- FALSE; next }
-      if (is.unsorted(b)) { valid[i] <- FALSE; next }
-      valid[i] <- TRUE
+        if (a <= 0)         { valid[i] <- FALSE; next }
+        if (is.unsorted(b)) { valid[i] <- FALSE; next }
+        valid[i] <- TRUE
 
-      item_pool@model[i] <- "item_GR"
-      parms[[i]] <- new("item_GR", slope = a, category = b, ncat = NCAT[i])
+        item_pool@model[i] <- "item_GR"
+        parms[[i]] <- new("item_GR", slope = a, category = b, ncat = NCAT[i])
 
-      item_pool@ipar[i, 1:n_pars[i]] <- c(a   , b)
-      item_pool@se[  i, 1:n_pars[i]] <- c(a_se, b_se)
+        item_pool@ipar[i, 1:n_pars[i]] <- c(a   , b)
+        item_pool@se[  i, 1:n_pars[i]] <- c(a_se, b_se)
 
-      next
+        next
 
     }
 
