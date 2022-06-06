@@ -106,6 +106,21 @@ setMethod(
 )
 
 #' @rdname simResp-methods
+#' @aliases simResp,item_M2PL,matrix-method
+setMethod(
+  f = "simResp",
+  signature = c("item_M2PL", "matrix"),
+  definition = function(object, theta) {
+    prob     <- calcProb(object, theta)
+    n_theta  <- nrow(theta)
+    random   <- runif(n_theta)
+    response <- numeric(n_theta)
+    response[random > prob[, 1]] <- 1
+    return(response)
+  }
+)
+
+#' @rdname simResp-methods
 #' @aliases simResp,item_3PL,numeric-method
 setMethod(
   f = "simResp",
@@ -126,6 +141,21 @@ setMethod(
     r <- runif(nrow(theta))
     response <- numeric(nrow(theta))
     response[p[, 2] > r] <- 1
+    return(response)
+  }
+)
+
+#' @rdname simResp-methods
+#' @aliases simResp,item_M3PL,matrix-method
+setMethod(
+  f = "simResp",
+  signature = c("item_M3PL", "matrix"),
+  definition = function(object, theta) {
+    prob     <- calcProb(object, theta)
+    n_theta  <- nrow(theta)
+    random   <- runif(n_theta)
+    response <- numeric(n_theta)
+    response[random > prob[, 1]] <- 1
     return(response)
   }
 )
@@ -189,6 +219,25 @@ setMethod(
 )
 
 #' @rdname simResp-methods
+#' @aliases simResp,item_MGPC,matrix-method
+setMethod(
+  f = "simResp",
+  signature = c("item_MGPC", "matrix"),
+  definition = function(object, theta) {
+    prob     <- calcProb(object, theta)
+    sum_prob <- cumsum(prob)
+    n_theta  <- nrow(theta)
+    random   <- runif(n_theta)
+    response <- numeric(n_theta)
+    for (k in 1:(object@ncat - 1)) {
+      response[random > sum_prob[k]] <-
+      response[random > sum_prob[k]] + 1
+    }
+    return(response)
+  }
+)
+
+#' @rdname simResp-methods
 #' @aliases simResp,item_GR,numeric-method
 setMethod(
   f = "simResp",
@@ -212,6 +261,25 @@ setMethod(
     for (k in 1:(object@ncat - 1)) {
       psum <- psum + p[, k]
       response[r > psum] <- response[r > psum] + 1
+    }
+    return(response)
+  }
+)
+
+#' @rdname simResp-methods
+#' @aliases simResp,item_MGR,matrix-method
+setMethod(
+  f = "simResp",
+  signature = c("item_MGR", "matrix"),
+  definition = function(object, theta) {
+    prob     <- calcProb(object, theta)
+    sum_prob <- cumsum(prob)
+    n_theta  <- nrow(theta)
+    random   <- runif(n_theta)
+    response <- numeric(n_theta)
+    for (k in 1:(object@ncat - 1)) {
+      response[random > sum_prob[k]] <-
+      response[random > sum_prob[k]] + 1
     }
     return(response)
   }

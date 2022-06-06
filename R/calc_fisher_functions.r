@@ -155,12 +155,34 @@ setMethod(
 )
 
 #' @rdname calcFisher-methods
+#' @aliases calcFisher,item_M2PL,matrix-method
+setMethod(
+  f = "calcFisher",
+  signature = c("item_M2PL", "matrix"),
+  definition = function(object, theta) {
+    info_Fisher <- array_info_m_2pl(theta, object@slope, object@intercept)
+    return(info_Fisher)
+  }
+)
+
+#' @rdname calcFisher-methods
 #' @aliases calcFisher,item_3PL,matrix-method
 setMethod(
   f = "calcFisher",
   signature = c("item_3PL", "matrix"),
   definition = function(object, theta) {
     info_Fisher <- array_info_3pl(theta, object@slope, object@difficulty, object@guessing)
+    return(info_Fisher)
+  }
+)
+
+#' @rdname calcFisher-methods
+#' @aliases calcFisher,item_M3PL,matrix-method
+setMethod(
+  f = "calcFisher",
+  signature = c("item_M3PL", "matrix"),
+  definition = function(object, theta) {
+    info_Fisher <- array_info_m_3pl(theta, object@slope, object@intercept, object@guessing)
     return(info_Fisher)
   }
 )
@@ -188,12 +210,34 @@ setMethod(
 )
 
 #' @rdname calcFisher-methods
+#' @aliases calcFisher,item_GPC,matrix-method
+setMethod(
+  f = "calcFisher",
+  signature = c("item_MGPC", "matrix"),
+  definition = function(object, theta) {
+    info_Fisher <- array_info_m_gpc(theta, object@slope, object@intercept)
+    return(info_Fisher)
+  }
+)
+
+#' @rdname calcFisher-methods
 #' @aliases calcFisher,item_GR,matrix-method
 setMethod(
   f = "calcFisher",
   signature = c("item_GR", "matrix"),
   definition = function(object, theta) {
     info_Fisher <- array_info_gr(theta, object@slope, object@category)
+    return(info_Fisher)
+  }
+)
+
+#' @rdname calcFisher-methods
+#' @aliases calcFisher,item_MGR,matrix-method
+setMethod(
+  f = "calcFisher",
+  signature = c("item_MGR", "matrix"),
+  definition = function(object, theta) {
+    info_Fisher <- array_info_m_gr(theta, object@slope, object@intercept)
     return(info_Fisher)
   }
 )

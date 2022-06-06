@@ -159,6 +159,19 @@ setMethod(
 )
 
 #' @rdname calcProb-methods
+#' @aliases calcProb,item_M2PL,matrix-method
+setMethod(
+  f = "calcProb",
+  signature = c("item_M2PL", "matrix"),
+  definition = function(object, theta) {
+    prob <- matrix(NA, nrow(theta), 2)
+    prob[, 2] <- array_p_m_2pl(theta, object@slope, object@intercept)
+    prob[, 1] <- 1 - prob[, 2]
+    return(prob)
+  }
+)
+
+#' @rdname calcProb-methods
 #' @aliases calcProb,item_3PL,matrix-method
 setMethod(
   f = "calcProb",
@@ -166,6 +179,19 @@ setMethod(
   definition = function(object, theta) {
     prob <- matrix(NA, nrow(theta), 2)
     prob[, 2] <- array_p_3pl(theta, object@slope, object@difficulty, object@guessing)
+    prob[, 1] <- 1 - prob[, 2]
+    return(prob)
+  }
+)
+
+#' @rdname calcProb-methods
+#' @aliases calcProb,item_M3PL,matrix-method
+setMethod(
+  f = "calcProb",
+  signature = c("item_M3PL", "matrix"),
+  definition = function(object, theta) {
+    prob <- matrix(NA, nrow(theta), 2)
+    prob[, 2] <- array_p_m_3pl(theta, object@slope, object@intercept, object@guessing)
     prob[, 1] <- 1 - prob[, 2]
     return(prob)
   }
@@ -194,12 +220,34 @@ setMethod(
 )
 
 #' @rdname calcProb-methods
+#' @aliases calcProb,item_MGPC,matrix-method
+setMethod(
+  f = "calcProb",
+  signature = c("item_MGPC", "matrix"),
+  definition = function(object, theta) {
+    prob <- array_p_m_gpc(theta, object@slope, object@intercept)
+    return(prob)
+  }
+)
+
+#' @rdname calcProb-methods
 #' @aliases calcProb,item_GR,matrix-method
 setMethod(
   f = "calcProb",
   signature = c("item_GR", "matrix"),
   definition = function(object, theta) {
     prob <- array_p_gr(theta, object@slope, object@category)
+    return(prob)
+  }
+)
+
+#' @rdname calcProb-methods
+#' @aliases calcProb,item_MGR,matrix-method
+setMethod(
+  f = "calcProb",
+  signature = c("item_MGR", "matrix"),
+  definition = function(object, theta) {
+    prob <- array_p_m_gr(theta, object@slope, object@intercept)
     return(prob)
   }
 )
