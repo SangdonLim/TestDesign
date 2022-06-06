@@ -1,4 +1,5 @@
-#' @include constraints_operators.R
+#' @include static_class.R
+#' @include shadow_class.R
 NULL
 
 #' Run fixed-form test assembly

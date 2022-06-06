@@ -1,4 +1,4 @@
-#' @include shadow_class.R
+#' @include loading_functions.R
 NULL
 
 #' @title Basic operators for item pool objects

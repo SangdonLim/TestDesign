@@ -1,4 +1,9 @@
-#' @include static_class.R
+#' @include item_pool_operators.R
+#' @include item_attrib_operators.R
+#' @include st_attrib_operators.R
+#' @include constraint_functions.R
+#' @include constraints_operators.R
+#' @include item_pool_cluster_operators.R
 NULL
 
 #' @rdname createShadowTestConfig

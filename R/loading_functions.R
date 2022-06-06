@@ -1,3 +1,4 @@
+#' @include item_class.R
 #' @include calc_prob_functions.r
 #' @include calc_escore_functions.r
 #' @include calc_location_functions.r

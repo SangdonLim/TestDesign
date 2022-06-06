@@ -1,3 +1,4 @@
+#' @include static_functions.R
 #' @include shadow_functions.R
 NULL
 

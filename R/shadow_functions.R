@@ -1,4 +1,5 @@
-#' @include static_functions.R
+#' @include static_class.R
+#' @include shadow_class.R
 NULL
 
 #' Run adaptive test assembly
