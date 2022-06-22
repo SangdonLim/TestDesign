@@ -11,8 +11,8 @@ List score_cpp(arma::mat ipar,
   // score input
 
   int ni = ipar.n_rows;
-  arma::colvec pos_ths = th;
-  arma::colvec pre_ths;
+  arma::colvec new_estimate = th;
+  arma::colvec old_estimate;
   int iter = 0;
   bool converged = false;
   arma::mat delta;
@@ -53,7 +53,7 @@ List score_cpp(arma::mat ipar,
   while ((iter < maxIter) & (converged == false)) {
 
     iter++;
-    pre_ths = pos_ths;
+    old_estimate = new_estimate;
 
     {
 
@@ -67,7 +67,7 @@ List score_cpp(arma::mat ipar,
       for (int i=0; i<ni; i++) {
         u = arma::as_scalar(resp.col(i));
         if ((u==1) | (u==0)) {
-          P = c.row(i) + (1-c.row(i))/(1+exp(-D*(a.row(i)*pre_ths + d.row(i))));
+          P = c.row(i) + (1-c.row(i))/(1+exp(-D*(a.row(i)*old_estimate + d.row(i))));
           num = arma::as_scalar((P-c.row(i))*(u-P)/((1-c.row(i))*P));
           dll = dll + a.row(i)*num;
         }
@@ -77,7 +77,7 @@ List score_cpp(arma::mat ipar,
         for (int h=0; h<p; h++) {
           w = arma::zeros<arma::rowvec>(p);
           w.col(h) = 1;
-          dll.col(h) = dll.col(h) - w*sigma_inv*pre_ths;
+          dll.col(h) = dll.col(h) - w*sigma_inv*old_estimate;
         }
       }
 
@@ -96,7 +96,7 @@ List score_cpp(arma::mat ipar,
 
       for (int i=0; i<ni; i++) {
 
-        P = c.row(i) + (1-c.row(i))/(1+exp(-D*(a.row(i)*pre_ths + d.row(i))));
+        P = c.row(i) + (1-c.row(i))/(1+exp(-D*(a.row(i)*old_estimate + d.row(i))));
         cf = (1-P)*pow(P-c.row(i),2.0)/(P*pow(1-c.row(i),2.0));
         FI_temp = trans(a.row(i))*a.row(i);
         num = arma::as_scalar(pow(D,2.0)*cf);
@@ -119,7 +119,7 @@ List score_cpp(arma::mat ipar,
       for (int i=0; i<ni; i++) {
         u = arma::as_scalar(resp.col(i));
         if ((u==1) | (u==0)) {
-          P = c.row(i) + (1-c.row(i))/(1+exp(-D*(a.row(i)*pre_ths + d.row(i))));
+          P = c.row(i) + (1-c.row(i))/(1+exp(-D*(a.row(i)*old_estimate + d.row(i))));
           cf = arma::as_scalar((1-P)*(P-c.row(i))*(c.row(i)*u-pow(P,2.0))/(pow(P,2.0)*pow(1-c.row(i),2.0)));
           H_temp = trans(a.row(i))*a.row(i);
           H_temp = arma::as_scalar(pow(D,2.0)*cf)*H_temp;
@@ -138,7 +138,7 @@ List score_cpp(arma::mat ipar,
     // calculate delta
 
     delta = inv(deriv2)*trans(deriv1);
-    pos_ths = pre_ths - delta;
+    new_estimate = old_estimate - delta;
     abs_delta = abs(delta);
     conv_status = all(vectorise(abs_delta) < conv );
     if (conv_status == true) { converged = true; }
@@ -153,7 +153,7 @@ List score_cpp(arma::mat ipar,
   for (int i=0; i<ni; i++) {
     u = arma::as_scalar(resp.col(i));
     if ((u==1) | (u==0)) {
-      P = c.row(i) + (1-c.row(i))/(1+exp(-D*(a.row(i)*pos_ths + d.row(i))));
+      P = c.row(i) + (1-c.row(i))/(1+exp(-D*(a.row(i)*new_estimate + d.row(i))));
       cf = arma::as_scalar((1-P)*(P-c.row(i))*(c.row(i)*u-pow(P,2.0))/(pow(P,2.0)*pow(1-c.row(i),2.0)));
       H_temp = trans(a.row(i))*a.row(i);
       H_temp = arma::as_scalar(pow(D,2.0)*cf)*H_temp;
@@ -167,7 +167,7 @@ List score_cpp(arma::mat ipar,
 
   deriv2 = H;
 
-  theta = pos_ths;
+  theta = new_estimate;
   d2_inv = inv(deriv2);
   d2_diag = d2_inv.diag();
   SE = pow(abs(d2_diag),0.5);
