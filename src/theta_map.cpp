@@ -1,4 +1,12 @@
-List score_cpp(
+#include "item_probability.h"
+#include "item_information.h"
+#include "jacobian.h"
+#include "hessian.h"
+
+//' @rdname map
+//' @export
+// [[Rcpp::export]]
+List estimate_theta_map(
   arma::mat ipar,
   arma::rowvec resp,
   arma::colvec th,

@@ -784,3 +784,9 @@ theta_FB_single <- function(nx, theta_init, theta_prop, item_mcmc, item_init, re
     .Call('_TestDesign_theta_FB_single', PACKAGE = 'TestDesign', nx, theta_init, theta_prop, item_mcmc, item_init, resp, ncat, model, prior, prior_parm)
 }
 
+#' @rdname map
+#' @export
+estimate_theta_map <- function(ipar, resp, th, nd, sigma, maxIter = 30L, conv = 0.001, Fisher = TRUE) {
+    .Call('_TestDesign_estimate_theta_map', PACKAGE = 'TestDesign', ipar, resp, th, nd, sigma, maxIter, conv, Fisher)
+}
+
