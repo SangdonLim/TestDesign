@@ -2,7 +2,7 @@ List score_cpp(
   arma::mat ipar,
   arma::rowvec resp,
   arma::colvec th,
-  const int p,
+  const int nd,
   arma::mat sigma,
   const int maxIter = 30,
   const double conv = 0.001,
@@ -26,12 +26,12 @@ List score_cpp(
 
   // dLL input
 
-  arma::mat sigma_inv = arma::mat(p, p);
-  arma::rowvec dll = arma::zeros<arma::rowvec>(p);
-  arma::rowvec deriv1 = arma::rowvec(p);
-  arma::mat a = ipar.cols(0, p - 1);
-  arma::colvec d = ipar.col(p);
-  arma::colvec c = ipar.col(p + 1);
+  arma::mat sigma_inv = arma::mat(nd, nd);
+  arma::rowvec dll = arma::zeros<arma::rowvec>(nd);
+  arma::rowvec deriv1 = arma::rowvec(nd);
+  arma::mat a = ipar.cols(0, nd - 1);
+  arma::colvec d = ipar.col(nd);
+  arma::colvec c = ipar.col(nd + 1);
   arma::mat P;
   double num;
   double u;
@@ -40,16 +40,16 @@ List score_cpp(
 
   // makeFI input
 
-  arma::mat FI = arma::zeros<arma::mat>(p, p);
+  arma::mat FI = arma::zeros<arma::mat>(nd, nd);
   arma::mat deriv2;
-  arma::mat FI_temp = arma::zeros<arma::mat>(p, p);
+  arma::mat FI_temp = arma::zeros<arma::mat>(nd, nd);
   arma::mat cf;
   bool addsigma = true;
 
   // makeHessian input
 
-  arma::mat H = arma::zeros<arma::mat>(p, p);
-  arma::mat H_temp = arma::zeros<arma::mat>(p, p);
+  arma::mat H = arma::zeros<arma::mat>(nd, nd);
+  arma::mat H_temp = arma::zeros<arma::mat>(nd, nd);
 
   while ((iter < maxIter) & (converged == false)) {
 
@@ -60,9 +60,9 @@ List score_cpp(
 
       // calculate first derivative
 
-      dll = arma::zeros<arma::rowvec>(p);
+      dll = arma::zeros<arma::rowvec>(nd);
 
-      if (p==1) { sigma_inv=1; }
+      if (nd == 1) { sigma_inv = 1; }
       else { sigma_inv = inv(sigma); }
 
       for (int i=0; i<ni; i++) {
@@ -75,8 +75,8 @@ List score_cpp(
       }
 
       if (Bayesian == true) {
-        for (int h=0; h<p; h++) {
-          w = arma::zeros<arma::rowvec>(p);
+        for (int h=0; h<nd; h++) {
+          w = arma::zeros<arma::rowvec>(nd);
           w.col(h) = 1;
           dll.col(h) = dll.col(h) - w*sigma_inv*old_estimate;
         }
@@ -90,8 +90,8 @@ List score_cpp(
 
     if (Fisher == true) {
 
-      FI = arma::zeros<arma::mat>(p,p);
-      FI_temp = arma::zeros<arma::mat>(p,p);
+      FI = arma::zeros<arma::mat>(nd, nd);
+      FI_temp = arma::zeros<arma::mat>(nd, nd);
 
       for (int i=0; i<ni; i++) {
 
@@ -112,8 +112,8 @@ List score_cpp(
 
     } else {
 
-      H = arma::zeros<arma::mat>(p,p);
-      H_temp = arma::zeros<arma::mat>(p,p);
+      H = arma::zeros<arma::mat>(nd, nd);
+      H_temp = arma::zeros<arma::mat>(nd, nd);
 
       for (int i=0; i<ni; i++) {
         u = arma::as_scalar(resp.col(i));
@@ -146,8 +146,8 @@ List score_cpp(
 
   // makeHessian for deriv2
 
-  H = arma::zeros<arma::mat>(p,p);
-  H_temp = arma::zeros<arma::mat>(p,p);
+  H = arma::zeros<arma::mat>(nd, nd);
+  H_temp = arma::zeros<arma::mat>(nd, nd);
 
   for (int i=0; i<ni; i++) {
     u = arma::as_scalar(resp.col(i));
