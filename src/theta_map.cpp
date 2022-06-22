@@ -1,12 +1,13 @@
-List score_cpp(arma::mat ipar,
-                      arma::rowvec resp,
-                      arma::colvec th,
-                      const int p,
-                      arma::mat sigma,
-                      const int maxIter = 30,
-                      const double conv = 0.001,
-                      const double D = 1.7,
-                      bool Fisher = true) {
+List score_cpp(
+  arma::mat ipar,
+  arma::rowvec resp,
+  arma::colvec th,
+  const int p,
+  arma::mat sigma,
+  const int maxIter = 30,
+  const double conv = 0.001,
+  bool Fisher = true
+) {
 
   // score input
 
@@ -81,8 +82,6 @@ List score_cpp(arma::mat ipar,
         }
       }
 
-      dll = arma::as_scalar(D)*dll;
-
       deriv1 = dll;
 
     }
@@ -99,7 +98,7 @@ List score_cpp(arma::mat ipar,
         P = p_m_3pl(old_estimate, a.row(i), d.row(i), c.row(i));
         cf = (1-P)*pow(P-c.row(i),2.0)/(P*pow(1-c.row(i),2.0));
         FI_temp = trans(a.row(i))*a.row(i);
-        num = arma::as_scalar(pow(D,2.0)*cf);
+        num = arma::as_scalar(cf);
         FI_temp = num*FI_temp;
         FI = FI + FI_temp;
 
@@ -122,7 +121,7 @@ List score_cpp(arma::mat ipar,
           P = p_m_3pl(old_estimate, a.row(i), d.row(i), c.row(i));
           cf = arma::as_scalar((1-P)*(P-c.row(i))*(c.row(i)*u-pow(P,2.0))/(pow(P,2.0)*pow(1-c.row(i),2.0)));
           H_temp = trans(a.row(i))*a.row(i);
-          H_temp = arma::as_scalar(pow(D,2.0)*cf)*H_temp;
+          H_temp = arma::as_scalar(cf)*H_temp;
           H = H + H_temp;
         }
       }
@@ -156,7 +155,7 @@ List score_cpp(arma::mat ipar,
       P = p_m_3pl(new_estimate, a.row(i), d.row(i), c.row(i));
       cf = arma::as_scalar((1-P)*(P-c.row(i))*(c.row(i)*u-pow(P,2.0))/(pow(P,2.0)*pow(1-c.row(i),2.0)));
       H_temp = trans(a.row(i))*a.row(i);
-      H_temp = arma::as_scalar(pow(D,2.0)*cf)*H_temp;
+      H_temp = arma::as_scalar(cf)*H_temp;
       H = H + H_temp;
     }
   }
