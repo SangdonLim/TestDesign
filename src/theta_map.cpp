@@ -67,7 +67,7 @@ List score_cpp(arma::mat ipar,
       for (int i=0; i<ni; i++) {
         u = arma::as_scalar(resp.col(i));
         if ((u==1) | (u==0)) {
-          P = c.row(i) + (1-c.row(i))/(1+exp(-D*(a.row(i)*old_estimate + d.row(i))));
+          P = p_m_3pl(old_estimate, a.row(i), d.row(i), c.row(i));
           num = arma::as_scalar((P-c.row(i))*(u-P)/((1-c.row(i))*P));
           dll = dll + a.row(i)*num;
         }
@@ -96,7 +96,7 @@ List score_cpp(arma::mat ipar,
 
       for (int i=0; i<ni; i++) {
 
-        P = c.row(i) + (1-c.row(i))/(1+exp(-D*(a.row(i)*old_estimate + d.row(i))));
+        P = p_m_3pl(old_estimate, a.row(i), d.row(i), c.row(i));
         cf = (1-P)*pow(P-c.row(i),2.0)/(P*pow(1-c.row(i),2.0));
         FI_temp = trans(a.row(i))*a.row(i);
         num = arma::as_scalar(pow(D,2.0)*cf);
@@ -119,7 +119,7 @@ List score_cpp(arma::mat ipar,
       for (int i=0; i<ni; i++) {
         u = arma::as_scalar(resp.col(i));
         if ((u==1) | (u==0)) {
-          P = c.row(i) + (1-c.row(i))/(1+exp(-D*(a.row(i)*old_estimate + d.row(i))));
+          P = p_m_3pl(old_estimate, a.row(i), d.row(i), c.row(i));
           cf = arma::as_scalar((1-P)*(P-c.row(i))*(c.row(i)*u-pow(P,2.0))/(pow(P,2.0)*pow(1-c.row(i),2.0)));
           H_temp = trans(a.row(i))*a.row(i);
           H_temp = arma::as_scalar(pow(D,2.0)*cf)*H_temp;
@@ -153,7 +153,7 @@ List score_cpp(arma::mat ipar,
   for (int i=0; i<ni; i++) {
     u = arma::as_scalar(resp.col(i));
     if ((u==1) | (u==0)) {
-      P = c.row(i) + (1-c.row(i))/(1+exp(-D*(a.row(i)*new_estimate + d.row(i))));
+      P = p_m_3pl(new_estimate, a.row(i), d.row(i), c.row(i));
       cf = arma::as_scalar((1-P)*(P-c.row(i))*(c.row(i)*u-pow(P,2.0))/(pow(P,2.0)*pow(1-c.row(i),2.0)));
       H_temp = trans(a.row(i))*a.row(i);
       H_temp = arma::as_scalar(pow(D,2.0)*cf)*H_temp;
