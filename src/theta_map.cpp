@@ -66,10 +66,10 @@ List score_cpp(
       else { sigma_inv = inv(sigma); }
 
       for (int i=0; i<ni; i++) {
-        u = arma::as_scalar(resp.col(i));
+        u = resp(i);
         if ((u==1) | (u==0)) {
-          P = p_m_3pl(old_estimate, a.row(i), d.row(i), c.row(i));
-          num = arma::as_scalar((P-c.row(i))*(u-P)/((1-c.row(i))*P));
+          P = p_m_3pl(old_estimate, a.row(i), d(i), c(i));
+          num = arma::as_scalar((P-c(i))*(u-P)/((1-c(i))*P));
           dll = dll + a.row(i)*num;
         }
       }
@@ -78,8 +78,8 @@ List score_cpp(
         arma::rowvec w(nd, fill::zeros);
         for (int h=0; h<nd; h++) {
           w.zeros();
-          w.col(h) = 1;
-          dll.col(h) = dll.col(h) - w*sigma_inv*old_estimate;
+          w(h) = 1;
+          dll(h) = dll(h) - arma::as_scalar(w * sigma_inv * old_estimate);
         }
       }
 
@@ -96,8 +96,8 @@ List score_cpp(
 
       for (int i=0; i<ni; i++) {
 
-        P = p_m_3pl(old_estimate, a.row(i), d.row(i), c.row(i));
-        cf = (1-P)*pow(P-c.row(i),2.0)/(P*pow(1-c.row(i),2.0));
+        P = p_m_3pl(old_estimate, a.row(i), d(i), c(i));
+        cf = (1-P)*pow(P-c(i),2.0)/(P*pow(1-c(i),2.0));
         FI_temp = trans(a.row(i))*a.row(i);
         num = arma::as_scalar(cf);
         FI_temp = num*FI_temp;
@@ -117,10 +117,10 @@ List score_cpp(
       H_temp.zeros();
 
       for (int i=0; i<ni; i++) {
-        u = arma::as_scalar(resp.col(i));
+        u = resp(i);
         if ((u==1) | (u==0)) {
-          P = p_m_3pl(old_estimate, a.row(i), d.row(i), c.row(i));
-          cf = arma::as_scalar((1-P)*(P-c.row(i))*(c.row(i)*u-pow(P,2.0))/(pow(P,2.0)*pow(1-c.row(i),2.0)));
+          P = p_m_3pl(old_estimate, a.row(i), d(i), c(i));
+          cf = arma::as_scalar((1-P)*(P-c(i))*(c(i)*u-pow(P,2.0))/(pow(P,2.0)*pow(1-c(i),2.0)));
           H_temp = trans(a.row(i))*a.row(i);
           H_temp = arma::as_scalar(cf)*H_temp;
           H = H + H_temp;
@@ -151,10 +151,10 @@ List score_cpp(
   H_temp.zeros();
 
   for (int i=0; i<ni; i++) {
-    u = arma::as_scalar(resp.col(i));
+    u = resp(i);
     if ((u==1) | (u==0)) {
-      P = p_m_3pl(new_estimate, a.row(i), d.row(i), c.row(i));
-      cf = arma::as_scalar((1-P)*(P-c.row(i))*(c.row(i)*u-pow(P,2.0))/(pow(P,2.0)*pow(1-c.row(i),2.0)));
+      P = p_m_3pl(new_estimate, a.row(i), d(i), c(i));
+      cf = arma::as_scalar((1-P)*(P-c(i))*(c(i)*u-pow(P,2.0))/(pow(P,2.0)*pow(1-c(i),2.0)));
       H_temp = trans(a.row(i))*a.row(i);
       H_temp = arma::as_scalar(cf)*H_temp;
       H = H + H_temp;
