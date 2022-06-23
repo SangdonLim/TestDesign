@@ -9,8 +9,8 @@
 List estimate_theta_map(
   const arma::mat& ipar,
   const arma::irowvec& item_model,
-  const arma::rowvec& resp,
   const arma::rowvec& th,
+  const arma::rowvec& response,
   const int& nd,
   const arma::mat& sigma,
   const int& maxIter = 30,
@@ -74,19 +74,19 @@ List estimate_theta_map(
       for (int i=0; i<ni; i++) {
         switch (item_model(i)) {
           case 102: {
-            dll += j_m_2pl(old_estimate, a.row(i), d(i), resp(i));
+            dll += j_m_2pl(old_estimate, a.row(i), d(i), response(i));
           }
           break;
           case 103: {
-            dll += j_m_3pl(old_estimate, a.row(i), d(i), c(i), resp(i));
+            dll += j_m_3pl(old_estimate, a.row(i), d(i), c(i), response(i));
           }
           break;
           case 105: {
-            dll += j_m_gpc(old_estimate, a.row(i), dd.row(i), resp(i));
+            dll += j_m_gpc(old_estimate, a.row(i), dd.row(i), response(i));
           }
           break;
           case 106: {
-            dll += j_m_gr(old_estimate, a.row(i), dd.row(i), resp(i));
+            dll += j_m_gr(old_estimate, a.row(i), dd.row(i), response(i));
           }
           break;
         }
@@ -145,19 +145,19 @@ List estimate_theta_map(
       for (int i=0; i<ni; i++) {
         switch (item_model(i)) {
           case 102: {
-            H = H + h_m_2pl(old_estimate, a.row(i), d(i), resp(i));
+            H = H + h_m_2pl(old_estimate, a.row(i), d(i), response(i));
           }
           break;
           case 103: {
-            H = H + h_m_3pl(old_estimate, a.row(i), d(i), c(i), resp(i));
+            H = H + h_m_3pl(old_estimate, a.row(i), d(i), c(i), response(i));
           }
           break;
           case 105: {
-            H = H + h_m_gpc(old_estimate, a.row(i), dd.row(i), resp(i));
+            H = H + h_m_gpc(old_estimate, a.row(i), dd.row(i), response(i));
           }
           break;
           case 106: {
-            H = H + h_m_gr(old_estimate, a.row(i), dd.row(i), resp(i));
+            H = H + h_m_gr(old_estimate, a.row(i), dd.row(i), response(i));
           }
           break;
         }
@@ -188,19 +188,19 @@ List estimate_theta_map(
   for (int i=0; i<ni; i++) {
     switch (item_model(i)) {
       case 102: {
-        H = H + h_m_2pl(new_estimate, a.row(i), d(i), resp(i));
+        H = H + h_m_2pl(new_estimate, a.row(i), d(i), response(i));
       }
       break;
       case 103: {
-        H = H + h_m_3pl(new_estimate, a.row(i), d(i), c(i), resp(i));
+        H = H + h_m_3pl(new_estimate, a.row(i), d(i), c(i), response(i));
       }
       break;
       case 105: {
-        H = H + h_m_gpc(new_estimate, a.row(i), dd.row(i), resp(i));
+        H = H + h_m_gpc(new_estimate, a.row(i), dd.row(i), response(i));
       }
       break;
       case 106: {
-        H = H + h_m_gr(new_estimate, a.row(i), dd.row(i), resp(i));
+        H = H + h_m_gr(new_estimate, a.row(i), dd.row(i), response(i));
       }
       break;
     }
