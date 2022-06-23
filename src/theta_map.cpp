@@ -57,7 +57,6 @@ List estimate_theta_map(
   // makeHessian input
 
   arma::mat H(nd, nd, fill::zeros);
-  arma::mat H_temp(nd, nd, fill::zeros);
 
   while ((iter < maxIter) & (converged == false)) {
 
@@ -120,16 +119,11 @@ List estimate_theta_map(
     } else {
 
       H.zeros();
-      H_temp.zeros();
 
       for (int i=0; i<ni; i++) {
         u = resp(i);
         if ((u==1) | (u==0)) {
-          P = p_m_3pl(old_estimate, a.row(i), d(i), c(i));
-          cf = arma::as_scalar((1-P)*(P-c(i))*(c(i)*u-pow(P,2.0))/(pow(P,2.0)*pow(1-c(i),2.0)));
-          H_temp = trans(a.row(i))*a.row(i);
-          H_temp = arma::as_scalar(cf)*H_temp;
-          H = H + H_temp;
+          H = H + h_m_3pl(old_estimate, a.row(i), d(i), c(i), resp(i));
         }
       }
 
@@ -154,16 +148,11 @@ List estimate_theta_map(
   // makeHessian for deriv2
 
   H.zeros();
-  H_temp.zeros();
 
   for (int i=0; i<ni; i++) {
     u = resp(i);
     if ((u==1) | (u==0)) {
-      P = p_m_3pl(new_estimate, a.row(i), d(i), c(i));
-      cf = arma::as_scalar((1-P)*(P-c(i))*(c(i)*u-pow(P,2.0))/(pow(P,2.0)*pow(1-c(i),2.0)));
-      H_temp = trans(a.row(i))*a.row(i);
-      H_temp = arma::as_scalar(cf)*H_temp;
-      H = H + H_temp;
+      H = H + h_m_3pl(new_estimate, a.row(i), d(i), c(i), resp(i));
     }
   }
 
