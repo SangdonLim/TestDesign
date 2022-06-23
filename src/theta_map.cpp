@@ -85,6 +85,10 @@ List estimate_theta_map(
             dll += j_m_gpc(old_estimate, a.row(i), dd.row(i), resp(i));
           }
           break;
+          case 106: {
+            dll += j_m_gr(old_estimate, a.row(i), dd.row(i), resp(i));
+          }
+          break;
         }
       }
 
@@ -121,6 +125,10 @@ List estimate_theta_map(
             FI = FI + info_m_gpc(old_estimate, a.row(i), dd.row(i));
           }
           break;
+          case 106: {
+            FI = FI + info_m_gr(old_estimate, a.row(i), dd.row(i));
+          }
+          break;
         }
       }
 
@@ -146,6 +154,10 @@ List estimate_theta_map(
           break;
           case 105: {
             H = H + h_m_gpc(old_estimate, a.row(i), dd.row(i), resp(i));
+          }
+          break;
+          case 106: {
+            H = H + h_m_gr(old_estimate, a.row(i), dd.row(i), resp(i));
           }
           break;
         }
@@ -185,6 +197,10 @@ List estimate_theta_map(
       break;
       case 105: {
         H = H + h_m_gpc(new_estimate, a.row(i), dd.row(i), resp(i));
+      }
+      break;
+      case 106: {
+        H = H + h_m_gr(new_estimate, a.row(i), dd.row(i), resp(i));
       }
       break;
     }
