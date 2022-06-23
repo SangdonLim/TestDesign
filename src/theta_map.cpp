@@ -8,6 +8,7 @@
 // [[Rcpp::export]]
 List estimate_theta_map(
   arma::mat ipar,
+  arma::irowvec item_model,
   arma::rowvec resp,
   arma::rowvec th,
   const int nd,
@@ -69,7 +70,12 @@ List estimate_theta_map(
       else { sigma_inv = inv(sigma); }
 
       for (int i=0; i<ni; i++) {
-        dll += j_m_3pl(old_estimate, a.row(i), d(i), c(i), resp(i));
+        switch (item_model(i)) {
+          case 103: {
+            dll += j_m_3pl(old_estimate, a.row(i), d(i), c(i), resp(i));
+          }
+          break;
+        }
       }
 
       if (Bayesian == true) {
@@ -92,7 +98,12 @@ List estimate_theta_map(
       FI.zeros();
 
       for (int i=0; i<ni; i++) {
-        FI = FI + info_m_3pl(old_estimate, a.row(i), d(i), c(i));
+        switch (item_model(i)) {
+          case 103: {
+            FI = FI + info_m_3pl(old_estimate, a.row(i), d(i), c(i));
+          }
+          break;
+        }
       }
 
       if (addsigma == true) {
@@ -106,7 +117,12 @@ List estimate_theta_map(
       H.zeros();
 
       for (int i=0; i<ni; i++) {
-        H = H + h_m_3pl(old_estimate, a.row(i), d(i), c(i), resp(i));
+        switch (item_model(i)) {
+          case 103: {
+            H = H + h_m_3pl(old_estimate, a.row(i), d(i), c(i), resp(i));
+          }
+          break;
+        }
       }
 
       if (addsigma == true) {
@@ -132,7 +148,12 @@ List estimate_theta_map(
   H.zeros();
 
   for (int i=0; i<ni; i++) {
-    H = H + h_m_3pl(new_estimate, a.row(i), d(i), c(i), resp(i));
+    switch (item_model(i)) {
+      case 103: {
+        H = H + h_m_3pl(new_estimate, a.row(i), d(i), c(i), resp(i));
+      }
+      break;
+    }
   }
 
   if (addsigma == true) {

@@ -1726,12 +1726,13 @@ BEGIN_RCPP
 END_RCPP
 }
 // estimate_theta_map
-List estimate_theta_map(arma::mat ipar, arma::rowvec resp, arma::rowvec th, const int nd, arma::mat sigma, const int maxIter, const double conv, bool Fisher);
-RcppExport SEXP _TestDesign_estimate_theta_map(SEXP iparSEXP, SEXP respSEXP, SEXP thSEXP, SEXP ndSEXP, SEXP sigmaSEXP, SEXP maxIterSEXP, SEXP convSEXP, SEXP FisherSEXP) {
+List estimate_theta_map(arma::mat ipar, arma::irowvec item_model, arma::rowvec resp, arma::rowvec th, const int nd, arma::mat sigma, const int maxIter, const double conv, bool Fisher);
+RcppExport SEXP _TestDesign_estimate_theta_map(SEXP iparSEXP, SEXP item_modelSEXP, SEXP respSEXP, SEXP thSEXP, SEXP ndSEXP, SEXP sigmaSEXP, SEXP maxIterSEXP, SEXP convSEXP, SEXP FisherSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::mat >::type ipar(iparSEXP);
+    Rcpp::traits::input_parameter< arma::irowvec >::type item_model(item_modelSEXP);
     Rcpp::traits::input_parameter< arma::rowvec >::type resp(respSEXP);
     Rcpp::traits::input_parameter< arma::rowvec >::type th(thSEXP);
     Rcpp::traits::input_parameter< const int >::type nd(ndSEXP);
@@ -1739,7 +1740,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const int >::type maxIter(maxIterSEXP);
     Rcpp::traits::input_parameter< const double >::type conv(convSEXP);
     Rcpp::traits::input_parameter< bool >::type Fisher(FisherSEXP);
-    rcpp_result_gen = Rcpp::wrap(estimate_theta_map(ipar, resp, th, nd, sigma, maxIter, conv, Fisher));
+    rcpp_result_gen = Rcpp::wrap(estimate_theta_map(ipar, item_model, resp, th, nd, sigma, maxIter, conv, Fisher));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1869,7 +1870,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_TestDesign_theta_EB_single", (DL_FUNC) &_TestDesign_theta_EB_single, 9},
     {"_TestDesign_theta_FB", (DL_FUNC) &_TestDesign_theta_FB, 10},
     {"_TestDesign_theta_FB_single", (DL_FUNC) &_TestDesign_theta_FB_single, 10},
-    {"_TestDesign_estimate_theta_map", (DL_FUNC) &_TestDesign_estimate_theta_map, 8},
+    {"_TestDesign_estimate_theta_map", (DL_FUNC) &_TestDesign_estimate_theta_map, 9},
     {NULL, NULL, 0}
 };
 
