@@ -28,7 +28,7 @@ List estimate_theta_map(
   arma::mat delta;
   arma::mat abs_delta;
   arma::rowvec theta;
-  arma::vec SE;
+  arma::vec se;
   arma::vec d2_diag;
   arma::mat d2_inv;
   bool conv_status;
@@ -215,12 +215,12 @@ List estimate_theta_map(
   theta = new_estimate;
   d2_inv = inv(deriv2);
   d2_diag = d2_inv.diag();
-  SE = pow(abs(d2_diag),0.5);
+  se = pow(abs(d2_diag),0.5);
 
   return List::create(
     Named("theta")=theta,
-    Named("SE")=SE,
-    Named("Hessian")=deriv2,
+    Named("se")=se,
+    Named("hessian")=deriv2,
     Named("iteration")=iteration
   );
 
