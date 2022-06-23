@@ -23,7 +23,7 @@ List estimate_theta_map(
   int ni = ipar.n_rows;
   arma::rowvec new_estimate = start_theta;
   arma::rowvec old_estimate;
-  int iter = 0;
+  int iteration = 0;
   bool converged = false;
   arma::mat delta;
   arma::mat abs_delta;
@@ -57,9 +57,9 @@ List estimate_theta_map(
 
   arma::mat H(nd, nd, fill::zeros);
 
-  while ((iter < max_iteration) & (converged == false)) {
+  while ((iteration < max_iteration) & (converged == false)) {
 
-    iter++;
+    iteration++;
     old_estimate = new_estimate;
 
     {
@@ -221,7 +221,7 @@ List estimate_theta_map(
     Named("theta")=theta,
     Named("SE")=SE,
     Named("Hessian")=deriv2,
-    Named("niter")=iter
+    Named("iteration")=iteration
   );
 
 }
