@@ -41,7 +41,6 @@ List estimate_theta_map(
   arma::colvec d = ipar.col(nd);
   arma::colvec c = ipar.col(nd + 1);
   arma::mat P;
-  double num;
   double u;
   arma::rowvec w(nd, fill::zeros);
   bool Bayesian = true;
@@ -50,8 +49,6 @@ List estimate_theta_map(
 
   arma::mat FI(nd, nd, fill::zeros);
   arma::mat deriv2;
-  arma::mat FI_temp(nd, nd, fill::zeros);
-  arma::mat cf;
   bool addsigma = true;
 
   // makeHessian input
@@ -97,17 +94,9 @@ List estimate_theta_map(
     if (Fisher == true) {
 
       FI.zeros();
-      FI_temp.zeros();
 
       for (int i=0; i<ni; i++) {
-
-        P = p_m_3pl(old_estimate, a.row(i), d(i), c(i));
-        cf = (1-P)*pow(P-c(i),2.0)/(P*pow(1-c(i),2.0));
-        FI_temp = trans(a.row(i))*a.row(i);
-        num = arma::as_scalar(cf);
-        FI_temp = num*FI_temp;
-        FI = FI + FI_temp;
-
+        FI = FI + info_m_3pl(old_estimate, a.row(i), d(i), c(i));
       }
 
       if (addsigma == true) {
