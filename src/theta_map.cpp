@@ -71,6 +71,10 @@ List estimate_theta_map(
 
       for (int i=0; i<ni; i++) {
         switch (item_model(i)) {
+          case 102: {
+            dll += j_m_2pl(old_estimate, a.row(i), d(i), resp(i));
+          }
+          break;
           case 103: {
             dll += j_m_3pl(old_estimate, a.row(i), d(i), c(i), resp(i));
           }
@@ -99,6 +103,10 @@ List estimate_theta_map(
 
       for (int i=0; i<ni; i++) {
         switch (item_model(i)) {
+          case 102: {
+            FI = FI + info_m_2pl(old_estimate, a.row(i), d(i));
+          }
+          break;
           case 103: {
             FI = FI + info_m_3pl(old_estimate, a.row(i), d(i), c(i));
           }
@@ -118,6 +126,10 @@ List estimate_theta_map(
 
       for (int i=0; i<ni; i++) {
         switch (item_model(i)) {
+          case 102: {
+            H = H + h_m_2pl(old_estimate, a.row(i), d(i), resp(i));
+          }
+          break;
           case 103: {
             H = H + h_m_3pl(old_estimate, a.row(i), d(i), c(i), resp(i));
           }
@@ -149,6 +161,10 @@ List estimate_theta_map(
 
   for (int i=0; i<ni; i++) {
     switch (item_model(i)) {
+      case 102: {
+        H = H + h_m_2pl(new_estimate, a.row(i), d(i), resp(i));
+      }
+      break;
       case 103: {
         H = H + h_m_3pl(new_estimate, a.row(i), d(i), c(i), resp(i));
       }
