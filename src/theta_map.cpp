@@ -31,7 +31,6 @@ List estimate_theta_map(
   arma::vec se;
   arma::vec d2_diag;
   arma::mat d2_inv;
-  bool conv_status;
 
   // dLL input
 
@@ -176,8 +175,7 @@ List estimate_theta_map(
     delta = (inv(deriv2) * (deriv1.t())).t();
     new_estimate = old_estimate - delta;
     abs_delta = abs(delta);
-    conv_status = all(vectorise(abs_delta) < convergence_criterion );
-    if (conv_status == true) { converged = true; }
+    converged = all(vectorise(abs_delta) < convergence_criterion);
 
   }
 
