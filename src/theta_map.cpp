@@ -15,7 +15,7 @@ List estimate_theta_map(
   const arma::mat& sigma,
   const int& max_iteration = 30,
   const double& convergence_criterion = 0.001,
-  const bool& Fisher = true
+  const bool& use_Fisher = true
 ) {
 
   // score input
@@ -107,7 +107,7 @@ List estimate_theta_map(
 
     // calculate second derivative
 
-    if (Fisher == true) {
+    if (use_Fisher == true) {
 
       FI.zeros();
 
