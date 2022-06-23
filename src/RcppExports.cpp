@@ -1726,14 +1726,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // estimate_theta_map
-List estimate_theta_map(arma::mat ipar, arma::rowvec resp, arma::colvec th, const int nd, arma::mat sigma, const int maxIter, const double conv, bool Fisher);
+List estimate_theta_map(arma::mat ipar, arma::rowvec resp, arma::rowvec th, const int nd, arma::mat sigma, const int maxIter, const double conv, bool Fisher);
 RcppExport SEXP _TestDesign_estimate_theta_map(SEXP iparSEXP, SEXP respSEXP, SEXP thSEXP, SEXP ndSEXP, SEXP sigmaSEXP, SEXP maxIterSEXP, SEXP convSEXP, SEXP FisherSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::mat >::type ipar(iparSEXP);
     Rcpp::traits::input_parameter< arma::rowvec >::type resp(respSEXP);
-    Rcpp::traits::input_parameter< arma::colvec >::type th(thSEXP);
+    Rcpp::traits::input_parameter< arma::rowvec >::type th(thSEXP);
     Rcpp::traits::input_parameter< const int >::type nd(ndSEXP);
     Rcpp::traits::input_parameter< arma::mat >::type sigma(sigmaSEXP);
     Rcpp::traits::input_parameter< const int >::type maxIter(maxIterSEXP);

@@ -9,7 +9,7 @@
 List estimate_theta_map(
   arma::mat ipar,
   arma::rowvec resp,
-  arma::colvec th,
+  arma::rowvec th,
   const int nd,
   arma::mat sigma,
   const int maxIter = 30,
@@ -20,13 +20,13 @@ List estimate_theta_map(
   // score input
 
   int ni = ipar.n_rows;
-  arma::colvec new_estimate = th;
-  arma::colvec old_estimate;
+  arma::rowvec new_estimate = th;
+  arma::rowvec old_estimate;
   int iter = 0;
   bool converged = false;
   arma::mat delta;
   arma::mat abs_delta;
-  arma::vec theta;
+  arma::rowvec theta;
   arma::vec SE;
   arma::vec d2_diag;
   arma::mat d2_inv;
@@ -85,7 +85,7 @@ List estimate_theta_map(
         for (int h=0; h<nd; h++) {
           w.zeros();
           w(h) = 1;
-          dll(h) = dll(h) - arma::as_scalar(w * sigma_inv * old_estimate);
+          dll(h) = dll(h) - arma::as_scalar(w * sigma_inv * old_estimate.t());
         }
       }
 
@@ -143,7 +143,7 @@ List estimate_theta_map(
 
     // calculate delta
 
-    delta = inv(deriv2)*trans(deriv1);
+    delta = (inv(deriv2) * (deriv1.t())).t();
     new_estimate = old_estimate - delta;
     abs_delta = abs(delta);
     conv_status = all(vectorise(abs_delta) < conv );
