@@ -7,15 +7,15 @@
 //' @export
 // [[Rcpp::export]]
 List estimate_theta_map(
-  arma::mat ipar,
-  arma::irowvec item_model,
-  arma::rowvec resp,
-  arma::rowvec th,
-  const int nd,
-  arma::mat sigma,
-  const int maxIter = 30,
-  const double conv = 0.001,
-  bool Fisher = true
+  const arma::mat& ipar,
+  const arma::irowvec& item_model,
+  const arma::rowvec& resp,
+  const arma::rowvec& th,
+  const int& nd,
+  const arma::mat& sigma,
+  const int& maxIter = 30,
+  const double& conv = 0.001,
+  const bool& Fisher = true
 ) {
 
   // score input
