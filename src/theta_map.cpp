@@ -41,7 +41,6 @@ List estimate_theta_map(
   arma::colvec d = ipar.col(nd);
   arma::colvec c = ipar.col(nd + 1);
   arma::mat P;
-  double u;
   arma::rowvec w(nd, fill::zeros);
   bool Bayesian = true;
 
@@ -70,10 +69,7 @@ List estimate_theta_map(
       else { sigma_inv = inv(sigma); }
 
       for (int i=0; i<ni; i++) {
-        u = resp(i);
-        if ((u==1) | (u==0)) {
-          dll = dll + j_m_3pl(old_estimate, a.row(i), d(i), c(i), u);
-        }
+        dll += j_m_3pl(old_estimate, a.row(i), d(i), c(i), resp(i));
       }
 
       if (Bayesian == true) {
@@ -110,10 +106,7 @@ List estimate_theta_map(
       H.zeros();
 
       for (int i=0; i<ni; i++) {
-        u = resp(i);
-        if ((u==1) | (u==0)) {
-          H = H + h_m_3pl(old_estimate, a.row(i), d(i), c(i), resp(i));
-        }
+        H = H + h_m_3pl(old_estimate, a.row(i), d(i), c(i), resp(i));
       }
 
       if (addsigma == true) {
@@ -139,10 +132,7 @@ List estimate_theta_map(
   H.zeros();
 
   for (int i=0; i<ni; i++) {
-    u = resp(i);
-    if ((u==1) | (u==0)) {
-      H = H + h_m_3pl(new_estimate, a.row(i), d(i), c(i), resp(i));
-    }
+    H = H + h_m_3pl(new_estimate, a.row(i), d(i), c(i), resp(i));
   }
 
   if (addsigma == true) {
