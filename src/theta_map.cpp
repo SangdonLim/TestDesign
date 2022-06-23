@@ -13,7 +13,7 @@ List estimate_theta_map(
   const arma::rowvec& start_theta,
   const int& nd,
   const arma::mat& sigma,
-  const int& maxIter = 30,
+  const int& max_iteration = 30,
   const double& conv = 0.001,
   const bool& Fisher = true
 ) {
@@ -57,7 +57,7 @@ List estimate_theta_map(
 
   arma::mat H(nd, nd, fill::zeros);
 
-  while ((iter < maxIter) & (converged == false)) {
+  while ((iter < max_iteration) & (converged == false)) {
 
     iter++;
     old_estimate = new_estimate;
