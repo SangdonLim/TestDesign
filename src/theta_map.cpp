@@ -14,7 +14,7 @@ List estimate_theta_map(
   const int& nd,
   const arma::mat& sigma,
   const int& max_iteration = 30,
-  const double& conv = 0.001,
+  const double& convergence_criterion = 0.001,
   const bool& Fisher = true
 ) {
 
@@ -176,7 +176,7 @@ List estimate_theta_map(
     delta = (inv(deriv2) * (deriv1.t())).t();
     new_estimate = old_estimate - delta;
     abs_delta = abs(delta);
-    conv_status = all(vectorise(abs_delta) < conv );
+    conv_status = all(vectorise(abs_delta) < convergence_criterion );
     if (conv_status == true) { converged = true; }
 
   }
