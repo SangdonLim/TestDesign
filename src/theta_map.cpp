@@ -9,8 +9,8 @@
 List estimate_theta_map(
   const arma::mat& ipar,
   const arma::irowvec& item_model,
-  const arma::rowvec& th,
   const arma::rowvec& response,
+  const arma::rowvec& start_theta,
   const int& nd,
   const arma::mat& sigma,
   const int& maxIter = 30,
@@ -21,7 +21,7 @@ List estimate_theta_map(
   // score input
 
   int ni = ipar.n_rows;
-  arma::rowvec new_estimate = th;
+  arma::rowvec new_estimate = start_theta;
   arma::rowvec old_estimate;
   int iter = 0;
   bool converged = false;
