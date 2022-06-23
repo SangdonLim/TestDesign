@@ -68,9 +68,7 @@ List score_cpp(
       for (int i=0; i<ni; i++) {
         u = resp(i);
         if ((u==1) | (u==0)) {
-          P = p_m_3pl(old_estimate, a.row(i), d(i), c(i));
-          num = arma::as_scalar((P-c(i))*(u-P)/((1-c(i))*P));
-          dll = dll + a.row(i)*num;
+          dll = dll + j_m_3pl(old_estimate, a.row(i), d(i), c(i), u);
         }
       }
 
