@@ -38,9 +38,11 @@ List estimate_theta_map(
   arma::mat sigma_inv(nd, nd);
   arma::rowvec dll(nd, fill::zeros);
   arma::rowvec deriv1(nd);
+  arma::rowvec j(nd);
   arma::mat a = ipar.cols(0, nd - 1);
   arma::colvec d = ipar.col(nd);
   arma::colvec c = ipar.col(nd + 1);
+  arma::mat dd = ipar.cols(nd, nd + 1);
   arma::mat P;
   arma::rowvec w(nd, fill::zeros);
   bool Bayesian = true;
@@ -79,6 +81,10 @@ List estimate_theta_map(
             dll += j_m_3pl(old_estimate, a.row(i), d(i), c(i), resp(i));
           }
           break;
+          case 105: {
+            dll += j_m_gpc(old_estimate, a.row(i), dd.row(i), resp(i));
+          }
+          break;
         }
       }
 
@@ -111,6 +117,10 @@ List estimate_theta_map(
             FI = FI + info_m_3pl(old_estimate, a.row(i), d(i), c(i));
           }
           break;
+          case 105: {
+            FI = FI + info_m_gpc(old_estimate, a.row(i), dd.row(i));
+          }
+          break;
         }
       }
 
@@ -132,6 +142,10 @@ List estimate_theta_map(
           break;
           case 103: {
             H = H + h_m_3pl(old_estimate, a.row(i), d(i), c(i), resp(i));
+          }
+          break;
+          case 105: {
+            H = H + h_m_gpc(old_estimate, a.row(i), dd.row(i), resp(i));
           }
           break;
         }
@@ -167,6 +181,10 @@ List estimate_theta_map(
       break;
       case 103: {
         H = H + h_m_3pl(new_estimate, a.row(i), d(i), c(i), resp(i));
+      }
+      break;
+      case 105: {
+        H = H + h_m_gpc(new_estimate, a.row(i), dd.row(i), resp(i));
       }
       break;
     }
