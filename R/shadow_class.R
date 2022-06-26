@@ -20,7 +20,7 @@ setClass("config_Shadow",
     stopping_criterion = "list",
     interim_theta      = "list",
     final_theta        = "list",
-    theta_grid         = "numeric"
+    theta_grid         = "matrix_or_numeric"
   ),
   prototype = list(
     item_selection = list(
