@@ -1135,7 +1135,7 @@ parseInitialThetaOfThisExaminee <- function(config_theta, initial_theta, j, post
   o$posterior  <- initial_theta$posterior[j, ]
   o$theta_q    <- initial_theta$theta_q
 
-  if (theta_method %in% c("EAP", "MLE", "MLEF")) {
+  if (theta_method %in% c("MAP", "EAP", "MLE", "MLEF")) {
     o$theta <- initial_theta$theta[j, ]
     o$se    <- initial_theta$se[j, ]
   }
