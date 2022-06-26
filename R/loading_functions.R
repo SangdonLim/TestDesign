@@ -399,6 +399,7 @@ loadItemPool <- function(ipar, ipar_se = NULL, unique = FALSE) {
   item_pool@ni <- ni
   item_pool@max_cat <- max(NCAT)
   item_pool@nd      <- nd
+  item_pool@n_pars  <- n_pars
   item_pool@NCAT    <- NCAT
   item_pool@parms   <- parms
 
