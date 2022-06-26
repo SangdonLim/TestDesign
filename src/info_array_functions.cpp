@@ -197,6 +197,7 @@ arma::colvec calc_info_EB (
   for (int j = 0; j < nx; j++) {
     info.fill(0);
     info = calc_info(x.row(j), item_parm, ncat, model);
+    // assumes 1D (TODO: update later)
     info_array = info_array + info;
   }
 
