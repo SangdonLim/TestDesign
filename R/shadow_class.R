@@ -206,16 +206,16 @@ setClass("config_Shadow",
       msg <- sprintf("config@stopping_criterion: unrecognized $method '%s'", object@stopping_criterion$method)
       err <- c(err, msg)
     }
-    if (!object@interim_theta$method %in% c("EAP", "MLE", "MLEF", "EB", "FB")) {
-      msg <- sprintf("config@interim_theta: unrecognized $method '%s' (accepts EAP, MLE, MLEF, EB, or FB)", object@interim_theta$method)
+    if (!object@interim_theta$method %in% c("EAP", "MLE", "MLEF", "MAP", "EB", "FB")) {
+      msg <- sprintf("config@interim_theta: unrecognized $method '%s' (accepts EAP, MLE, MLEF, MAP, EB, or FB)", object@interim_theta$method)
       err <- c(err, msg)
     }
     if (!object@interim_theta$prior_dist %in% c("NORMAL", "UNIFORM")) {
       msg <- sprintf("config@interim_theta: unrecognized $prior_dist '%s' (accepts NORMAL or UNIFORM)", object@interim_theta$prior_dist)
       err <- c(err, msg)
     }
-    if (!object@final_theta$method %in% c("EAP", "MLE", "MLEF", "EB", "FB")) {
-      msg <- sprintf("config@final_theta: unrecognized $method '%s' (accepts EAP, MLE, MLEF, EB, or FB)", object@final_theta$method)
+    if (!object@final_theta$method %in% c("EAP", "MLE", "MLEF", "MAP", "EB", "FB")) {
+      msg <- sprintf("config@final_theta: unrecognized $method '%s' (accepts EAP, MLE, MLEF, MAP, EB, or FB)", object@final_theta$method)
       err <- c(err, msg)
     }
     if (toupper(object@final_theta$method) == "EAP") {
