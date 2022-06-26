@@ -17,7 +17,7 @@ NULL
 setClass("simulation_data_cache",
   slots = c(
     item_pool     = "item_pool",
-    theta_grid    = "numeric",
+    theta_grid    = "matrix_or_numeric",
     prob_grid     = "list",
     info_grid     = "matrix",
     max_info      = "numeric",
