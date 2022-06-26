@@ -132,6 +132,10 @@ sanitizeModel <- function(model) {
   model[which(model == "item_PC")]  <- 4
   model[which(model == "item_GPC")] <- 5
   model[which(model == "item_GR")]  <- 6
+  model[which(model == "item_M2PL")] <- 102
+  model[which(model == "item_M3PL")] <- 103
+  model[which(model == "item_MGPC")] <- 105
+  model[which(model == "item_MGR")]  <- 106
   model <- as.numeric(model)
   return(model)
 }
