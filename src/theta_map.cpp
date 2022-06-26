@@ -10,6 +10,7 @@ List estimate_theta_map(
   const arma::mat& ipar,
   const arma::irowvec& item_model,
   const int& nd,
+  const arma::irowvec& n_pars,
   const arma::rowvec& response,
   const arma::rowvec& start_theta,
   const arma::mat& sigma,
@@ -38,10 +39,10 @@ List estimate_theta_map(
   arma::rowvec dll(nd, fill::zeros);
   arma::rowvec deriv1(nd);
   arma::rowvec j(nd);
-  arma::mat a = ipar.cols(0, nd - 1);
-  arma::colvec d = ipar.col(nd);
-  arma::colvec c = ipar.col(nd + 1);
-  arma::mat dd = ipar.cols(nd, nd + 1);
+  arma::rowvec a;
+  double d;
+  double c;
+  arma::rowvec dd;
   arma::mat P;
   arma::rowvec w(nd, fill::zeros);
   bool Bayesian = true;
@@ -73,19 +74,28 @@ List estimate_theta_map(
       for (int i=0; i<ni; i++) {
         switch (item_model(i)) {
           case 102: {
-            dll += j_m_2pl(old_estimate, a.row(i), d(i), response(i));
+            a = ipar(i, span(0, nd - 1));
+            d = ipar(i, nd);
+            dll += j_m_2pl(old_estimate, a, d, response(i));
           }
           break;
           case 103: {
-            dll += j_m_3pl(old_estimate, a.row(i), d(i), c(i), response(i));
+            a = ipar(i, span(0, nd - 1));
+            d = ipar(i, nd);
+            c = ipar(i, nd + 1);
+            dll += j_m_3pl(old_estimate, a, d, c, response(i));
           }
           break;
           case 105: {
-            dll += j_m_gpc(old_estimate, a.row(i), dd.row(i), response(i));
+            a  = ipar(i, span(0, nd - 1));
+            dd = ipar(i, span(nd, n_pars(i) - 1));
+            dll += j_m_gpc(old_estimate, a, dd, response(i));
           }
           break;
           case 106: {
-            dll += j_m_gr(old_estimate, a.row(i), dd.row(i), response(i));
+            a  = ipar(i, span(0, nd - 1));
+            dd = ipar(i, span(nd, n_pars(i) - 1));
+            dll += j_m_gr(old_estimate, a, dd, response(i));
           }
           break;
         }
@@ -113,19 +123,28 @@ List estimate_theta_map(
       for (int i=0; i<ni; i++) {
         switch (item_model(i)) {
           case 102: {
-            FI = FI + info_m_2pl(old_estimate, a.row(i), d(i));
+            a = ipar(i, span(0, nd - 1));
+            d = ipar(i, nd);
+            FI = FI + info_m_2pl(old_estimate, a, d);
           }
           break;
           case 103: {
-            FI = FI + info_m_3pl(old_estimate, a.row(i), d(i), c(i));
+            a = ipar(i, span(0, nd - 1));
+            d = ipar(i, nd);
+            c = ipar(i, nd + 1);
+            FI = FI + info_m_3pl(old_estimate, a, d, c);
           }
           break;
           case 105: {
-            FI = FI + info_m_gpc(old_estimate, a.row(i), dd.row(i));
+            a  = ipar(i, span(0, nd - 1));
+            dd = ipar(i, span(nd, n_pars(i) - 1));
+            FI = FI + info_m_gpc(old_estimate, a, dd);
           }
           break;
           case 106: {
-            FI = FI + info_m_gr(old_estimate, a.row(i), dd.row(i));
+            a  = ipar(i, span(0, nd - 1));
+            dd = ipar(i, span(nd, n_pars(i) - 1));
+            FI = FI + info_m_gr(old_estimate, a, dd);
           }
           break;
         }
@@ -144,19 +163,28 @@ List estimate_theta_map(
       for (int i=0; i<ni; i++) {
         switch (item_model(i)) {
           case 102: {
-            H = H + h_m_2pl(old_estimate, a.row(i), d(i), response(i));
+            a = ipar(i, span(0, nd - 1));
+            d = ipar(i, nd);
+            H = H + h_m_2pl(old_estimate, a, d, response(i));
           }
           break;
           case 103: {
-            H = H + h_m_3pl(old_estimate, a.row(i), d(i), c(i), response(i));
+            a = ipar(i, span(0, nd - 1));
+            d = ipar(i, nd);
+            c = ipar(i, nd + 1);
+            H = H + h_m_3pl(old_estimate, a, d, c, response(i));
           }
           break;
           case 105: {
-            H = H + h_m_gpc(old_estimate, a.row(i), dd.row(i), response(i));
+            a  = ipar(i, span(0, nd - 1));
+            dd = ipar(i, span(nd, n_pars(i) - 1));
+            H = H + h_m_gpc(old_estimate, a, dd, response(i));
           }
           break;
           case 106: {
-            H = H + h_m_gr(old_estimate, a.row(i), dd.row(i), response(i));
+            a  = ipar(i, span(0, nd - 1));
+            dd = ipar(i, span(nd, n_pars(i) - 1));
+            H = H + h_m_gr(old_estimate, a, dd, response(i));
           }
           break;
         }
@@ -186,19 +214,28 @@ List estimate_theta_map(
   for (int i=0; i<ni; i++) {
     switch (item_model(i)) {
       case 102: {
-        H = H + h_m_2pl(new_estimate, a.row(i), d(i), response(i));
+        a = ipar(i, span(0, nd - 1));
+        d = ipar(i, nd);
+        H = H + h_m_2pl(new_estimate, a, d, response(i));
       }
       break;
       case 103: {
-        H = H + h_m_3pl(new_estimate, a.row(i), d(i), c(i), response(i));
+        a = ipar(i, span(0, nd - 1));
+        d = ipar(i, nd);
+        c = ipar(i, nd + 1);
+        H = H + h_m_3pl(new_estimate, a, d, c, response(i));
       }
       break;
       case 105: {
-        H = H + h_m_gpc(new_estimate, a.row(i), dd.row(i), response(i));
+        a  = ipar(i, span(0, nd - 1));
+        dd = ipar(i, span(nd, n_pars(i) - 1));
+        H = H + h_m_gpc(new_estimate, a, dd, response(i));
       }
       break;
       case 106: {
-        H = H + h_m_gr(new_estimate, a.row(i), dd.row(i), response(i));
+        a  = ipar(i, span(0, nd - 1));
+        dd = ipar(i, span(nd, n_pars(i) - 1));
+        H = H + h_m_gr(new_estimate, a, dd, response(i));
       }
       break;
     }
