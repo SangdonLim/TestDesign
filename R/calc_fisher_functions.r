@@ -248,14 +248,18 @@ setMethod(
   f = "calcFisher",
   signature = c("item_pool", "matrix"),
   definition = function(object, theta) {
-    if (nrow(theta) > 0 && all(!is.na(theta))) {
-      info_Fisher <- matrix(NA, nrow(theta), object@ni)
-      for (i in 1:object@ni) {
-        info_Fisher[, i] <- calcFisher(object@parms[[i]], theta)
-      }
-    } else {
-      stop("'theta' is empty, or contains missing values.")
+    if (nrow(theta) == 0) {
+      stop("unexpected 'theta': is empty")
     }
+    if (any(is.na(theta))) {
+      stop("unexpected 'theta': contains missing values")
+    }
+
+    info_Fisher <- matrix(NA, nrow(theta), object@ni)
+    for (i in 1:object@ni) {
+      info_Fisher[, i] <- calcFisher(object@parms[[i]], theta)
+    }
+
     return(info_Fisher)
   }
 )
