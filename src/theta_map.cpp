@@ -9,9 +9,9 @@
 List estimate_theta_map(
   const arma::mat& ipar,
   const arma::irowvec& item_model,
+  const int& nd,
   const arma::rowvec& response,
   const arma::rowvec& start_theta,
-  const int& nd,
   const arma::mat& sigma,
   const int& max_iteration = 30,
   const double& convergence_criterion = 0.001,
