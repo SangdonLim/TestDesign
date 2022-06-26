@@ -94,9 +94,14 @@ loadItemPool <- function(ipar, ipar_se = NULL, unique = FALSE) {
 
   multidimensional <- FALSE
   n_nonpars        <- 2
+  nd               <- 1
   if ("NDIM" %in% names(ipar)) {
     multidimensional <- TRUE
     n_nonpars        <- 3
+    nd               <- unique(ipar[, 3])
+    if (length(nd) > 1) {
+      stop("unexpected values in 'NDIM' column: must be identical for all items")
+    }
   }
 
   n_pars     <- n_values - n_nonpars
@@ -182,7 +187,6 @@ loadItemPool <- function(ipar, ipar_se = NULL, unique = FALSE) {
       if (multidimensional) {
 
         NCAT[i] <- 2
-        nd <- ipar[i, n_nonpars]
         a    <- as.numeric(ipar[   i, n_nonpars + 1:nd])
         d    <- as.numeric(ipar[   i, n_nonpars + nd + 1])
         a_se <- as.numeric(ipar_se[i, n_nonpars + 1:nd])
@@ -233,7 +237,6 @@ loadItemPool <- function(ipar, ipar_se = NULL, unique = FALSE) {
       if (multidimensional) {
 
         NCAT[i] <- 2
-        nd <- ipar[i, n_nonpars]
         a    <- as.numeric(ipar[   i, n_nonpars + 1:nd])
         d    <- as.numeric(ipar[   i, n_nonpars + nd + 1])
         c    <- as.numeric(ipar[   i, n_nonpars + nd + 2])
@@ -311,7 +314,6 @@ loadItemPool <- function(ipar, ipar_se = NULL, unique = FALSE) {
 
       if (multidimensional) {
 
-        nd <- ipar[i, n_nonpars]
         NCAT[i] <- (n_pars[i] - nd) + 1
         a    <- as.numeric(ipar[   i, n_nonpars + 1:nd])
         d    <- as.numeric(ipar[   i, n_nonpars + (nd + 1):n_pars[i]])
@@ -359,7 +361,6 @@ loadItemPool <- function(ipar, ipar_se = NULL, unique = FALSE) {
 
       if (multidimensional) {
 
-        nd <- ipar[i, n_nonpars]
         NCAT[i] <- (n_pars[i] - nd) + 1
         a    <- as.numeric(ipar[   i, n_nonpars + 1:nd])
         d    <- as.numeric(ipar[   i, n_nonpars + (nd + 1):n_pars[i]])
@@ -397,8 +398,9 @@ loadItemPool <- function(ipar, ipar_se = NULL, unique = FALSE) {
 
   item_pool@ni <- ni
   item_pool@max_cat <- max(NCAT)
-  item_pool@NCAT <- NCAT
-  item_pool@parms <- parms
+  item_pool@nd      <- nd
+  item_pool@NCAT    <- NCAT
+  item_pool@parms   <- parms
 
   tmp <- item_pool@raw
   tmp[, n_nonpars + 1:max(n_pars)] <- item_pool@se
