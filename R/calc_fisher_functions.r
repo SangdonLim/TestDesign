@@ -7,6 +7,7 @@ NULL
 #'
 #' @param object an \code{\link{item}} or an \code{\linkS4class{item_pool}} object.
 #' @param theta theta values to use.
+#' @param alpha_vec (optional) the alpha angle vector to use for computing directional information. Used only for multidimensional items.
 #'
 #' @return
 #' \describe{
@@ -50,7 +51,7 @@ NULL
 #' @rdname calcFisher-methods
 setGeneric(
   name = "calcFisher",
-  def = function(object, theta) {
+  def = function(object, theta, alpha_vec = NULL) {
     standardGeneric("calcFisher")
   }
 )
@@ -159,8 +160,8 @@ setMethod(
 setMethod(
   f = "calcFisher",
   signature = c("item_M2PL", "matrix"),
-  definition = function(object, theta) {
-    info_Fisher <- array_info_m_2pl(theta, object@slope, object@intercept)
+  definition = function(object, theta, alpha_vec) {
+    info_Fisher <- array_thisdirinfo_m_2pl(theta, alpha_vec, object@slope, object@intercept)
     return(info_Fisher)
   }
 )
@@ -180,9 +181,9 @@ setMethod(
 #' @aliases calcFisher,item_M3PL,matrix-method
 setMethod(
   f = "calcFisher",
-  signature = c("item_M3PL", "matrix"),
-  definition = function(object, theta) {
-    info_Fisher <- array_info_m_3pl(theta, object@slope, object@intercept, object@guessing)
+  signature = c("item_M3PL", "matrix", "matrix_or_null"),
+  definition = function(object, theta, alpha_vec) {
+    info_Fisher <- array_thisdirinfo_m_3pl(theta, alpha_vec, object@slope, object@intercept, object@guessing)
     return(info_Fisher)
   }
 )
@@ -213,9 +214,9 @@ setMethod(
 #' @aliases calcFisher,item_GPC,matrix-method
 setMethod(
   f = "calcFisher",
-  signature = c("item_MGPC", "matrix"),
-  definition = function(object, theta) {
-    info_Fisher <- array_info_m_gpc(theta, object@slope, object@intercept)
+  signature = c("item_MGPC", "matrix", "matrix_or_null"),
+  definition = function(object, theta, alpha_vec) {
+    info_Fisher <- array_thisdirinfo_m_gpc(theta, alpha_vec, object@slope, object@intercept)
     return(info_Fisher)
   }
 )
@@ -235,9 +236,9 @@ setMethod(
 #' @aliases calcFisher,item_MGR,matrix-method
 setMethod(
   f = "calcFisher",
-  signature = c("item_MGR", "matrix"),
-  definition = function(object, theta) {
-    info_Fisher <- array_info_m_gr(theta, object@slope, object@intercept)
+  signature = c("item_MGR", "matrix", "matrix_or_null"),
+  definition = function(object, theta, alpha_vec) {
+    info_Fisher <- array_thisdirinfo_m_gr(theta, alpha_vec, object@slope, object@intercept)
     return(info_Fisher)
   }
 )
@@ -247,7 +248,7 @@ setMethod(
 setMethod(
   f = "calcFisher",
   signature = c("item_pool", "matrix"),
-  definition = function(object, theta) {
+  definition = function(object, theta, alpha_vec) {
     if (nrow(theta) == 0) {
       stop("unexpected 'theta': is empty")
     }
@@ -257,7 +258,7 @@ setMethod(
 
     info_Fisher <- matrix(NA, nrow(theta), object@ni)
     for (i in 1:object@ni) {
-      info_Fisher[, i] <- calcFisher(object@parms[[i]], theta)
+      info_Fisher[, i] <- calcFisher(object@parms[[i]], theta, alpha_vec)
     }
 
     return(info_Fisher)

@@ -3,71 +3,91 @@
 \docType{methods}
 \name{calcFisher}
 \alias{calcFisher}
+\alias{calcFisher,item_1PL,numeric,ANY-method}
 \alias{calcFisher,item_1PL,numeric-method}
+\alias{calcFisher,item_2PL,numeric,ANY-method}
 \alias{calcFisher,item_2PL,numeric-method}
+\alias{calcFisher,item_3PL,numeric,ANY-method}
 \alias{calcFisher,item_3PL,numeric-method}
+\alias{calcFisher,item_PC,numeric,ANY-method}
 \alias{calcFisher,item_PC,numeric-method}
+\alias{calcFisher,item_GPC,numeric,ANY-method}
 \alias{calcFisher,item_GPC,numeric-method}
+\alias{calcFisher,item_GR,numeric,ANY-method}
 \alias{calcFisher,item_GR,numeric-method}
+\alias{calcFisher,item_pool,numeric,ANY-method}
 \alias{calcFisher,item_pool,numeric-method}
+\alias{calcFisher,item_1PL,matrix,ANY-method}
 \alias{calcFisher,item_1PL,matrix-method}
+\alias{calcFisher,item_2PL,matrix,ANY-method}
 \alias{calcFisher,item_2PL,matrix-method}
+\alias{calcFisher,item_M2PL,matrix,ANY-method}
 \alias{calcFisher,item_M2PL,matrix-method}
+\alias{calcFisher,item_3PL,matrix,ANY-method}
 \alias{calcFisher,item_3PL,matrix-method}
+\alias{calcFisher,item_M3PL,matrix,matrix_or_null-method}
 \alias{calcFisher,item_M3PL,matrix-method}
+\alias{calcFisher,item_PC,matrix,ANY-method}
 \alias{calcFisher,item_PC,matrix-method}
+\alias{calcFisher,item_GPC,matrix,ANY-method}
 \alias{calcFisher,item_GPC,matrix-method}
-\alias{calcFisher,item_MGPC,matrix-method}
+\alias{calcFisher,item_MGPC,matrix,matrix_or_null-method}
+\alias{calcFisher,item_GR,matrix,ANY-method}
 \alias{calcFisher,item_GR,matrix-method}
+\alias{calcFisher,item_MGR,matrix,matrix_or_null-method}
 \alias{calcFisher,item_MGR,matrix-method}
+\alias{calcFisher,item_pool,matrix,ANY-method}
 \alias{calcFisher,item_pool,matrix-method}
+\alias{calcFisher,item_pool_cluster,numeric,ANY-method}
 \alias{calcFisher,item_pool_cluster,numeric-method}
 \title{Calculate Fisher information}
 \usage{
-calcFisher(object, theta)
+calcFisher(object, theta, alpha_vec = NULL)
 
-\S4method{calcFisher}{item_1PL,numeric}(object, theta)
+\S4method{calcFisher}{item_1PL,numeric,ANY}(object, theta)
 
-\S4method{calcFisher}{item_2PL,numeric}(object, theta)
+\S4method{calcFisher}{item_2PL,numeric,ANY}(object, theta)
 
-\S4method{calcFisher}{item_3PL,numeric}(object, theta)
+\S4method{calcFisher}{item_3PL,numeric,ANY}(object, theta)
 
-\S4method{calcFisher}{item_PC,numeric}(object, theta)
+\S4method{calcFisher}{item_PC,numeric,ANY}(object, theta)
 
-\S4method{calcFisher}{item_GPC,numeric}(object, theta)
+\S4method{calcFisher}{item_GPC,numeric,ANY}(object, theta)
 
-\S4method{calcFisher}{item_GR,numeric}(object, theta)
+\S4method{calcFisher}{item_GR,numeric,ANY}(object, theta)
 
-\S4method{calcFisher}{item_pool,numeric}(object, theta)
+\S4method{calcFisher}{item_pool,numeric,ANY}(object, theta)
 
-\S4method{calcFisher}{item_1PL,matrix}(object, theta)
+\S4method{calcFisher}{item_1PL,matrix,ANY}(object, theta)
 
-\S4method{calcFisher}{item_2PL,matrix}(object, theta)
+\S4method{calcFisher}{item_2PL,matrix,ANY}(object, theta)
 
-\S4method{calcFisher}{item_M2PL,matrix}(object, theta)
+\S4method{calcFisher}{item_M2PL,matrix,ANY}(object, theta, alpha_vec = NULL)
 
-\S4method{calcFisher}{item_3PL,matrix}(object, theta)
+\S4method{calcFisher}{item_3PL,matrix,ANY}(object, theta)
 
-\S4method{calcFisher}{item_M3PL,matrix}(object, theta)
+\S4method{calcFisher}{item_M3PL,matrix,matrix_or_null}(object, theta, alpha_vec = NULL)
 
-\S4method{calcFisher}{item_PC,matrix}(object, theta)
+\S4method{calcFisher}{item_PC,matrix,ANY}(object, theta)
 
-\S4method{calcFisher}{item_GPC,matrix}(object, theta)
+\S4method{calcFisher}{item_GPC,matrix,ANY}(object, theta)
 
-\S4method{calcFisher}{item_MGPC,matrix}(object, theta)
+\S4method{calcFisher}{item_MGPC,matrix,matrix_or_null}(object, theta, alpha_vec = NULL)
 
-\S4method{calcFisher}{item_GR,matrix}(object, theta)
+\S4method{calcFisher}{item_GR,matrix,ANY}(object, theta)
 
-\S4method{calcFisher}{item_MGR,matrix}(object, theta)
+\S4method{calcFisher}{item_MGR,matrix,matrix_or_null}(object, theta, alpha_vec = NULL)
 
-\S4method{calcFisher}{item_pool,matrix}(object, theta)
+\S4method{calcFisher}{item_pool,matrix,ANY}(object, theta, alpha_vec = NULL)
 
-\S4method{calcFisher}{item_pool_cluster,numeric}(object, theta)
+\S4method{calcFisher}{item_pool_cluster,numeric,ANY}(object, theta)
 }
 \arguments{
 \item{object}{an \code{\link{item}} or an \code{\linkS4class{item_pool}} object.}
 
 \item{theta}{theta values to use.}
+
+\item{alpha_vec}{(optional) the alpha angle vector to use for computing directional information. Used only for multidimensional items.}
 }
 \value{
 \describe{
