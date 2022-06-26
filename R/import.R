@@ -32,6 +32,7 @@
 #' @importFrom stats rnorm runif dnorm dunif rlnorm sd cor na.omit aggregate
 #' @importFrom utils capture.output read.csv setTxtProgressBar txtProgressBar write.table packageVersion packageDescription menu combn
 #' @importFrom graphics abline lines axis grid layout legend mtext par plot.new points rect text strheight box
+#' @importFrom mvnfast dmvn
 #' @useDynLib TestDesign
 NULL
 

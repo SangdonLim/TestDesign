@@ -22,7 +22,7 @@ BugReports: https://github.com/choi-phd/TestDesign/issues/
 License: GPL (>= 2)
 Depends: R (>= 2.10)
 biocViews:
-Imports: Rcpp (>= 1.0.0), methods, lpSolve, foreach, logitnorm, crayon
+Imports: Rcpp (>= 1.0.0), methods, lpSolve, foreach, logitnorm, crayon, mvnfast
 SystemRequirements: C++17
 Suggests:
     Rsymphony,

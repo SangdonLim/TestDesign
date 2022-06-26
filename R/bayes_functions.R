@@ -219,9 +219,10 @@ generateItemParameterSample <- function(config, item_pool, posterior_constants) 
 generateDensityFromPriorPar <- function(config_theta, theta_q, nj) {
 
   nq <- nrow(theta_q)
+  nd <- ncol(theta_q)
   prior_density <- NULL
 
-  if (config_theta$prior_dist == "NORMAL") {
+  if (config_theta$prior_dist == "NORMAL" && nd == 1) {
     prior_density <- matrix(NA, nj, nq, byrow = TRUE)
     for (j in 1:nj) {
       prior_density[j, ] <- dnorm(
@@ -232,7 +233,18 @@ generateDensityFromPriorPar <- function(config_theta, theta_q, nj) {
     }
     return(prior_density)
   }
-  if (config_theta$prior_dist == "UNIFORM") {
+  if (config_theta$prior_dist == "NORMAL" && nd > 1) {
+    prior_density <- matrix(NA, nj, nq, byrow = TRUE)
+    for (j in 1:nj) {
+      prior_density[j, ] <- mvnfast::dmvn(
+        theta_q,
+        mu    = config_theta$prior_par[[j]][[1]],
+        sigma = config_theta$prior_par[[j]][[2]]
+      )
+    }
+    return(prior_density)
+  }
+  if (config_theta$prior_dist == "UNIFORM" && nd == 1) {
     prior_density <- matrix(1, nj, nq, byrow = TRUE)
     for (j in 1:nj) {
       prior_density[j, ] <- dunif(
