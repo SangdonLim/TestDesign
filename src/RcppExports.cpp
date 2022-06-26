@@ -455,6 +455,22 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// calc_thisdirinfo
+arma::colvec calc_thisdirinfo(const arma::rowvec& x, const arma::mat& item_parm, const int& nd, const arma::icolvec& ncat, const arma::icolvec& model, const arma::rowvec& alpha_vec);
+RcppExport SEXP _TestDesign_calc_thisdirinfo(SEXP xSEXP, SEXP item_parmSEXP, SEXP ndSEXP, SEXP ncatSEXP, SEXP modelSEXP, SEXP alpha_vecSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::rowvec& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type item_parm(item_parmSEXP);
+    Rcpp::traits::input_parameter< const int& >::type nd(ndSEXP);
+    Rcpp::traits::input_parameter< const arma::icolvec& >::type ncat(ncatSEXP);
+    Rcpp::traits::input_parameter< const arma::icolvec& >::type model(modelSEXP);
+    Rcpp::traits::input_parameter< const arma::rowvec& >::type alpha_vec(alpha_vecSEXP);
+    rcpp_result_gen = Rcpp::wrap(calc_thisdirinfo(x, item_parm, nd, ncat, model, alpha_vec));
+    return rcpp_result_gen;
+END_RCPP
+}
 // calc_info_matrix
 arma::mat calc_info_matrix(const arma::mat& x, const arma::mat& item_parm, const arma::icolvec& ncat, const arma::icolvec& model);
 RcppExport SEXP _TestDesign_calc_info_matrix(SEXP xSEXP, SEXP item_parmSEXP, SEXP ncatSEXP, SEXP modelSEXP) {
@@ -1780,6 +1796,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_TestDesign_array_h_gpc", (DL_FUNC) &_TestDesign_array_h_gpc, 4},
     {"_TestDesign_array_h_gr", (DL_FUNC) &_TestDesign_array_h_gr, 4},
     {"_TestDesign_calc_info", (DL_FUNC) &_TestDesign_calc_info, 4},
+    {"_TestDesign_calc_thisdirinfo", (DL_FUNC) &_TestDesign_calc_thisdirinfo, 6},
     {"_TestDesign_calc_info_matrix", (DL_FUNC) &_TestDesign_calc_info_matrix, 4},
     {"_TestDesign_calc_info_EB", (DL_FUNC) &_TestDesign_calc_info_EB, 4},
     {"_TestDesign_calc_info_FB", (DL_FUNC) &_TestDesign_calc_info_FB, 5},

@@ -58,6 +58,54 @@ arma::colvec calc_info(
 
 }
 
+//' @rdname calc_thisdirinfo
+//' @export
+// [[Rcpp::export]]
+arma::colvec calc_thisdirinfo(
+  const arma::rowvec& x,
+  const arma::mat& item_parm,
+  const int& nd,
+  const arma::icolvec& ncat,
+  const arma::icolvec& model,
+  const arma::rowvec& alpha_vec) {
+
+  int ni = item_parm.n_rows;
+  colvec thisdirinfo_array(ni);
+
+  for (int i = 0; i < ni; i++) {
+    switch (model(i)) {
+      case 102: {
+        arma::rowvec a = item_parm(i, span(0, nd - 1));
+        double d       = item_parm(i, nd);
+        thisdirinfo_array(i) = thisdirinfo_m_2pl(x, alpha_vec, a, d);
+      }
+      break;
+      case 103: {
+        arma::rowvec a = item_parm(i, span(0, nd - 1));
+        double d       = item_parm(i, nd);
+        double c       = item_parm(i, nd + 1);
+        thisdirinfo_array(i) = thisdirinfo_m_3pl(x, alpha_vec, a, d, c);
+      }
+      break;
+      case 105: {
+        arma::rowvec a = item_parm(i, span(0, nd - 1));
+        arma::rowvec d = item_parm(i, span(nd, nd + ncat(i) - 2));
+        thisdirinfo_array(i) = thisdirinfo_m_gpc(x, alpha_vec, a, d);
+      }
+      break;
+      case 106: {
+        arma::rowvec a = item_parm(i, span(0, nd - 1));
+        arma::rowvec d = item_parm(i, span(nd, nd + ncat(i) - 2));
+        thisdirinfo_array(i) = thisdirinfo_m_gr(x, alpha_vec, a, d);
+      }
+      break;
+    }
+  }
+
+  return thisdirinfo_array;
+
+}
+
 //' @rdname calc_info
 //' @export
 // [[Rcpp::export]]

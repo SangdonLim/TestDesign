@@ -56,6 +56,37 @@ NULL
 #' @name calc_info
 NULL
 
+#' (C++) For multiple items, calculate directional information
+#'
+#' \code{calc_thisdirinfo()} is a function for calculating directional information using a specific angle.
+#' These functions are designed for multiple items.
+#'
+#' \code{calc_thisdirinfo()} accepts a single theta value.
+#'
+#' This function is designed for multidimensional models.
+#'
+#' @param x the theta value. This must be a row vector in matrix form. Each column should represent a dimension.
+#' @param item_parm a matrix containing item parameters. Each row should represent an item.
+#' @param nd the number of dimensions. This must be a single value shared by all items.
+#' @param ncat a vector containing the number of response categories of each item.
+#' @param model a vector indicating item models of each item, using \itemize{
+#'   \item{\code{102}}: M2PL model
+#'   \item{\code{103}}: M3PL model
+#'   \item{\code{105}}: MGPC model
+#'   \item{\code{106}}: MGR model
+#' }
+#' @param alpha_vec the alpha angle vector.
+#'
+#' @template 1pl-ref
+#' @template 2pl-ref
+#' @template 3pl-ref
+#' @template pc-ref
+#' @template gpc-ref
+#' @template gr-ref
+#'
+#' @name calc_thisdirinfo
+NULL
+
 #' (C++) For multiple items, calculate likelihoods
 #'
 #' \code{calc_likelihood()} and \code{calc_likelihood_function()} are functions for calculating likelihoods.

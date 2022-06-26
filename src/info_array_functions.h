@@ -7,6 +7,14 @@ arma::colvec calc_info(
   const arma::icolvec&,
   const arma::icolvec&);
 
+arma::colvec calc_thisdirinfo(
+  const arma::rowvec&,
+  const arma::mat&,
+  const int&,
+  const arma::icolvec&,
+  const arma::icolvec&,
+  const arma::rowvec&);
+
 arma::mat calc_info_matrix(
   const arma::mat&,
   const arma::mat&,

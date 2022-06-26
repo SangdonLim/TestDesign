@@ -199,6 +199,12 @@ calc_info <- function(x, item_parm, ncat, model) {
     .Call('_TestDesign_calc_info', PACKAGE = 'TestDesign', x, item_parm, ncat, model)
 }
 
+#' @rdname calc_thisdirinfo
+#' @export
+calc_thisdirinfo <- function(x, item_parm, nd, ncat, model, alpha_vec) {
+    .Call('_TestDesign_calc_thisdirinfo', PACKAGE = 'TestDesign', x, item_parm, nd, ncat, model, alpha_vec)
+}
+
 #' @rdname calc_info
 #' @export
 calc_info_matrix <- function(x, item_parm, ncat, model) {
