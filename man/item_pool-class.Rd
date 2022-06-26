@@ -25,6 +25,8 @@ See \code{\link{item_pool-operators}} for object manipulation functions.
 
 \item{\code{nd}}{the number of dimensions used in the pool. This is a single value shared by all items.}
 
+\item{\code{n_pars}}{the number of item parameters for each item.}
+
 \item{\code{NCAT}}{the number of response categories of each item.}
 
 \item{\code{parms}}{a list containing item class objects. See \code{\link{item-classes}}.}

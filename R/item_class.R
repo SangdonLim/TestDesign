@@ -311,6 +311,7 @@ setClass("item_MGR",
 #' @slot id the ID string of each item.
 #' @slot model the item class name of each item. See \code{\link{item-classes}}.
 #' @slot nd the number of dimensions used in the pool. This is a single value shared by all items.
+#' @slot n_pars the number of item parameters for each item.
 #' @slot NCAT the number of response categories of each item.
 #' @slot parms a list containing item class objects. See \code{\link{item-classes}}.
 #' @slot ipar a matrix containing item parameters.
@@ -328,6 +329,7 @@ setClass("item_pool",
     id      = "character",
     model   = "character",
     nd      = "numeric",
+    n_pars  = "numeric",
     NCAT    = "numeric",
     parms   = "list",
     ipar    = "matrix",
@@ -343,6 +345,7 @@ setClass("item_pool",
     id      = character(0),
     model   = character(0),
     nd      = numeric(0),
+    n_pars  = numeric(0),
     NCAT    = numeric(0),
     parms   = list(0),
     ipar    = matrix(0),
