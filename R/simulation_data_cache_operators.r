@@ -40,8 +40,11 @@ setMethod(
     o@theta_grid <- theta_grid
     o@prob_grid <- calcProb(item_pool, theta_grid)
 
-    if (toupper(info_type) == "FISHER") {
-      o@info_grid <- calcFisher(item_pool, theta_grid)
+    if (item_pool@nd == 1) {
+      if (toupper(info_type) == "FISHER") {
+        # used only for MPWI (maximum posterior weighted information)
+        o@info_grid <- calcFisher(item_pool, theta_grid)
+      }
     }
 
     o@max_info <- max(o@info_grid)
