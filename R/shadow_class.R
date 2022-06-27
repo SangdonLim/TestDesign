@@ -28,7 +28,8 @@ setClass("config_Shadow",
       info_type                 = "FISHER",
       initial_theta             = NULL,
       fixed_theta               = NULL,
-      target_value              = NULL
+      target_value              = NULL,
+      alpha_vec                 = NULL
     ),
     content_balancing = list(
       method                    = "STA"
@@ -128,8 +129,12 @@ setClass("config_Shadow",
       }
     }
 
-    if (!toupper(object@item_selection$method) %in% c("MFI", "MPWI", "EB", "FB", "GFI", "FIXED")) {
-      msg <- sprintf("config@item_selection: unrecognized $method '%s' (accepts MFI, MPWI, EB, FB, GFI, or FIXED)", object@item_selection$method)
+    if (!toupper(object@item_selection$method) %in% c(
+      "MFI", "MPWI", "EB", "FB", "GFI", "FIXED",
+      "DIRINFO-45",
+      "DIRINFO-THISANGLE"
+    )) {
+      msg <- sprintf("config@item_selection: unrecognized $method '%s')", object@item_selection$method)
       err <- c(err, msg)
     }
     if (toupper(object@item_selection$method) %in% c("FIXED")) {

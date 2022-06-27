@@ -176,6 +176,7 @@ computeInfoAtCurrentTheta <- function(
   model_code,
   info_fixed_theta,
   info_grid,
+  prob_grid,
   item_parameter_sample
 ) {
 
@@ -187,12 +188,53 @@ computeInfoAtCurrentTheta <- function(
     return(info)
   }
   if (item_method == "MFI") {
-    info <- calc_info(current_theta$theta, item_pool@ipar, item_pool@NCAT, model_code)
-    return(info)
+    if (item_pool@nd == 1) {
+      info <- calc_info(
+        current_theta$theta,
+        item_pool@ipar,
+        item_pool@NCAT,
+        model_code
+      )
+      return(info)
+    }
   }
   if (item_method == "GFI") {
-    info <- calc_info(current_theta$theta, item_pool@ipar, item_pool@NCAT, model_code)
-    return(info)
+    if (item_pool@nd == 1) {
+      info <- calc_info(
+        current_theta$theta,
+        item_pool@ipar,
+        item_pool@NCAT,
+        model_code
+      )
+      return(info)
+    }
+  }
+  if (item_method == "DIRINFO-45") {
+    if (item_pool@nd > 1) {
+      alpha_vec <- a_to_alpha(rep(1, item_pool@nd))
+      info <- calc_thisdirinfo(
+        current_theta$theta,
+        item_pool@ipar,
+        item_pool@nd,
+        item_pool@NCAT,
+        model_code,
+        alpha_vec
+      )
+      return(info)
+    }
+  }
+  if (item_method == "DIRINFO-THISANGLE") {
+    if (item_pool@nd > 1) {
+      info <- calc_thisdirinfo(
+        current_theta$theta,
+        item_pool@ipar,
+        item_pool@nd,
+        item_pool@NCAT,
+        model_code,
+        item_selection$alpha_vec
+      )
+      return(info)
+    }
   }
   if (item_method == "MPWI") {
     info <- as.vector(matrix(current_theta$posterior, nrow = 1) %*% info_grid)
