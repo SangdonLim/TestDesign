@@ -343,17 +343,6 @@ setMethod(
     ...
 ) {
 
-  if (type == "audit") {
-    plotShadowAudit(
-      x,
-      theta_range,
-      z_ci,
-      use_par,
-      ...
-    )
-    return(invisible(NULL))
-  }
-
   if (type == "shadow") {
     plotShadowChart(
       x,
@@ -605,77 +594,134 @@ plotShadowAudit <- function(x, dimension, theta_range, z_ci, use_par, ...) {
   n_items <- length(x@administered_item_index)
   min_theta <- theta_range[1]
   max_theta <- theta_range[2]
+  nd <- length(x@final_theta_est)
 
   layout(rbind(c(1, 1), c(1, 1), c(1, 1), c(1, 1), c(2, 2)))
 
-  plot(1:n_items, seq(min_theta, max_theta, length = n_items), ylab = "Theta", type = "n", las = 1, xlim = c(0, n_items), xaxt = "n", yaxt = "n")
-  grid()
-
-  text(n_items / 2, max_theta, paste0("Examinee ID: ", x@simulee_id), adj = c(0.5, 0.5), cex = 2)
-  axis(1, at = 0:n_items, tick = TRUE, labels = 0:n_items, cex.axis = 1.5)
-  axis(2, at = min_theta:max_theta, labels = min_theta:max_theta, cex.axis = 1.5)
-
-  nd <- length(x@final_theta_est)
-  if (nd == 1) {
-    text(
-      0.5, min_theta + 1.0,
-      sprintf(
-        "Final Theta:  %.2f  SE:  %.2f",
-        round(x@final_theta_est, digits = 2),
-        round(x@final_se_est, digits = 2)
-      ),
-      cex = 1.5, adj = 0
+  if (length(dimension) == 2) {
+    # do 2D plot
+    plot(
+      0, 0,
+      type = "n",
+      xlab = sprintf("Theta %s", dimension[1]),
+      ylab = sprintf("Theta %s", dimension[1]),
+      las = 1,
+      xlim = c(min_theta, max_theta),
+      ylim = c(min_theta, max_theta),
+      xaxt = "n", yaxt = "n"
     )
-  }
-  if (nd > 1) {
+    grid()
+
+    text(mean(c(min_theta, max_theta)), max_theta, paste0("Examinee ID: ", x@simulee_id), adj = c(0.5, 0.5), cex = 2)
+    axis(1, at = min_theta:max_theta, labels = min_theta:max_theta, cex.axis = 1.5)
+    axis(2, at = min_theta:max_theta, labels = min_theta:max_theta, cex.axis = 1.5)
+
+    plot_values_1 <- rbind(x@initial_theta_est, x@interim_theta_est)[, dimension[1]]
+    plot_values_2 <- rbind(x@initial_theta_est, x@interim_theta_est)[, dimension[2]]
+
+    lines(plot_values_1, plot_values_2, lty = 3, col = "blue", lwd = 1.5)
+    points(plot_values_1, plot_values_2, pch = 16, cex = 2.5, col = "blue")
+    points(plot_values_1, plot_values_2, pch = 1, cex = 2.5, col = "purple4")
+
+    if (!is.null(x@true_theta)) {
+      abline(v = x@true_theta[dimension[1]], lty = 1, col = "red")
+      abline(h = x@true_theta[dimension[2]], lty = 1, col = "red")
+    }
+
     text(
-      0.5, min_theta + 1.0,
+      min_theta, min_theta,
       sprintf(
-        "Dimension %s of %s\nFinal Theta:  %.2f  SE:  %.2f",
-        dimension, nd,
-        round(x@final_theta_est[dimension], digits = 2),
-        round(x@final_se_est[dimension], digits = 2)
+        paste0(c(
+          "Final Theta:",
+          "(Axis x, Dimension %s of %s)  Theta:  %.2f  SE:  %.2f",
+          "(Axis y, Dimension %s of %s)  Theta:  %.2f  SE:  %.2f"),
+          collapse = "\n"
+        ),
+        dimension[1], nd,
+        round(x@final_theta_est[dimension[1]], digits = 2),
+        round(x@final_se_est[dimension[1]], digits = 2),
+        dimension[2], nd,
+        round(x@final_theta_est[dimension[2]], digits = 2),
+        round(x@final_se_est[dimension[2]], digits = 2)
       ),
-      cex = 1.5, adj = 0
+      cex = 1.5, adj = c(0, 0)
     )
+
   }
 
-  for (i in 0:n_items) {
-    if (i == 0) {
-      if (!inherits(x@initial_theta_est, "list")) {
-        next
+  if (length(dimension) == 1) {
+    # do 1D plot
+
+    plot(1:n_items, seq(min_theta, max_theta, length = n_items), ylab = "Theta", type = "n", las = 1, xlim = c(0, n_items), xaxt = "n", yaxt = "n")
+    grid()
+
+    text(n_items / 2, max_theta, paste0("Examinee ID: ", x@simulee_id), adj = c(0.5, 0.5), cex = 2)
+    axis(1, at = 0:n_items, tick = TRUE, labels = 0:n_items, cex.axis = 1.5)
+    axis(2, at = min_theta:max_theta, labels = min_theta:max_theta, cex.axis = 1.5)
+
+    if (nd == 1) {
+      text(
+        0.5, min_theta + 1.0,
+        sprintf(
+          "Final Theta:  %.2f  SE:  %.2f",
+          round(x@final_theta_est, digits = 2),
+          round(x@final_se_est, digits = 2)
+        ),
+        cex = 1.5, adj = 0
+      )
+    }
+    if (nd > 1) {
+      text(
+        0.5, min_theta + 1.0,
+        sprintf(
+          "Dimension %s of %s\nFinal Theta:  %.2f  SE:  %.2f",
+          dimension, nd,
+          round(x@final_theta_est[dimension], digits = 2),
+          round(x@final_se_est[dimension], digits = 2)
+        ),
+        cex = 1.5, adj = 0
+      )
+    }
+
+    for (i in 0:n_items) {
+      if (i == 0) {
+        if (!inherits(x@initial_theta_est, "list")) {
+          next
+        }
+        if (is.null(x@initial_theta_est$se)) {
+          next
+        }
+        ci_lower <- x@initial_theta_est$theta - z_ci * x@initial_theta_est$se
+        ci_upper <- x@initial_theta_est$theta + z_ci * x@initial_theta_est$se
       }
-      if (is.null(x@initial_theta_est$se)) {
-        next
+      if (i > 0) {
+        ci_lower <- x@interim_theta_est[i, dimension] - z_ci * x@interim_se_est[i, dimension]
+        ci_upper <- x@interim_theta_est[i, dimension] + z_ci * x@interim_se_est[i, dimension]
       }
-      ci_lower <- x@initial_theta_est$theta - z_ci * x@initial_theta_est$se
-      ci_upper <- x@initial_theta_est$theta + z_ci * x@initial_theta_est$se
+      lines(rep(i, 2)            , c(ci_lower, ci_upper), col = "purple4")
+      lines(c(i - 0.25, i + 0.25), c(ci_lower, ci_lower), col = "purple4")
+      lines(c(i - 0.25, i + 0.25), c(ci_upper, ci_upper), col = "purple4")
     }
-    if (i > 0) {
-      ci_lower <- x@interim_theta_est[i, dimension] - z_ci * x@interim_se_est[i, dimension]
-      ci_upper <- x@interim_theta_est[i, dimension] + z_ci * x@interim_se_est[i, dimension]
+    if (!inherits(x@initial_theta_est, "list")) {
+      o <- list()
+      o$theta <- x@initial_theta_est
+      x@initial_theta_est <- o
     }
-    lines(rep(i, 2)            , c(ci_lower, ci_upper), col = "purple4")
-    lines(c(i - 0.25, i + 0.25), c(ci_lower, ci_lower), col = "purple4")
-    lines(c(i - 0.25, i + 0.25), c(ci_upper, ci_upper), col = "purple4")
-  }
-  if (!inherits(x@initial_theta_est, "list")) {
-    o <- list()
-    o$theta <- x@initial_theta_est
-    x@initial_theta_est <- o
-  }
-  plot_values <- rbind(x@initial_theta_est$theta, x@interim_theta_est)[, dimension]
-  lines(0:n_items, plot_values, lty = 3, col = "blue", lwd = 1.5)
-  points(0:n_items, plot_values, pch = 16, cex = 2.5, col = "blue")
-  points(0:n_items, plot_values, pch = 1, cex = 2.5, col = "purple4")
-  if (!is.null(x@true_theta)) {
-    abline(h = x@true_theta[dimension], lty = 1, col = "red")
-  }
-  for (i in 1:n_items) {
-    if (x@shadow_test_refreshed[i]) {
-      text(i, min_theta, "S", col = "red", cex = 1.5)
+    plot_values <- rbind(x@initial_theta_est$theta, x@interim_theta_est)[, dimension]
+    lines(0:n_items, plot_values, lty = 3, col = "blue", lwd = 1.5)
+    points(0:n_items, plot_values, pch = 16, cex = 2.5, col = "blue")
+    points(0:n_items, plot_values, pch = 1, cex = 2.5, col = "purple4")
+    if (!is.null(x@true_theta)) {
+      abline(h = x@true_theta[dimension], lty = 1, col = "red")
+    }
+    for (i in 1:n_items) {
+      if (x@shadow_test_refreshed[i]) {
+        text(i, min_theta, "S", col = "red", cex = 1.5)
+      }
     }
   }
+
+  # response panel
 
   min_score <- 0
   max_score <- x@max_cat_pool
