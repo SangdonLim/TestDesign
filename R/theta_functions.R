@@ -36,6 +36,26 @@ estimateInterimTheta <- function(
     }
   }
 
+  if (toupper(config@interim_theta$method) == "MAP") {
+
+    ipar <- augmented_item_pool@ipar[augmented_item_index, , drop = FALSE]
+    interim_MAP <- estimate_theta_map(
+      ipar        = ipar,
+      item_model  = model_code[augmented_item_index],
+      nd          = constants$nd,
+      n_pars      = augmented_item_pool@n_pars[augmented_item_index],
+      response    = augmented_item_resp,
+      start_theta = matrix(augmented_current_theta$theta, 1, ),
+      prior_sigma = config@interim_theta$prior_par[[j]]$prior_sigma
+    )
+
+    o@interim_theta_est[position, ] <- interim_MAP$theta
+    o@interim_se_est[position, ] <- interim_MAP$se
+
+    return(o)
+
+  }
+
   if (toupper(config@interim_theta$method) == "EAP") {
 
     interim_EAP <- computeEAPFromPosterior(augmented_current_theta$posterior, constants$theta_q)
@@ -182,6 +202,26 @@ estimateFinalTheta <- function(
 
     o@final_theta_est <- o@interim_theta_est[position, ]
     o@final_se_est    <- o@interim_se_est[position, ]
+
+    return(o)
+
+  }
+
+  if (toupper(config@final_theta$method) == "MAP") {
+
+    ipar <- augmented_item_pool@ipar[o@administered_item_index, , drop = FALSE]
+    final_MAP <- estimate_theta_map(
+      ipar        = ipar,
+      item_model  = model_code[o@administered_item_index],
+      nd          = constants$nd,
+      n_pars      = augmented_item_pool@n_pars[o@administered_item_index],
+      response    = o@administered_item_resp,
+      start_theta = o@interim_theta_est[constants$max_ni, , drop = FALSE],
+      prior_sigma = config@final_theta$prior_par[[j]]$prior_sigma
+    )
+
+    o@final_theta_est <- final_MAP$theta
+    o@final_se_est    <- final_MAP$se
 
     return(o)
 
