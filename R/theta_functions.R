@@ -1153,6 +1153,12 @@ parseInitialThetaOfThisExaminee <- function(config_theta, initial_theta, j, post
 #' @noRd
 parseThetaSegment <- function(current_theta, position, exposure_control, constants) {
 
+  if (constants$nd > 1) {
+    # placeholder for multidimensional case
+    segment <- 1
+    return(segment)
+  }
+
   n_segment   <- constants$n_segment
   segment_cut <- constants$segment_cut
 
