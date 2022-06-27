@@ -29,6 +29,7 @@ NULL
 #' @param select used in \code{\linkS4class{item_pool}} objects. Item indices to subset.
 #' @param color the color of the curve.
 #' @param examinee_id used in \code{\linkS4class{output_Shadow}} and \code{\linkS4class{output_Shadow_all}} with \code{type = 'audit'} and \code{type = 'shadow'}. The examinee numeric ID to draw the plot.
+#' @param dimension used for \code{\linkS4class{output_Shadow}} and \code{\linkS4class{output_Shadow_all}} objects when \code{type = 'audit'}. The theta dimension to plot. (default = \code{1})
 #' @param position used in \code{\linkS4class{output_Shadow_all}} with \code{type = 'info'}. The item position to draw the plot.
 #' @param theta_range used in \code{\linkS4class{output_Shadow}} and \code{\linkS4class{output_Shadow_all}} with \code{type = 'audit'}. The theta range to plot. (default = \code{c(-5, 5)})
 #' @param ylim (optional) the y-axis plot range. Used in most plot types.
@@ -331,6 +332,7 @@ setMethod(
     plot_sum = TRUE,
     select = NULL,
     examinee_id = 1,
+    dimension = 1,
     theta_range = c(-5, 5),
     ylim = NULL,
     color = "blue",
@@ -377,6 +379,7 @@ setMethod(
     plot_sum = TRUE,
     select = NULL,
     examinee_id = 1,
+    dimension = 1,
     position = NULL,
     theta_range = c(-5, 5),
     ylim = NULL,
@@ -414,9 +417,10 @@ setMethod(
   if (type == "audit") {
     plotShadowAudit(
       x@output[[examinee_id]],
-      theta_range,
-      z_ci,
-      use_par,
+      dimension = dimension,
+      theta_range = theta_range,
+      z_ci = z_ci,
+      use_par = use_par,
       ...
     )
     return(invisible(NULL))
@@ -588,7 +592,7 @@ plotShadowInfo <- function(x, examinee_id, position, info_type, ylim, theta, col
 }
 
 #' @noRd
-plotShadowAudit <- function(x, theta_range, z_ci, use_par, ...) {
+plotShadowAudit <- function(x, dimension, theta_range, z_ci, use_par, ...) {
 
   if (use_par) {
     old_par <- par(no.readonly = TRUE)
@@ -610,7 +614,31 @@ plotShadowAudit <- function(x, theta_range, z_ci, use_par, ...) {
   text(n_items / 2, max_theta, paste0("Examinee ID: ", x@simulee_id), adj = c(0.5, 0.5), cex = 2)
   axis(1, at = 0:n_items, tick = TRUE, labels = 0:n_items, cex.axis = 1.5)
   axis(2, at = min_theta:max_theta, labels = min_theta:max_theta, cex.axis = 1.5)
-  text(0.5, min_theta + 1.0, paste("Final Theta: ", round(x@final_theta_est, digits = 2), " SE: ", round(x@final_se_est, digits = 2)), cex = 1.5, adj = 0)
+
+  nd <- length(x@final_theta_est)
+  if (nd == 1) {
+    text(
+      0.5, min_theta + 1.0,
+      sprintf(
+        "Final Theta:  %.2f  SE:  %.2f",
+        round(x@final_theta_est, digits = 2),
+        round(x@final_se_est, digits = 2)
+      ),
+      cex = 1.5, adj = 0
+    )
+  }
+  if (nd > 1) {
+    text(
+      0.5, min_theta + 1.0,
+      sprintf(
+        "Dimension %s of %s\nFinal Theta:  %.2f  SE:  %.2f",
+        dimension, nd,
+        round(x@final_theta_est[dimension], digits = 2),
+        round(x@final_se_est[dimension], digits = 2)
+      ),
+      cex = 1.5, adj = 0
+    )
+  }
 
   for (i in 0:n_items) {
     if (i == 0) {
@@ -624,8 +652,8 @@ plotShadowAudit <- function(x, theta_range, z_ci, use_par, ...) {
       ci_upper <- x@initial_theta_est$theta + z_ci * x@initial_theta_est$se
     }
     if (i > 0) {
-      ci_lower <- x@interim_theta_est[i] - z_ci * x@interim_se_est[i]
-      ci_upper <- x@interim_theta_est[i] + z_ci * x@interim_se_est[i]
+      ci_lower <- x@interim_theta_est[i, dimension] - z_ci * x@interim_se_est[i, dimension]
+      ci_upper <- x@interim_theta_est[i, dimension] + z_ci * x@interim_se_est[i, dimension]
     }
     lines(rep(i, 2)            , c(ci_lower, ci_upper), col = "purple4")
     lines(c(i - 0.25, i + 0.25), c(ci_lower, ci_lower), col = "purple4")
@@ -636,11 +664,12 @@ plotShadowAudit <- function(x, theta_range, z_ci, use_par, ...) {
     o$theta <- x@initial_theta_est
     x@initial_theta_est <- o
   }
-  lines(0:n_items, c(x@initial_theta_est$theta, x@interim_theta_est), lty = 3, col = "blue", lwd = 1.5)
-  points(0:n_items, c(x@initial_theta_est$theta, x@interim_theta_est), pch = 16, cex = 2.5, col = "blue")
-  points(0:n_items, c(x@initial_theta_est$theta, x@interim_theta_est), pch = 1, cex = 2.5, col = "purple4")
+  plot_values <- rbind(x@initial_theta_est$theta, x@interim_theta_est)[, dimension]
+  lines(0:n_items, plot_values, lty = 3, col = "blue", lwd = 1.5)
+  points(0:n_items, plot_values, pch = 16, cex = 2.5, col = "blue")
+  points(0:n_items, plot_values, pch = 1, cex = 2.5, col = "purple4")
   if (!is.null(x@true_theta)) {
-    abline(h = x@true_theta, lty = 1, col = "red")
+    abline(h = x@true_theta[dimension], lty = 1, col = "red")
   }
   for (i in 1:n_items) {
     if (x@shadow_test_refreshed[i]) {

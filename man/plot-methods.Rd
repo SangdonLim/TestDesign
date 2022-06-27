@@ -82,6 +82,7 @@
   plot_sum = TRUE,
   select = NULL,
   examinee_id = 1,
+  dimension = 1,
   theta_range = c(-5, 5),
   ylim = NULL,
   color = "blue",
@@ -101,6 +102,7 @@
   plot_sum = TRUE,
   select = NULL,
   examinee_id = 1,
+  dimension = 1,
   position = NULL,
   theta_range = c(-5, 5),
   ylim = NULL,
@@ -170,6 +172,8 @@
 \item{select}{used in \code{\linkS4class{item_pool}} objects. Item indices to subset.}
 
 \item{examinee_id}{used in \code{\linkS4class{output_Shadow}} and \code{\linkS4class{output_Shadow_all}} with \code{type = 'audit'} and \code{type = 'shadow'}. The examinee numeric ID to draw the plot.}
+
+\item{dimension}{used for \code{\linkS4class{output_Shadow}} and \code{\linkS4class{output_Shadow_all}} objects when \code{type = 'audit'}. The theta dimension to plot. (default = \code{1})}
 
 \item{position}{used in \code{\linkS4class{output_Shadow_all}} with \code{type = 'info'}. The item position to draw the plot.}
 
