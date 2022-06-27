@@ -210,6 +210,13 @@ getSegmentOf <- function(x, constants) {
 
   o <- list()
 
+  if (constants$nd > 1) {
+    # placeholder for multidimensional case
+    o$final_theta_est <- 1
+    o$true_theta      <- 1
+    return(o)
+  }
+
   # find_segment() needs to be updated for multidimensional segments
   o$final_theta_est   <- find_segment(x@final_theta_est, constants$segment_cut)
 
