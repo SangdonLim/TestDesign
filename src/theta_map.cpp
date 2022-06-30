@@ -29,7 +29,7 @@ List estimate_theta_map(
   arma::mat delta;
   arma::mat abs_delta;
   arma::rowvec theta;
-  arma::vec se;
+  arma::rowvec se;
   arma::vec d2_diag;
   arma::mat d2_inv;
 
@@ -250,7 +250,7 @@ List estimate_theta_map(
   theta = new_estimate;
   d2_inv = inv(deriv2);
   d2_diag = d2_inv.diag();
-  se = pow(abs(d2_diag),0.5);
+  se = pow(abs(d2_diag),0.5).t();
 
   return List::create(
     Named("theta")=theta,
