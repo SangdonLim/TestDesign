@@ -1726,8 +1726,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // estimate_theta_map
-List estimate_theta_map(const arma::mat& ipar, const arma::irowvec& item_model, const int& nd, const arma::irowvec& n_pars, const arma::rowvec& response, const arma::rowvec& start_theta, const arma::mat& sigma, const int& max_iteration, const double& convergence_criterion, const bool& use_Fisher);
-RcppExport SEXP _TestDesign_estimate_theta_map(SEXP iparSEXP, SEXP item_modelSEXP, SEXP ndSEXP, SEXP n_parsSEXP, SEXP responseSEXP, SEXP start_thetaSEXP, SEXP sigmaSEXP, SEXP max_iterationSEXP, SEXP convergence_criterionSEXP, SEXP use_FisherSEXP) {
+List estimate_theta_map(const arma::mat& ipar, const arma::irowvec& item_model, const int& nd, const arma::irowvec& n_pars, const arma::rowvec& response, const arma::rowvec& start_theta, const arma::mat& prior_sigma, const int& max_iteration, const double& convergence_criterion, const bool& use_Fisher);
+RcppExport SEXP _TestDesign_estimate_theta_map(SEXP iparSEXP, SEXP item_modelSEXP, SEXP ndSEXP, SEXP n_parsSEXP, SEXP responseSEXP, SEXP start_thetaSEXP, SEXP prior_sigmaSEXP, SEXP max_iterationSEXP, SEXP convergence_criterionSEXP, SEXP use_FisherSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1737,11 +1737,11 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const arma::irowvec& >::type n_pars(n_parsSEXP);
     Rcpp::traits::input_parameter< const arma::rowvec& >::type response(responseSEXP);
     Rcpp::traits::input_parameter< const arma::rowvec& >::type start_theta(start_thetaSEXP);
-    Rcpp::traits::input_parameter< const arma::mat& >::type sigma(sigmaSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type prior_sigma(prior_sigmaSEXP);
     Rcpp::traits::input_parameter< const int& >::type max_iteration(max_iterationSEXP);
     Rcpp::traits::input_parameter< const double& >::type convergence_criterion(convergence_criterionSEXP);
     Rcpp::traits::input_parameter< const bool& >::type use_Fisher(use_FisherSEXP);
-    rcpp_result_gen = Rcpp::wrap(estimate_theta_map(ipar, item_model, nd, n_pars, response, start_theta, sigma, max_iteration, convergence_criterion, use_Fisher));
+    rcpp_result_gen = Rcpp::wrap(estimate_theta_map(ipar, item_model, nd, n_pars, response, start_theta, prior_sigma, max_iteration, convergence_criterion, use_Fisher));
     return rcpp_result_gen;
 END_RCPP
 }

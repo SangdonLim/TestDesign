@@ -13,7 +13,7 @@ List estimate_theta_map(
   const arma::irowvec& n_pars,
   const arma::rowvec& response,
   const arma::rowvec& start_theta,
-  const arma::mat& sigma,
+  const arma::mat& prior_sigma,
   const int& max_iteration = 30,
   const double& convergence_criterion = 0.001,
   const bool& use_Fisher = true
@@ -69,7 +69,7 @@ List estimate_theta_map(
       dll.zeros();
 
       if (nd == 1) { sigma_inv = 1; }
-      else { sigma_inv = inv(sigma); }
+      else { sigma_inv = inv(prior_sigma); }
 
       for (int i=0; i<ni; i++) {
         switch (item_model(i)) {
@@ -151,7 +151,7 @@ List estimate_theta_map(
       }
 
       if (addsigma == true) {
-        FI = FI + inv(sigma);
+        FI = FI + sigma_inv;
       }
 
       deriv2 = -FI;
@@ -191,7 +191,7 @@ List estimate_theta_map(
       }
 
       if (addsigma == true) {
-        H = H - inv(sigma);
+        H = H - sigma_inv;
       }
 
       deriv2 = H;
@@ -242,7 +242,7 @@ List estimate_theta_map(
   }
 
   if (addsigma == true) {
-    H = H - inv(sigma);
+    H = H - sigma_inv;
   }
 
   deriv2 = H;
