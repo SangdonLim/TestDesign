@@ -71,3 +71,11 @@ usethis::use_data(constraints_bayes_data, overwrite = TRUE)
 usethis::use_data(itempool_bayes,    overwrite = TRUE)
 usethis::use_data(itemattrib_bayes,  overwrite = TRUE)
 usethis::use_data(constraints_bayes, overwrite = TRUE)
+
+# MAT dataset
+
+itempool_mat_data <- read.csv("inst/extdata/itempool_mat_180.csv", header = TRUE, as.is = TRUE)
+itempool_mat      <- loadItemPool("inst/extdata/itempool_mat_180.csv")
+
+usethis::use_data(itempool_mat_data, overwrite = TRUE)
+usethis::use_data(itempool_mat     , overwrite = TRUE)

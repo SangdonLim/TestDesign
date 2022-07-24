@@ -131,3 +131,27 @@ NULL
 #' @name dataset_bayes
 #' @rdname dataset_bayes
 NULL
+
+#' MAT dataset
+#'
+#' Item-based example item pool (180 items).
+#'
+#' This pool is associated with the following objects:
+#' \itemize{
+#'   \item \code{itempool_mat} an \code{\linkS4class{item_pool}} object containing 180 items.
+#' }
+#'
+#' Also, the following objects are intended for illustrating expected data structures.
+#' \itemize{
+#'   \item \code{itempool_mat_data} a \code{\link{data.frame}} containing item parameters.
+#' }
+#'
+#' @examples
+#' itempool_mat   <- loadItemPool(itempool_mat_data)
+#'
+#' @aliases itempool_mat_data itempool_mat
+#' @docType data
+#' @keywords datasets
+#' @name dataset_mat
+#' @rdname dataset_mat
+NULL
