@@ -41,10 +41,11 @@ getConstants <- function(constraints, config, arg_data, true_theta, max_info) {
   } else {
     o$use_shadowtest <- FALSE
     o$set_based      <- FALSE
-    o$test_length    <- NULL
-    o$min_ni         <- config@stopping_criterion$min_ni
-    o$max_ni         <- config@stopping_criterion$max_ni
-    o$max_se         <- config@stopping_criterion$se_threshold
+    o$test_length    <- constraints@test_length
+    o$min_ni         <- constraints@test_length
+    o$max_ni         <- constraints@test_length
+    o$max_se         <- NULL
+    # TODO: accomodate dynamic length test assembly
   }
 
   o$exclude_method <- toupper(config@exclude_policy$method)
