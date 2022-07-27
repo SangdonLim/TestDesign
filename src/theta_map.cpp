@@ -253,10 +253,11 @@ List estimate_theta_map(
   se = pow(abs(d2_diag),0.5).t();
 
   return List::create(
-    Named("theta")=theta,
-    Named("se")=se,
-    Named("hessian")=deriv2,
-    Named("iteration")=iteration
+    Named("theta") = theta,
+    Named("se") = se,
+    Named("vcov") = inv(-H),
+    Named("hessian") = deriv2,
+    Named("iteration") = iteration
   );
 
 }

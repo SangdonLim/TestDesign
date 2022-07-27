@@ -48,6 +48,7 @@ estimateInterimTheta <- function(
       start_theta = matrix(augmented_current_theta$theta, 1, ),
       prior_sigma = config@interim_theta$prior_par[[j]]$prior_sigma
     )
+    interim_MAP <- applyShrinkageCorrection(interim_MAP, config@interim_theta, j)
 
     o@interim_theta_est[position, ] <- interim_MAP$theta
     o@interim_se_est[position, ] <- interim_MAP$se
@@ -219,6 +220,7 @@ estimateFinalTheta <- function(
       start_theta = o@interim_theta_est[constants$max_ni, , drop = FALSE],
       prior_sigma = config@final_theta$prior_par[[j]]$prior_sigma
     )
+    final_MAP <- applyShrinkageCorrection(final_MAP, config@final_theta, j)
 
     o@final_theta_est <- final_MAP$theta
     o@final_se_est    <- final_MAP$se
@@ -1256,14 +1258,35 @@ computeEAPFromPosterior <- function(posterior, theta_grid) {
 applyShrinkageCorrection <- function(EAP, config_theta, j) {
 
   if (toupper(config_theta$prior_dist) == "NORMAL" && config_theta$shrinkage_correction) {
-    prior_sd <- config_theta$prior_par[[j]][2]
-    o        <- list()
-    o$theta  <- EAP$theta * (1 + (EAP$se ** 2))
-    o$se     <- EAP$se
-    if (o$se < prior_sd) {
-      o$se <- 1 / sqrt((o$se ** -2) - (prior_sd ** -2))
+    nd <- ncol(EAP$theta)
+    if (nd == 1) {
+      prior_sd <- config_theta$prior_par[[j]][2]
+      o        <- list()
+      o$theta  <- EAP$theta * (1 + (EAP$se ** 2))
+      o$se     <- EAP$se
+      if (o$se < prior_sd) {
+        x <- (o$se ** -2) - (prior_sd ** -2)
+        o$se <- sqrt(1 / x)
+      }
+      return(o)
     }
-    return(o)
+    if (nd > 1) {
+      prior_sigma <- config_theta$prior_par[[j]]$prior_sigma
+      prior_sd <- sqrt(diag(prior_sigma))
+      o <- list()
+      o$theta <- EAP$theta %*% (diag(1, nd) + EAP$vcov)
+      o$se    <- EAP$se
+      # correct for each dimension separately
+      # TODO: there might be a better way to do this
+      for (d in 1:nd) {
+        if (o$se[d] < prior_sd[d]) {
+          x <- (o$se[d] ** -2) - (prior_sd[d] ** -2)
+          o$se[d] <- sqrt(1 / x)
+        }
+      }
+      # TODO: vcov needs to be corrected
+      return(o)
+    }
   }
 
   return(EAP)
