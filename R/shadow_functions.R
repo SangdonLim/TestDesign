@@ -298,7 +298,7 @@ setMethod(
 
           if (toupper(config@content_balancing$method) == "NONE") {
             if (toupper(config@item_selection$method) == "D-OPTIMAL") {
-              o@administered_item_index[position] <- selectItemUsingDOptimality(info_current_theta, position, o)
+              o@administered_item_index[position] <- selectItemUsingDOptimality(info_current_theta, position, o, constants)
             }
           }
 
