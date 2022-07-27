@@ -132,7 +132,8 @@ setClass("config_Shadow",
     if (!toupper(object@item_selection$method) %in% c(
       "MFI", "MPWI", "EB", "FB", "GFI", "FIXED",
       "DIRINFO-45",
-      "DIRINFO-THISANGLE"
+      "DIRINFO-THISANGLE",
+      "D-OPTIMAL"
     )) {
       msg <- sprintf("config@item_selection: unrecognized $method '%s')", object@item_selection$method)
       err <- c(err, msg)
