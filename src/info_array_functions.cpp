@@ -175,6 +175,53 @@ arma::mat calc_info_array(
 
 }
 
+//' @rdname calc_info_matrix
+//' @export
+// [[Rcpp::export]]
+List calc_info_matrix(
+  const arma::rowvec& x,
+  const arma::mat& item_parm,
+  const int& nd,
+  const arma::icolvec& ncat,
+  const arma::icolvec& model) {
+
+  int ni = item_parm.n_rows;
+  List info_array(ni);
+
+  for (int i = 0; i < ni; i++) {
+    switch (model(i)) {
+      case 102: {
+        arma::rowvec a = item_parm(i, span(0, nd - 1));
+        double d       = item_parm(i, nd);
+        info_array(i) = info_m_2pl(x, a, d);
+      }
+      break;
+      case 103: {
+        arma::rowvec a = item_parm(i, span(0, nd - 1));
+        double d       = item_parm(i, nd);
+        double c       = item_parm(i, nd + 1);
+        info_array(i) = info_m_3pl(x, a, d, c);
+      }
+      break;
+      case 105: {
+        arma::rowvec a = item_parm(i, span(0, nd - 1));
+        arma::rowvec d = item_parm(i, span(nd, nd + ncat(i) - 2));
+        info_array(i) = info_m_gpc(x, a, d);
+      }
+      break;
+      case 106: {
+        arma::rowvec a = item_parm(i, span(0, nd - 1));
+        arma::rowvec d = item_parm(i, span(nd, nd + ncat(i) - 2));
+        info_array(i) = info_m_gr(x, a, d);
+      }
+      break;
+    }
+  }
+
+  return info_array;
+
+}
+
 //' Calculate the Fisher information using empirical Bayes
 //'
 //' Calculate the Fisher information using empirical Bayes.

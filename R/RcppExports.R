@@ -211,6 +211,12 @@ calc_info_array <- function(x, item_parm, ncat, model) {
     .Call('_TestDesign_calc_info_array', PACKAGE = 'TestDesign', x, item_parm, ncat, model)
 }
 
+#' @rdname calc_info_matrix
+#' @export
+calc_info_matrix <- function(x, item_parm, nd, ncat, model) {
+    .Call('_TestDesign_calc_info_matrix', PACKAGE = 'TestDesign', x, item_parm, nd, ncat, model)
+}
+
 #' Calculate the Fisher information using empirical Bayes
 #'
 #' Calculate the Fisher information using empirical Bayes.

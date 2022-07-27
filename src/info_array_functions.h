@@ -21,6 +21,13 @@ arma::mat calc_info_array(
   const arma::icolvec&,
   const arma::icolvec&);
 
+List calc_info_matrix(
+  const arma::rowvec&,
+  const arma::mat&,
+  const int&,
+  const arma::icolvec&,
+  const arma::icolvec&);
+
 arma::colvec calc_info_EB (
   const arma::mat&,
   const arma::mat&,
