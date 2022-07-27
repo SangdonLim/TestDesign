@@ -32,7 +32,7 @@ createShadowTestConfig(
 
 \item{content_balancing}{a named list containing content balancing options.
 \itemize{
-  \item{\code{method}} the type of balancing method. Accepts \code{NONE, STA}. (default = \code{STA})
+  \item{\code{method}} the type of content balancing method. Accepts \code{NONE, STA, WEIGHTED-DEVIATION}. (default = \code{STA})
 }}
 
 \item{MIP}{a named list containing solver options.

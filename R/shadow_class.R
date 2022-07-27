@@ -134,8 +134,8 @@ setClass("config_Shadow",
       }
     }
 
-    if (!object@content_balancing$method %in% c("NONE", "STA")) {
-      msg <- sprintf("config@content_balancing: unrecognized $method '%s' (accepts NONE, or STA)", object@content_balancing$method)
+    if (!object@content_balancing$method %in% c("NONE", "STA", "WEIGHTED-DEVIATION")) {
+      msg <- sprintf("config@content_balancing: unrecognized $method '%s'", object@content_balancing$method)
       err <- c(err, msg)
     }
     if (!object@exclude_policy$method %in%
@@ -246,7 +246,7 @@ setClass("config_Shadow",
 #' }
 #' @param content_balancing a named list containing content balancing options.
 #' \itemize{
-#'   \item{\code{method}} the type of balancing method. Accepts \code{NONE, STA}. (default = \code{STA})
+#'   \item{\code{method}} the type of content balancing method. Accepts \code{NONE, STA, WEIGHTED-DEVIATION}. (default = \code{STA})
 #' }
 #' @param MIP a named list containing solver options.
 #' \itemize{
