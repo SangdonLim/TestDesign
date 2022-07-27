@@ -714,9 +714,11 @@ plotShadowAudit <- function(x, dimension, theta_range, z_ci, use_par, ...) {
     if (!is.null(x@true_theta)) {
       abline(h = x@true_theta[dimension], lty = 1, col = "red")
     }
-    for (i in 1:n_items) {
-      if (x@shadow_test_refreshed[i]) {
-        text(i, min_theta, "S", col = "red", cex = 1.5)
+    if (length(x@shadow_test_refreshed) > 0) {
+      for (i in 1:n_items) {      
+        if (x@shadow_test_refreshed[i]) {
+          text(i, min_theta, "S", col = "red", cex = 1.5)
+        }
       }
     }
   }
@@ -761,6 +763,10 @@ plotShadowAudit <- function(x, dimension, theta_range, z_ci, use_par, ...) {
 
 #' @noRd
 plotShadowChart <- function(x, simple, use_par, ...) {
+
+  if (length(x@shadow_test_refreshed) == 0) {
+    stop("shadowtests were not used for this simulation result object")
+  }
 
   if (use_par) {
     old_par <- par(no.readonly = TRUE)
