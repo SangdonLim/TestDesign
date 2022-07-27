@@ -206,19 +206,20 @@ setMethod(
       while (!done) {
 
         position <- position + 1
-        info_current_theta <- computeInfoAtCurrentTheta(
-          config@item_selection, j,
-          current_theta,
-          item_pool,
-          model,
-          posterior_record,
-          info_fixed_theta,               # Only used if config@item_selection$method = "FIXED"
-          simulation_data_cache@info_grid # Only used if config@item_selection$method = "MPWI"
-        )
 
         # Item position / simulee: do shadow test assembly
 
         if (constants$use_shadowtest) {
+
+          info_current_theta <- computeInfoAtCurrentTheta(
+            config@item_selection, j,
+            current_theta,
+            item_pool,
+            model,
+            posterior_record,
+            info_fixed_theta,               # Only used if config@item_selection$method = "FIXED"
+            simulation_data_cache@info_grid # Only used if config@item_selection$method = "MPWI"
+          )
 
           o@theta_segment_index[position] <- parseThetaSegment(
             current_theta, position, config@exposure_control, constants
@@ -276,6 +277,16 @@ setMethod(
         if (!constants$use_shadowtest) {
 
           # Do traditional CAT
+
+          info_current_theta <- computeInfoAtCurrentTheta(
+            config@item_selection, j,
+            current_theta,
+            item_pool,
+            model,
+            posterior_record,
+            info_fixed_theta,               # Only used if config@item_selection$method = "FIXED"
+            simulation_data_cache@info_grid # Only used if config@item_selection$method = "MPWI"
+          )
 
           o@administered_item_index[position] <- selectItem(info_current_theta, position, o)
 
