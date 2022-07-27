@@ -288,7 +288,9 @@ setMethod(
             simulation_data_cache@info_grid # Only used if config@item_selection$method = "MPWI"
           )
 
-          o@administered_item_index[position] <- selectItem(info_current_theta, position, o)
+          if (toupper(config@content_balancing$method) == "WEIGHTED-DEVIATION") {
+            o@administered_item_index[position] <- selectItemUsingWeightedDeviation(info_current_theta, position, o, constraints)
+          }
 
         }
 

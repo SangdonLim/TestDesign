@@ -92,4 +92,5 @@ Collate:
     'simulation_data_cache_class.r'
     'simulation_data_cache_operators.r'
     'theta_functions.R'
+    'weighted_deviation_functions.r'
     'xdata_functions.R'
