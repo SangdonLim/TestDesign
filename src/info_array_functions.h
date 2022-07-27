@@ -15,7 +15,7 @@ arma::colvec calc_thisdirinfo(
   const arma::icolvec&,
   const arma::rowvec&);
 
-arma::mat calc_info_matrix(
+arma::mat calc_info_array(
   const arma::mat&,
   const arma::mat&,
   const arma::icolvec&,

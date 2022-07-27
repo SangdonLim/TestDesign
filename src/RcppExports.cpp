@@ -471,9 +471,9 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// calc_info_matrix
-arma::mat calc_info_matrix(const arma::mat& x, const arma::mat& item_parm, const arma::icolvec& ncat, const arma::icolvec& model);
-RcppExport SEXP _TestDesign_calc_info_matrix(SEXP xSEXP, SEXP item_parmSEXP, SEXP ncatSEXP, SEXP modelSEXP) {
+// calc_info_array
+arma::mat calc_info_array(const arma::mat& x, const arma::mat& item_parm, const arma::icolvec& ncat, const arma::icolvec& model);
+RcppExport SEXP _TestDesign_calc_info_array(SEXP xSEXP, SEXP item_parmSEXP, SEXP ncatSEXP, SEXP modelSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -481,7 +481,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const arma::mat& >::type item_parm(item_parmSEXP);
     Rcpp::traits::input_parameter< const arma::icolvec& >::type ncat(ncatSEXP);
     Rcpp::traits::input_parameter< const arma::icolvec& >::type model(modelSEXP);
-    rcpp_result_gen = Rcpp::wrap(calc_info_matrix(x, item_parm, ncat, model));
+    rcpp_result_gen = Rcpp::wrap(calc_info_array(x, item_parm, ncat, model));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1797,7 +1797,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_TestDesign_array_h_gr", (DL_FUNC) &_TestDesign_array_h_gr, 4},
     {"_TestDesign_calc_info", (DL_FUNC) &_TestDesign_calc_info, 4},
     {"_TestDesign_calc_thisdirinfo", (DL_FUNC) &_TestDesign_calc_thisdirinfo, 6},
-    {"_TestDesign_calc_info_matrix", (DL_FUNC) &_TestDesign_calc_info_matrix, 4},
+    {"_TestDesign_calc_info_array", (DL_FUNC) &_TestDesign_calc_info_array, 4},
     {"_TestDesign_calc_info_EB", (DL_FUNC) &_TestDesign_calc_info_EB, 4},
     {"_TestDesign_calc_info_FB", (DL_FUNC) &_TestDesign_calc_info_FB, 5},
     {"_TestDesign_calc_MI_FB", (DL_FUNC) &_TestDesign_calc_MI_FB, 4},

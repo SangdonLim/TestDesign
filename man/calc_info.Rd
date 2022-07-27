@@ -2,15 +2,15 @@
 % Please edit documentation in R/RcppExports.R, R/cpp_calc_documents.r
 \name{calc_info}
 \alias{calc_info}
-\alias{calc_info_matrix}
+\alias{calc_info_array}
 \title{(C++) For multiple items, calculate Fisher information}
 \usage{
 calc_info(x, item_parm, ncat, model)
 
-calc_info_matrix(x, item_parm, ncat, model)
+calc_info_array(x, item_parm, ncat, model)
 }
 \arguments{
-\item{x}{the theta value. This must be a column vector in matrix form for \code{calc_info_matrix()}.}
+\item{x}{the theta value. This must be a column vector in matrix form for \code{calc_info_array()}.}
 
 \item{item_parm}{a matrix containing item parameters. Each row should represent an item.}
 
@@ -26,11 +26,11 @@ calc_info_matrix(x, item_parm, ncat, model)
 }}
 }
 \description{
-\code{calc_info()} and \code{calc_info_matrix()} are functions for calculating Fisher information.
+\code{calc_info()} and \code{calc_info_array()} are functions for calculating Fisher information.
 These functions are designed for multiple items.
 }
 \details{
-\code{calc_info()} accepts a single theta value, and \code{calc_info_matrix()} accepts multiple theta values.
+\code{calc_info()} accepts a single theta value, and \code{calc_info_array()} accepts multiple theta values.
 
 Currently supports unidimensional models.
 }
@@ -56,7 +56,7 @@ calc_info(x, item_parm, ncat, model)
 
 # multiple thetas example
 x <- matrix(seq(0.1, 0.5, 0.1)) # column vector in matrix form
-calc_info_matrix(x, item_parm, ncat, model)
+calc_info_array(x, item_parm, ncat, model)
 
 }
 \references{

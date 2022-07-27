@@ -109,7 +109,7 @@ arma::colvec calc_thisdirinfo(
 //' @rdname calc_info
 //' @export
 // [[Rcpp::export]]
-arma::mat calc_info_matrix(
+arma::mat calc_info_array(
   const arma::mat& x,
   const arma::mat& item_parm,
   const arma::icolvec& ncat,
@@ -117,14 +117,14 @@ arma::mat calc_info_matrix(
 
   int nx = x.n_rows;
   int ni = item_parm.n_rows;
-  arma::mat info_matrix(nx, ni);
+  arma::mat info_array(nx, ni);
 
   for (int i = 0; i < ni; i++) {
     switch (model(i)) {
       case 1: {
         double b = item_parm(i, 0);
         for (int q = 0; q < nx; q++) {
-          info_matrix(q, i) = info_1pl(x.row(q), b);
+          info_array(q, i) = info_1pl(x.row(q), b);
         }
       }
       break;
@@ -132,7 +132,7 @@ arma::mat calc_info_matrix(
         double a = item_parm(i, 0);
         double b = item_parm(i, 1);
         for (int q = 0; q < nx; q++) {
-          info_matrix(q, i) = info_2pl(x.row(q), a, b);
+          info_array(q, i) = info_2pl(x.row(q), a, b);
         }
       }
       break;
@@ -141,14 +141,14 @@ arma::mat calc_info_matrix(
         double b = item_parm(i, 1);
         double c = item_parm(i, 2);
         for (int q = 0; q < nx; q++) {
-          info_matrix(q, i) = info_3pl(x.row(q), a, b, c);
+          info_array(q, i) = info_3pl(x.row(q), a, b, c);
         }
       }
       break;
       case 4: {
         rowvec b = item_parm(i, span(0, ncat(i) - 2));
         for (int q = 0; q < nx; q++) {
-          info_matrix(q, i) = info_pc(x.row(q), b);
+          info_array(q, i) = info_pc(x.row(q), b);
         }
       }
       break;
@@ -156,7 +156,7 @@ arma::mat calc_info_matrix(
         double a = item_parm(i, 0);
         rowvec b = item_parm(i, span(1, ncat(i) - 1));
         for (int q = 0; q < nx; q++) {
-          info_matrix(q, i) = info_gpc(x.row(q), a, b);
+          info_array(q, i) = info_gpc(x.row(q), a, b);
         }
       }
       break;
@@ -164,14 +164,14 @@ arma::mat calc_info_matrix(
         double a = item_parm(i, 0);
         rowvec b = item_parm(i, span(1, ncat(i) - 1));
         for (int q = 0; q < nx; q++) {
-          info_matrix(q, i) = info_gr(x.row(q), a, b);
+          info_array(q, i) = info_gr(x.row(q), a, b);
         }
       }
       break;
     }
   }
 
-  return info_matrix;
+  return info_array;
 
 }
 
