@@ -258,6 +258,16 @@ computeInfoAtCurrentTheta <- function(
       item_parameter_sample, item_pool@NCAT, model_code)[, 1]
     return(info)
   }
+  if (item_method == "D-OPTIMAL") {
+    info <- calc_info_matrix(
+      current_theta$theta,
+      item_pool@ipar,
+      item_pool@nd,
+      item_pool@NCAT,
+      model_code
+    )
+    return(info)
+  }
 }
 
 #' @noRd
