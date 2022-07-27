@@ -285,7 +285,22 @@ setMethod(
 
           # Do traditional CAT
 
-          o@administered_item_index[position] <- selectItem(info_current_theta, position, o)
+          info_current_theta <- computeInfoAtCurrentTheta(
+            config@item_selection,
+            j,
+            current_theta,
+            item_pool,
+            model_code,
+            info_fixed_theta,                # Only used if config@item_selection$method = "FIXED"
+            simulation_data_cache@info_grid, # Only used if config@item_selection$method = "MPWI"
+            item_parameter_sample            # Only used if config@item_selection$method = "FB"
+          )
+
+          if (toupper(config@content_balancing$method) == "NONE") {
+            if (toupper(config@item_selection$method) == "D-OPTIMAL") {
+              o@administered_item_index[position] <- selectItemUsingDOptimality(info_current_theta, position, o)
+            }
+          }
 
         }
 

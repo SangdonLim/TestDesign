@@ -80,6 +80,7 @@ Collate:
     'exposure_control_functions.R'
     'solver_functions.R'
     'helper_functions.R'
+    'optimality_functions.r'
     'other_functions.R'
     'partitioning_class.r'
     'partitioning_functions.r'
