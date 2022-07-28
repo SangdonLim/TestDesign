@@ -4,6 +4,7 @@
 ^data-raw$
 ^man-roxygen$
 ^\.vscode$
+^R/\.vscode$
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^cleanup\..*$
