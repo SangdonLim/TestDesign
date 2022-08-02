@@ -890,6 +890,7 @@ loadConstraints <- function(object, pool, item_attrib, st_attrib = NULL, file = 
 
     list_constraints[[index]] <- parseConstraintData(constraints[index, ], item_attrib, constants)
     constraints[index, ]      <- addCountsToConstraintData(constraints[index, ], item_attrib)
+    constraints[index, ]      <- addLBUBToConstraintData(constraints[index, ], item_attrib)
 
     if (constraints[["TYPE"]][index] %in% c("NUMBER", "COUNT")) {
 
@@ -951,6 +952,7 @@ loadConstraints <- function(object, pool, item_attrib, st_attrib = NULL, file = 
 
       list_constraints[[index]] <- parseConstraintData(constraints[index, ], st_attrib, constants)
       constraints[index, ]      <- addCountsToConstraintData(constraints[index, ], st_attrib)
+      constraints[index, ]      <- addLBUBToConstraintData(constraints[index, ], st_attrib)
 
       if (constraints[["TYPE"]][index] == "ORDER") {
 

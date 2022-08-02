@@ -591,6 +591,26 @@ addCountsToConstraintData <- function(x, attrib) {
 }
 
 #' @noRd
+addLBUBToConstraintData <- function(x, attrib) {
+  if (x$TYPE %in% c("MUTUALLYEXCLUSIVE", "MUTUALLY EXCLUSIVE", "XOR", "ENEMY")) {
+    x$LB <- 0
+    x$UB <- 1
+    return(x)
+  }
+  if (x$TYPE %in% c("INCLUDE")) {
+    x$LB <- x$COUNT
+    x$UB <- x$COUNT
+    return(x)
+  }
+  if (x$TYPE %in% c("EXCLUDE")) {
+    x$LB <- 0
+    x$UB <- 0
+    return(x)
+  }
+  return(x)
+}
+
+#' @noRd
 addSolutionToConstraintData <- function(x, attrib, item_idx, all_values) {
 
   # attrib must be item_attrib
