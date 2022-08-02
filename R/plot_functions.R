@@ -625,9 +625,11 @@ plotShadowAudit <- function(x, theta_range, z_ci, use_par, ...) {
   if (!is.null(x@true_theta)) {
     abline(h = x@true_theta, lty = 1, col = "red")
   }
-  for (i in 1:n_items) {
-    if (x@shadow_test_refreshed[i]) {
-      text(i, min_theta, "S", col = "red", cex = 1.5)
+  if (length(x@shadow_test_refreshed) > 0) {
+    for (i in 1:n_items) {
+      if (x@shadow_test_refreshed[i]) {
+        text(i, min_theta, "S", col = "red", cex = 1.5)
+      }
     }
   }
 
