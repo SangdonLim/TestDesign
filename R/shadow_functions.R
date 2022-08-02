@@ -98,6 +98,15 @@ setMethod(
     if (constants$use_shadowtest) {
       shadowtest_refresh_schedule <- parseShadowTestRefreshSchedule(constants, config@refresh_policy)
     }
+    if (!constants$use_shadowtest) {
+      attribute_contribution <- lapply(
+        1:constants$ni,
+        function(x) {
+          candidate_item_attribute <- getSolutionAttributes(constraints, x, FALSE)
+          return(candidate_item_attribute$solution)
+        }
+      )
+    }
 
     # Initialize exposure rate control
     if (constants$exposure_control_method %in% c("NONE", "ELIGIBILITY", "BIGM", "BIGM-BAYESIAN")) {
@@ -289,7 +298,13 @@ setMethod(
           )
 
           if (toupper(config@content_balancing$method) == "WEIGHTED-DEVIATION") {
-            o@administered_item_index[position] <- selectItemUsingWeightedDeviation(info_current_theta, position, o, constraints)
+            o@administered_item_index[position] <- selectItemUsingWeightedDeviation(
+              info_current_theta,
+              position,
+              o,
+              attribute_contribution,
+              constraints
+            )
           }
 
         }
