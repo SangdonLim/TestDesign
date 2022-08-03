@@ -59,3 +59,33 @@ selectItemUsingWeightedDeviation <- function(info, position, o, attribute_contri
   return(selected_item)
 
 }
+
+#' @noRd
+populateWeightedDeviation <- function(o, attribute_contribution, constraints) {
+
+  administered_test <- o@administered_item_index
+  administered_test_attributes <- do.call(rbind, attribute_contribution[administered_test])
+  administered_test_attributes <- apply(administered_test_attributes, 2, sum)
+
+  d_lowerbound_violation <-
+    (constraints@constraints$LB - administered_test_attributes) *
+    (constraints@constraints$LB > administered_test_attributes)
+  d_upperbound_violation <-
+    (administered_test_attributes - constraints@constraints$UB) *
+    (administered_test_attributes > constraints@constraints$UB)
+
+  x <- list()
+  x$d_lowerbound_violation <- d_lowerbound_violation
+  x$d_upperbound_violation <- d_upperbound_violation
+  x$weight <- constraints@constraints$WEIGHT
+  x$weighted_deviation <-
+    sum(constraints@constraints$WEIGHT * d_lowerbound_violation, na.rm = TRUE) +
+    sum(constraints@constraints$WEIGHT * d_upperbound_violation, na.rm = TRUE)
+
+  # TODO: parse info deviation
+
+  o@weighted_deviation <- x
+
+  return(o)
+
+}

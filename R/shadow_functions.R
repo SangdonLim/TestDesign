@@ -441,6 +441,9 @@ setMethod(
       # Simulee: record item usage
       usage_matrix <- updateUsageMatrix(usage_matrix, j, o, constants)
 
+      # Simulee: record weighted deviation if applicable
+      o <- populateWeightedDeviation(o, attribute_contribution, constraints)
+
       # Simulee: do exposure control
       exposure_record <- doExposureControl(
         exposure_record, segment_record,
