@@ -16,6 +16,10 @@ selectItemUsingWeightedDeviation <- function(info, position, o, attribute_contri
     administered_test_attributes <- apply(administered_test_attributes, 2, sum)
   }
 
+  if (is.null(constraints@constraints$WEIGHT)) {
+    stop("'WEIGHT' column not found in constraints")
+  }
+
   wd <- lapply(
     1:ni,
     function(x) {
@@ -41,11 +45,9 @@ selectItemUsingWeightedDeviation <- function(info, position, o, attribute_contri
       d_info_violation <- 100000 - candidate_test_info
 
       wd <-
-        sum(d_lowerbound_violation, na.rm = TRUE) +
-        sum(d_upperbound_violation, na.rm = TRUE) +
+        sum(constraints@constraints$WEIGHT * d_lowerbound_violation, na.rm = TRUE) +
+        sum(constraints@constraints$WEIGHT * d_upperbound_violation, na.rm = TRUE) +
         d_info_violation
-
-      # TODO: add weights
 
       return(wd)
       
