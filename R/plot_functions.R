@@ -680,6 +680,10 @@ plotShadowChart <- function(x, simple, use_par, ...) {
     par(mar = c(2, 3, 1, 1) + 0.1, mfrow = c(1, 1))
   }
 
+  if (length(x@shadow_test_refreshed) == 0) {
+    stop("shadow test was not used for this simulation")
+  }
+
   test_length  <- x@test_length_constraints
   ni_pool      <- x@ni_pool
 
