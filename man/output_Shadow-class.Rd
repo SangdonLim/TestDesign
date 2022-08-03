@@ -54,6 +54,8 @@
 
 \item{\code{shadow_test}}{the list containing the item IDs within the shadow test used in each position.}
 
+\item{\code{weighted_deviation}}{the list containing the weighted (and unweighted) deviation of the administered test for each constraint.}
+
 \item{\code{max_cat_pool}}{the maximum number of response categories the item pool had.}
 
 \item{\code{ni_pool}}{the total number of items the item pool had.}
