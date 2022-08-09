@@ -48,16 +48,26 @@ NULL
 #' @export
 #' @docType methods
 #' @rdname calcKL-methods
-calcKL <- function(theta, theta_width, quadrature_unit) {
-  KL <- numeric(ni)
+calcKL <- function(object, theta, theta_width, quadrature_unit) {
+
+  ni <- object@ni
+  NCAT <- object@NCAT
+  info <- numeric(ni)
+
   theta_q <- seq(theta - theta_width, theta + theta_width, by = quadrature_unit)
+
   for (i in 1:ni) {
-    ncat <- NCAT[i]
-    p <- as.vector(TestDesign::calcProb(item.pool@parms[[i]], theta))
-    p.interval <- TestDesign::calcProb(item.pool@parms[[i]], theta_q)
-    for (k in 1:ncat) {
-      KL[i] <- KL[i] + sum(p[k] * log(p[k] / p.interval[, k]))
+    ncat_thisitem <- NCAT[i]
+    prob_origin <- calcProb(object@parms[[i]], theta)
+    prob_area   <- calcProb(object@parms[[i]], theta_q)
+    info_thisitem <- 0
+    for (k in 1:ncat_thisitem) {
+      info_thisitem <- info_thisitem +
+        sum(prob_origin[k] * log(prob_origin[k] / prob_area[, k]))
     }
+    info[i] <- info[i] + info_thisitem
   }
-  return(KL)
+
+  return(info)
+
 }
