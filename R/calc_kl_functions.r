@@ -78,7 +78,7 @@ setMethod(
         info_thisitem <- 0
         for (k in 1:ncat_thisitem) {
           info_thisitem <- info_thisitem +
-          sum(prob_origin[k] * log(prob_origin[k] / prob_area[, k]))
+          mean(prob_origin[k] * log(prob_origin[k] / prob_area[, k]))
         }
         info[theta_idx, i] <- info[theta_idx, i] + info_thisitem
       }
