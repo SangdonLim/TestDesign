@@ -3,9 +3,12 @@
 \docType{methods}
 \name{calcKL}
 \alias{calcKL}
+\alias{calcKL,item_pool,matrix-method}
 \title{Calculate Kullback-Leibler information}
 \usage{
 calcKL(object, theta, theta_width, quadrature_unit)
+
+\S4method{calcKL}{item_pool,matrix}(object, theta, theta_width, quadrature_unit)
 }
 \arguments{
 \item{object}{an \code{\linkS4class{item_pool}} object.}

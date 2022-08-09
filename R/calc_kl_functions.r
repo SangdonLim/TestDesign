@@ -33,26 +33,40 @@ NULL
 #' @export
 #' @docType methods
 #' @rdname calcKL-methods
-calcKL <- function(object, theta, theta_width, quadrature_unit) {
+setGeneric(
+  name = "calcKL",
+  def = function(object, theta, theta_width, quadrature_unit) {
+    standardGeneric("calcKL")
+  }
+)
 
-  ni <- object@ni
-  NCAT <- object@NCAT
-  info <- numeric(ni)
+#' @rdname calcKL-methods
+#' @aliases calcKL,item_pool,matrix-method
+setMethod(
+  f = "calcKL",
+  signature = c("item_pool", "matrix"),
+  definition = function(object, theta, theta_width, quadrature_unit) {
 
-  theta_q <- seq(theta - theta_width, theta + theta_width, by = quadrature_unit)
+    ni <- object@ni
+    NCAT <- object@NCAT
+    info <- numeric(ni)
 
-  for (i in 1:ni) {
-    ncat_thisitem <- NCAT[i]
-    prob_origin <- calcProb(object@parms[[i]], theta)
-    prob_area   <- calcProb(object@parms[[i]], theta_q)
-    info_thisitem <- 0
-    for (k in 1:ncat_thisitem) {
-      info_thisitem <- info_thisitem +
-        sum(prob_origin[k] * log(prob_origin[k] / prob_area[, k]))
+    theta_q <- seq(theta - theta_width, theta + theta_width, by = quadrature_unit)
+
+    for (i in 1:ni) {
+      ncat_thisitem <- NCAT[i]
+      prob_origin <- calcProb(object@parms[[i]], theta)
+      prob_area   <- calcProb(object@parms[[i]], theta_q)
+      info_thisitem <- 0
+      for (k in 1:ncat_thisitem) {
+        info_thisitem <- info_thisitem +
+          sum(prob_origin[k] * log(prob_origin[k] / prob_area[, k]))
+      }
+      info[i] <- info[i] + info_thisitem
     }
-    info[i] <- info[i] + info_thisitem
+
+    return(info)
+
   }
 
-  return(info)
-
-}
+)
