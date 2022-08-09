@@ -72,6 +72,7 @@ Collate:
     'shadow_functions.R'
     'static_functions.R'
     'bayes_functions.R'
+    'calc_kl_functions.r'
     'cpp_calc_documents.r'
     'cpp_core_documents.r'
     'cpp_theta_documents.r'
