@@ -48,9 +48,9 @@ NULL
 #' @export
 #' @docType methods
 #' @rdname calcKL-methods
-calcKL <- function(theta, theta_width) {
+calcKL <- function(theta, theta_width, quadrature_unit) {
   KL <- numeric(ni)
-  interval <- seq(theta - theta_width, theta + theta_width, length.out = 10)
+  theta_q <- seq(theta - theta_width, theta + theta_width, by = quadrature_unit)
   available <- items.available
   if (content.balancing) {
     available <- items.available & (content.cat == .GetNextContent())
@@ -59,7 +59,7 @@ calcKL <- function(theta, theta_width) {
     if (available[i]) {
       ncat <- NCAT[i]
       p <- as.vector(TestDesign::calcProb(item.pool@parms[[i]], theta))
-      p.interval <- TestDesign::calcProb(item.pool@parms[[i]], interval)
+      p.interval <- TestDesign::calcProb(item.pool@parms[[i]], theta_q)
       for (k in 1:ncat) {
         KL[i] <- KL[i] + sum(p[k] * log(p[k] / p.interval[, k]))
       }
