@@ -44,6 +44,17 @@ setGeneric(
 #' @aliases calcKL,item_pool,matrix-method
 setMethod(
   f = "calcKL",
+  signature = c("item_pool", "numeric"),
+  definition = function(object, theta, theta_width, quadrature_unit) {
+    theta <- matrix(theta, , 1)
+    return(calcKL(object, theta, theta_width, quadrature_unit))
+  }
+)
+
+#' @rdname calcKL-methods
+#' @aliases calcKL,item_pool,matrix-method
+setMethod(
+  f = "calcKL",
   signature = c("item_pool", "matrix"),
   definition = function(object, theta, theta_width, quadrature_unit) {
 

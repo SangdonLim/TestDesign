@@ -3,10 +3,13 @@
 \docType{methods}
 \name{calcKL}
 \alias{calcKL}
+\alias{calcKL,item_pool,numeric-method}
 \alias{calcKL,item_pool,matrix-method}
 \title{Calculate Kullback-Leibler information}
 \usage{
 calcKL(object, theta, theta_width, quadrature_unit)
+
+\S4method{calcKL}{item_pool,numeric}(object, theta, theta_width, quadrature_unit)
 
 \S4method{calcKL}{item_pool,matrix}(object, theta, theta_width, quadrature_unit)
 }
