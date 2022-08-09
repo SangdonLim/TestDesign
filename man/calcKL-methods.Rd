@@ -5,14 +5,14 @@
 \alias{calcKL}
 \title{Calculate Kullback-Leibler information}
 \usage{
-calcKL(current.theta, d)
+calcKL(theta, theta_width)
 }
 \arguments{
-\item{object}{an \code{\link{item}} or an \code{\linkS4class{item_pool}} object.}
-
 \item{theta}{theta values to use.}
 
 \item{theta_width}{the theta width to use to define the range of integration. The range is \code{c(theta - theta_width, theta + theta_width)}.}
+
+\item{object}{an \code{\link{item}} or an \code{\linkS4class{item_pool}} object.}
 
 \item{quadrature_unit}{the quadrature spacing to use for integration. Smaller numbers yield more accurate values.}
 }
