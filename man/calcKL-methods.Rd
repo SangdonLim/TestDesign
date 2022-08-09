@@ -16,7 +16,7 @@ calcKL(object, theta, theta_width, quadrature_unit)
 \arguments{
 \item{object}{an \code{\linkS4class{item_pool}} object.}
 
-\item{theta}{the theta value to use. This must be a single value.}
+\item{theta}{theta values to use.}
 
 \item{theta_width}{the theta width to use to define the range of integration. The range is \code{c(theta - theta_width, theta + theta_width)}.}
 
@@ -24,10 +24,11 @@ calcKL(object, theta, theta_width, quadrature_unit)
 }
 \value{
 \describe{
-  \item{\code{\linkS4class{item_pool}} object:}{\code{\link{calcKL}} returns a length-\emph{ni} vector of information values.}
+  \item{\code{\linkS4class{item_pool}} object:}{\code{\link{calcKL}} returns a (\emph{nx}, \emph{ni}) matrix of information values.}
 }
 \describe{
   \item{\emph{notations}}{\itemize{
+    \item{\emph{nx} denotes the number of theta values in the 'theta' argument.}
     \item{\emph{ni} denotes the number of items in the \code{\linkS4class{item_pool}} object.}
   }}
 }
@@ -36,7 +37,7 @@ calcKL(object, theta, theta_width, quadrature_unit)
 \code{\link{calcKL}} is a function to calculate Kullback-Leibler information.
 }
 \examples{
-info_pool <- calcKL(itempool_science, 0, 1, 10)
+info_pool <- calcKL(itempool_science, seq(-3, 3, 1), 1, 10)
 
 }
 \references{
