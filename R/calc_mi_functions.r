@@ -48,23 +48,17 @@ NULL
 #' @rdname calcMI-methods
 calcMI <- function(posterior) {
   MI <- numeric(ni)
-  available <- items.available
-  if (content.balancing) {
-    available <- items.available & (content.cat == .GetNextContent())
-  }
   for (i in 1:ni) {
-    if (available[i]) {
-      ncat <- NCAT[i]
-      p <- numeric(ncat)
-      posterior.k <- matrix(NA, ncat, length(posterior))
-      for (k in 1:ncat) {
-        posterior.k[k,] <- posterior * pp[, i, k]
-        p[k] <- sum(posterior.k[k, ])
-      }
-      p <- p / sum(p)
-      for (k in 1:ncat) {
-        MI[i] <- MI[i] + sum(posterior.k[k, ] * log(posterior.k[k, ] / (posterior * p[k])))
-      }
+    ncat <- NCAT[i]
+    p <- numeric(ncat)
+    posterior.k <- matrix(NA, ncat, length(posterior))
+    for (k in 1:ncat) {
+      posterior.k[k,] <- posterior * pp[, i, k]
+      p[k] <- sum(posterior.k[k, ])
+    }
+    p <- p / sum(p)
+    for (k in 1:ncat) {
+      MI[i] <- MI[i] + sum(posterior.k[k, ] * log(posterior.k[k, ] / (posterior * p[k])))
     }
   }
   return(MI)
