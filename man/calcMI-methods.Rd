@@ -5,12 +5,12 @@
 \alias{calcMI}
 \title{Calculate mutual information}
 \usage{
-calcMI(pos)
+calcMI(posterior)
 }
 \arguments{
-\item{object}{an \code{\link{item}} or an \code{\linkS4class{item_pool}} object.}
-
 \item{posterior}{the posterior density of estimated theta.}
+
+\item{object}{an \code{\link{item}} or an \code{\linkS4class{item_pool}} object.}
 }
 \value{
 \describe{
