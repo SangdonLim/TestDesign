@@ -5,12 +5,14 @@
 \alias{calcMI}
 \title{Calculate mutual information}
 \usage{
-calcMI(object, posterior)
+calcMI(object, posterior, theta_q)
 }
 \arguments{
 \item{object}{an \code{\link{item}} or an \code{\linkS4class{item_pool}} object.}
 
 \item{posterior}{the posterior density of estimated theta.}
+
+\item{theta_q}{the theta quadrature points corresponding to the posterior density vector.}
 }
 \value{
 \describe{

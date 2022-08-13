@@ -7,6 +7,7 @@ NULL
 #'
 #' @param object an \code{\link{item}} or an \code{\linkS4class{item_pool}} object.
 #' @param posterior the posterior density of estimated theta.
+#' @param theta_q the theta quadrature points corresponding to the posterior density vector.
 #'
 #' @return
 #' \describe{
@@ -46,13 +47,11 @@ NULL
 #' @export
 #' @docType methods
 #' @rdname calcMI-methods
-calcMI <- function(object, posterior) {
+calcMI <- function(object, posterior, theta_q) {
 
   ni <- object@ni
   NCAT <- object@NCAT
   info <- numeric(ni)
-
-  theta_q <- seq(-3, 3, .1)
 
   pp <- calcProb(object, theta_q)
 
