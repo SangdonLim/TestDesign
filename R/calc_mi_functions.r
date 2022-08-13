@@ -46,20 +46,30 @@ NULL
 #' @export
 #' @docType methods
 #' @rdname calcMI-methods
-calcMI <- function(posterior) {
-  MI <- numeric(ni)
+calcMI <- function(object, posterior) {
+
+  ni <- object@ni
+  NCAT <- object@NCAT
+  info <- numeric(ni)
+
+  theta_q <- seq(-3, 3, .1)
+
+  pp <- calcProb(object, theta_q)
+
   for (i in 1:ni) {
-    ncat <- NCAT[i]
-    p <- numeric(ncat)
-    posterior.k <- matrix(NA, ncat, length(posterior))
-    for (k in 1:ncat) {
-      posterior.k[k,] <- posterior * pp[, i, k]
+    ncat_thisitem <- NCAT[i]
+    p <- numeric(ncat_thisitem)
+    posterior.k <- matrix(NA, ncat_thisitem, length(posterior))
+    for (k in 1:ncat_thisitem) {
+      posterior.k[k,] <- posterior * pp[[i]][, k]
       p[k] <- sum(posterior.k[k, ])
     }
     p <- p / sum(p)
-    for (k in 1:ncat) {
-      MI[i] <- MI[i] + sum(posterior.k[k, ] * log(posterior.k[k, ] / (posterior * p[k])))
+    for (k in 1:ncat_thisitem) {
+      info[i] <- info[i] + sum(posterior.k[k, ] * log(posterior.k[k, ] / (posterior * p[k])))
     }
   }
-  return(MI)
+
+  return(info)
+
 }
