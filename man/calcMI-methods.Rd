@@ -8,7 +8,7 @@
 calcMI(object, posterior, theta_q)
 }
 \arguments{
-\item{object}{an \code{\link{item}} or an \code{\linkS4class{item_pool}} object.}
+\item{object}{an \code{\linkS4class{item_pool}} object.}
 
 \item{posterior}{the posterior density of estimated theta.}
 
@@ -16,12 +16,10 @@ calcMI(object, posterior, theta_q)
 }
 \value{
 \describe{
-  \item{\code{\link{item}} object:}{\code{\link{calcMI}} returns a (\emph{nq}, \emph{1}) matrix of information values.}
   \item{\code{\linkS4class{item_pool}} object:}{\code{\link{calcMI}} returns a (\emph{nq}, \emph{ni}) matrix of information values.}
 }
 \describe{
   \item{\emph{notations}}{\itemize{
-    \item{\emph{nq} denotes the number of theta values.}
     \item{\emph{ni} denotes the number of items in the \code{\linkS4class{item_pool}} object.}
   }}
 }
@@ -30,20 +28,7 @@ calcMI(object, posterior, theta_q)
 \code{\link{calcMI}} is a function for calculating mutual information.
 }
 \examples{
-item_1      <- new("item_1PL", difficulty = 0.5)
-item_2      <- new("item_2PL", slope = 1.0, difficulty = 0.5)
-item_3      <- new("item_3PL", slope = 1.0, difficulty = 0.5, guessing = 0.2)
-item_4      <- new("item_PC", threshold = c(-1, 0, 1), ncat = 4)
-item_5      <- new("item_GPC", slope = 1.2, threshold = c(-0.8, -1.0, 0.5), ncat = 4)
-item_6      <- new("item_GR", slope = 0.9, category = c(-1, 0, 1), ncat = 4)
-
-info_item_1 <- calcMI(item_1, seq(-3, 3, 1))
-info_item_2 <- calcMI(item_2, seq(-3, 3, 1))
-info_item_3 <- calcMI(item_3, seq(-3, 3, 1))
-info_item_4 <- calcMI(item_4, seq(-3, 3, 1))
-info_item_5 <- calcMI(item_5, seq(-3, 3, 1))
-info_item_6 <- calcMI(item_6, seq(-3, 3, 1))
-info_pool   <- calcMI(itempool_science, seq(-3, 3, 1))
+info_pool <- calcMI(itempool_science, seq(-3, 3, 1))
 
 }
 \references{
