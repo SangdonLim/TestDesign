@@ -58,14 +58,14 @@ calcMI <- function(object, posterior, theta_q) {
   for (i in 1:ni) {
     ncat_thisitem <- NCAT[i]
     p <- numeric(ncat_thisitem)
-    posterior.k <- matrix(NA, ncat_thisitem, length(posterior))
+    posterior_k <- matrix(NA, ncat_thisitem, length(posterior))
     for (k in 1:ncat_thisitem) {
-      posterior.k[k,] <- posterior * pp[[i]][, k]
-      p[k] <- sum(posterior.k[k, ])
+      posterior_k[k,] <- posterior * pp[[i]][, k]
+      p[k] <- sum(posterior_k[k, ])
     }
     p <- p / sum(p)
     for (k in 1:ncat_thisitem) {
-      info[i] <- info[i] + sum(posterior.k[k, ] * log(posterior.k[k, ] / (posterior * p[k])))
+      info[i] <- info[i] + sum(posterior_k[k, ] * log(posterior_k[k, ] / (posterior * p[k])))
     }
   }
 
