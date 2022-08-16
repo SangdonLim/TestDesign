@@ -29,7 +29,9 @@ setClass("config_Shadow",
       initial_theta             = NULL,
       fixed_theta               = NULL,
       target_value              = NULL,
-      alpha_vec                 = NULL
+      alpha_vec                 = NULL,
+      KL_width                  = 1,
+      KL_quadrature_unit        = 0.1
     ),
     content_balancing = list(
       method                    = "STA"
