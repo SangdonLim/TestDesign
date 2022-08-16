@@ -236,6 +236,15 @@ computeInfoAtCurrentTheta <- function(
       return(info)
     }
   }
+  if (item_method == "MKL") {
+    info <- calcKL(
+      item_pool,
+      matrix(current_theta$theta, 1, ),
+      item_selection$KL_width,
+      item_selection$KL_quadrature_unit
+    )
+    return(info)
+  }
   if (item_method == "MPWI") {
     info <- as.vector(matrix(current_theta$posterior, nrow = 1) %*% info_grid)
     return(info)

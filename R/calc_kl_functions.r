@@ -68,8 +68,17 @@ setMethod(
 
     for (theta_idx in 1:n_theta) {
 
-      this_theta <- theta[theta_idx]
-      theta_q <- seq(this_theta - theta_width, this_theta + theta_width, by = quadrature_unit)
+      this_theta <- theta[theta_idx, , drop = FALSE]
+
+      nd <- length(this_theta)
+      theta_q <- seq(-theta_width, +theta_width, by = quadrature_unit)
+      theta_q <- expand.grid(replicate(nd, theta_q, simplify = FALSE))
+      theta_q <- as.matrix(theta_q)
+
+      nq <- nrow(theta_q)
+      this_theta_q <- do.call(rbind, replicate(nq, this_theta, simplify = FALSE))
+
+      theta_q <- theta_q + this_theta_q
 
       for (i in 1:ni) {
         ncat_thisitem <- NCAT[i]
