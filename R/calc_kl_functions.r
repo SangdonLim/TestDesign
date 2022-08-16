@@ -9,6 +9,7 @@ NULL
 #' @param theta theta values to use.
 #' @param theta_width the theta width to use to define the range of integration. The range is \code{c(theta - theta_width, theta + theta_width)}.
 #' @param quadrature_unit the quadrature spacing to use for integration. Smaller numbers yield more accurate values.
+#' @param use_ellipse if \code{TRUE}, use an ellipse domain for integration. if \code{FALSE}, use a rectangular domain for integration.
 #'
 #' @return
 #' \describe{
@@ -22,7 +23,7 @@ NULL
 #' }
 #'
 #' @examples
-#' info_pool <- calcKL(itempool_science, seq(-3, 3, 1), 1, 10)
+#' info_pool <- calcKL(itempool_science, seq(-3, 3, 1), 1, 10, FALSE)
 #'
 #' @template 1pl-ref
 #' @template 2pl-ref
@@ -36,7 +37,7 @@ NULL
 #' @rdname calcKL-methods
 setGeneric(
   name = "calcKL",
-  def = function(object, theta, theta_width, quadrature_unit) {
+  def = function(object, theta, theta_width, quadrature_unit, use_ellipse) {
     standardGeneric("calcKL")
   }
 )
@@ -46,9 +47,9 @@ setGeneric(
 setMethod(
   f = "calcKL",
   signature = c("item_pool", "numeric"),
-  definition = function(object, theta, theta_width, quadrature_unit) {
+  definition = function(object, theta, theta_width, quadrature_unit, use_ellipse) {
     theta <- matrix(theta, , 1)
-    return(calcKL(object, theta, theta_width, quadrature_unit))
+    return(calcKL(object, theta, theta_width, quadrature_unit, use_ellipse))
   }
 )
 
@@ -57,7 +58,7 @@ setMethod(
 setMethod(
   f = "calcKL",
   signature = c("item_pool", "matrix"),
-  definition = function(object, theta, theta_width, quadrature_unit) {
+  definition = function(object, theta, theta_width, quadrature_unit, use_ellipse) {
 
     ni <- object@ni
     NCAT <- object@NCAT
@@ -70,15 +71,7 @@ setMethod(
 
       this_theta <- theta[theta_idx, , drop = FALSE]
 
-      nd <- length(this_theta)
-      theta_q <- seq(-theta_width, +theta_width, by = quadrature_unit)
-      theta_q <- expand.grid(replicate(nd, theta_q, simplify = FALSE))
-      theta_q <- as.matrix(theta_q)
-
-      nq <- nrow(theta_q)
-      this_theta_q <- do.call(rbind, replicate(nq, this_theta, simplify = FALSE))
-
-      theta_q <- theta_q + this_theta_q
+      theta_q <- getThetaQuadrature(this_theta, theta_width, quadrature_unit, use_ellipse)
 
       for (i in 1:ni) {
         ncat_thisitem <- NCAT[i]

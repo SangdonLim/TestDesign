@@ -1292,3 +1292,74 @@ applyShrinkageCorrection <- function(EAP, config_theta, j) {
   return(EAP)
 
 }
+
+#' Get theta quadrature points
+#'
+#' \code{getThetaQuadrature()} is a helper function for getting quadrature points for numerical integration.
+#'
+#' @param theta_center the theta value to use as center.
+#' @param theta_width the width for each dimension.
+#' @param quadrature_unit the interval between quadrature points in each dimension.
+#' @param use_ellipse if \code{TRUE}, return an ellipse area. If \code{FALSE}, return a rectangle area. (default = \code{FALSE})
+#'
+#' @examples
+#' theta_q <- getThetaQuadrature(0, 3, .1)
+#' plot(theta_q)
+#'
+#' theta_q <- getThetaQuadrature(c(1, 2), 1, .1)
+#' plot(theta_q)
+#'
+#' theta_q <- getThetaQuadrature(c(1, 2), c(1, 2), .1)
+#' plot(theta_q)
+#'
+#' theta_q <- getThetaQuadrature(c(1, 2), 1, .1, TRUE)
+#' plot(theta_q)
+#'
+#' theta_q <- getThetaQuadrature(c(1, 2), c(1, 2), .1, TRUE)
+#' plot(theta_q)
+#'
+#' @export
+getThetaQuadrature <- function(
+  theta_center,
+  theta_width,
+  quadrature_unit,
+  use_ellipse = FALSE
+) {
+
+  nd <- length(theta_center)
+
+  if (length(theta_width) == 1) {
+    theta_width <- rep(theta_width, nd)
+  }
+
+  units <- floor(theta_width / quadrature_unit)
+  theta_width <- quadrature_unit * units
+
+  theta_q <- list()
+  for (d in 1:nd) {
+    theta_q[[d]] <- seq(-theta_width[d], +theta_width[d], by = quadrature_unit)
+  }
+
+  theta_q <- expand.grid(theta_q)
+  theta_q <- as.matrix(theta_q)
+
+  if (use_ellipse) {
+
+    d <- apply(
+      (theta_q ** 2) /
+      matrix(theta_width ** 2, nrow(theta_q), nd, byrow = TRUE),
+      1, sum
+    )
+
+    theta_q <- theta_q[d <= 1, , drop = FALSE]
+
+  }
+
+  nq <- nrow(theta_q)
+  theta_center_q <- do.call(rbind, replicate(nq, theta_center, simplify = FALSE))
+
+  theta_q <- theta_q + theta_center_q
+
+  return(theta_q)
+
+}

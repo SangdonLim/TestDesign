@@ -31,7 +31,8 @@ setClass("config_Shadow",
       target_value              = NULL,
       alpha_vec                 = NULL,
       KL_width                  = 1,
-      KL_quadrature_unit        = 0.1
+      KL_quadrature_unit        = 0.1,
+      KL_use_ellipse            = TRUE
     ),
     content_balancing = list(
       method                    = "STA"

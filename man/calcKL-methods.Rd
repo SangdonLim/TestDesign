@@ -7,11 +7,11 @@
 \alias{calcKL,item_pool,matrix-method}
 \title{Calculate Kullback-Leibler information}
 \usage{
-calcKL(object, theta, theta_width, quadrature_unit)
+calcKL(object, theta, theta_width, quadrature_unit, use_ellipse)
 
-\S4method{calcKL}{item_pool,numeric}(object, theta, theta_width, quadrature_unit)
+\S4method{calcKL}{item_pool,numeric}(object, theta, theta_width, quadrature_unit, use_ellipse)
 
-\S4method{calcKL}{item_pool,matrix}(object, theta, theta_width, quadrature_unit)
+\S4method{calcKL}{item_pool,matrix}(object, theta, theta_width, quadrature_unit, use_ellipse)
 }
 \arguments{
 \item{object}{an \code{\linkS4class{item_pool}} object.}
@@ -21,6 +21,8 @@ calcKL(object, theta, theta_width, quadrature_unit)
 \item{theta_width}{the theta width to use to define the range of integration. The range is \code{c(theta - theta_width, theta + theta_width)}.}
 
 \item{quadrature_unit}{the quadrature spacing to use for integration. Smaller numbers yield more accurate values.}
+
+\item{use_ellipse}{if \code{TRUE}, use an ellipse domain for integration. if \code{FALSE}, use a rectangular domain for integration.}
 }
 \value{
 \describe{
@@ -37,7 +39,7 @@ calcKL(object, theta, theta_width, quadrature_unit)
 \code{\link{calcKL}} is a function to calculate Kullback-Leibler information.
 }
 \examples{
-info_pool <- calcKL(itempool_science, seq(-3, 3, 1), 1, 10)
+info_pool <- calcKL(itempool_science, seq(-3, 3, 1), 1, 10, FALSE)
 
 }
 \references{

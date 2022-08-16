@@ -241,7 +241,8 @@ computeInfoAtCurrentTheta <- function(
       item_pool,
       matrix(current_theta$theta, 1, ),
       item_selection$KL_width,
-      item_selection$KL_quadrature_unit
+      item_selection$KL_quadrature_unit,
+      item_selection$KL_use_ellipse
     )
     return(info)
   }
