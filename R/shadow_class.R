@@ -133,6 +133,7 @@ setClass("config_Shadow",
       "MFI", "MPWI", "EB", "FB", "GFI", "FIXED",
       "DIRINFO-45",
       "DIRINFO-THISANGLE",
+      "MKL",
       "D-OPTIMAL"
     )) {
       msg <- sprintf("config@item_selection: unrecognized $method '%s')", object@item_selection$method)
