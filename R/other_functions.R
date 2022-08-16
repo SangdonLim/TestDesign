@@ -246,6 +246,14 @@ computeInfoAtCurrentTheta <- function(
     )
     return(info)
   }
+  if (item_method == "MMI") {
+    info <- calcMI(
+      item_pool,
+      current_theta$posterior,
+      current_theta$theta_q
+    )
+    return(info)
+  }
   if (item_method == "MPWI") {
     info <- as.vector(matrix(current_theta$posterior, nrow = 1) %*% info_grid)
     return(info)
