@@ -39,15 +39,12 @@ calcMI <- function(prob_grid, posterior) {
   for (i in 1:ni) {
     ncat_thisitem <- ncol(prob_grid[[i]])
     p <- numeric(ncat_thisitem)
-    posterior_k <- matrix(NA, ncat_thisitem, length(posterior))
-    for (k in 1:ncat_thisitem) {
-      posterior_k[k,] <- posterior * prob_grid[[i]][, k]
-      p[k] <- sum(posterior_k[k, ])
-    }
+    p <- posterior %*% prob_grid[[i]]
     p <- p / sum(p)
-    for (k in 1:ncat_thisitem) {
-      info[i] <- info[i] + sum(posterior_k[k, ] * log(posterior_k[k, ] / (posterior * p[k])))
-    }
+    p <- p[1, ]
+    posterior_k <- t(posterior * prob_grid[[i]])
+    info_k <- diag(posterior_k %*% log(t(t(prob_grid[[i]]) / p)))
+    info[i] <- sum(info_k)
   }
 
   return(info)
