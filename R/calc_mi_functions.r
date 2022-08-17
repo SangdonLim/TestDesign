@@ -5,9 +5,8 @@ NULL
 #'
 #' \code{\link{calcMI}} is a function for calculating mutual information.
 #'
-#' @param object an \code{\linkS4class{item_pool}} object.
-#' @param posterior the posterior density of estimated theta.
-#' @param theta_q the theta quadrature points corresponding to the posterior density vector.
+#' @param prob_grid the response probability of a \code{\linkS4class{item_pool}} object over quadrature points.
+#' @param posterior the posterior density of estimated theta. Must be from the same quadrature points used for \code{prob_grid}.
 #'
 #' @return
 #' \describe{
@@ -32,20 +31,17 @@ NULL
 #' @export
 #' @docType methods
 #' @rdname calcMI-methods
-calcMI <- function(object, posterior, theta_q) {
+calcMI <- function(prob_grid, posterior) {
 
-  ni <- object@ni
-  NCAT <- object@NCAT
+  ni <- length(prob_grid)
   info <- numeric(ni)
 
-  pp <- calcProb(object, theta_q)
-
   for (i in 1:ni) {
-    ncat_thisitem <- NCAT[i]
+    ncat_thisitem <- ncol(prob_grid[[i]])
     p <- numeric(ncat_thisitem)
     posterior_k <- matrix(NA, ncat_thisitem, length(posterior))
     for (k in 1:ncat_thisitem) {
-      posterior_k[k,] <- posterior * pp[[i]][, k]
+      posterior_k[k,] <- posterior * prob_grid[[i]][, k]
       p[k] <- sum(posterior_k[k, ])
     }
     p <- p / sum(p)

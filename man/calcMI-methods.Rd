@@ -5,14 +5,12 @@
 \alias{calcMI}
 \title{Calculate mutual information}
 \usage{
-calcMI(object, posterior, theta_q)
+calcMI(prob_grid, posterior)
 }
 \arguments{
-\item{object}{an \code{\linkS4class{item_pool}} object.}
+\item{prob_grid}{the response probability of a \code{\linkS4class{item_pool}} object over quadrature points.}
 
-\item{posterior}{the posterior density of estimated theta.}
-
-\item{theta_q}{the theta quadrature points corresponding to the posterior density vector.}
+\item{posterior}{the posterior density of estimated theta. Must be from the same quadrature points used for \code{prob_grid}.}
 }
 \value{
 \describe{

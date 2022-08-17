@@ -248,9 +248,8 @@ computeInfoAtCurrentTheta <- function(
   }
   if (item_method == "MMI") {
     info <- calcMI(
-      item_pool,
-      current_theta$posterior,
-      current_theta$theta_q
+      prob_grid,
+      current_theta$posterior
     )
     return(info)
   }

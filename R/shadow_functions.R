@@ -210,20 +210,22 @@ setMethod(
       while (!done) {
 
         position <- position + 1
-        info_current_theta <- computeInfoAtCurrentTheta(
-          config@item_selection,
-          j,
-          current_theta,
-          item_pool,
-          model_code,
-          info_fixed_theta,                # Only used if config@item_selection$method = "FIXED"
-          simulation_data_cache@info_grid, # Only used if config@item_selection$method = "MPWI"
-          item_parameter_sample            # Only used if config@item_selection$method = "FB"
-        )
 
         # Item position / simulee: do shadow test assembly
 
         if (constants$use_shadowtest) {
+
+          info_current_theta <- computeInfoAtCurrentTheta(
+            config@item_selection,
+            j,
+            current_theta,
+            item_pool,
+            model_code,
+            info_fixed_theta,                # Only used if config@item_selection$method = "FIXED"
+            simulation_data_cache@info_grid, # Only used if config@item_selection$method = "MPWI"
+            simulation_data_cache@prob_grid, # Only used if config@item_selection$method = "MMI"
+            item_parameter_sample            # Only used if config@item_selection$method = "FB"
+          )
 
           o@theta_segment_index[position] <- parseThetaSegment(
             current_theta, position, config@exposure_control, constants
