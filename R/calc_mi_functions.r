@@ -18,9 +18,6 @@ NULL
 #'   }}
 #' }
 #'
-#' @examples
-#' info_pool <- calcMI(itempool_science, seq(-3, 3, 1))
-#'
 #' @template 1pl-ref
 #' @template 2pl-ref
 #' @template 3pl-ref

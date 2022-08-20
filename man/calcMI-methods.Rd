@@ -25,10 +25,6 @@ calcMI(prob_grid, posterior)
 \description{
 \code{\link{calcMI}} is a function for calculating mutual information.
 }
-\examples{
-info_pool <- calcMI(itempool_science, seq(-3, 3, 1))
-
-}
 \references{
 Rasch, G. (1960). \emph{Probabilistic models for some intelligence and attainment tests.}
 Copenhagen: Danish Institute for Educational Research.
