@@ -3,7 +3,7 @@
 #include "jacobian.h"
 #include "hessian.h"
 
-//' @rdname map
+//' @rdname estimate_theta_map
 //' @export
 // [[Rcpp::export]]
 List estimate_theta_map(

@@ -60,6 +60,31 @@ NULL
 #' @name theta_EAP
 NULL
 
+#' (C++) Calculate a theta estimate using MAP (maximum a posteriori) method
+#'
+#' \code{estimate_theta_map()} is a function for calculating a theta estimate using MAP (maximum a posteriori) method.
+#'
+#' \code{estimate_theta_map()} is designed for multiple items.
+#'
+#' @param ipar a matrix containing item parameters.
+#' @param item_model a vector indicating item models of each item, using \itemize{
+#'   \item{\code{102}}: M2PL model
+#'   \item{\code{103}}: M3PL model
+#'   \item{\code{105}}: MGPC model
+#'   \item{\code{106}}: MGR model
+#' }
+#' @param nd the number of dimensions for items.
+#' @param n_pars a vector containing the number of item parameters for each item.
+#' @param response responses on each item.
+#' @param start_theta a vector containing the starting estimate.
+#' @param prior_sigma a matrix for the prior distribution.
+#' @param max_iteration the maximum number of iterations.
+#' @param convergence_criterion the convergence criterion.
+#' @param use_Fisher use Fisher method instead of Newton-Raphson method for optimization.
+#'
+#' @name estimate_theta_map
+NULL
+
 #' (C++) Calculate a theta estimate using EB (Empirical Bayes) method
 #'
 #' \code{theta_EB_single()} and \code{theta_EB()} are functions to calculate a theta estimate using EB (Empirical Bayes) method.
