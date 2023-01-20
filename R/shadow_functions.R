@@ -139,7 +139,7 @@ setMethod(
       o@simulee_id <- j
 
       if (!is.null(true_theta)) {
-        o@true_theta <- true_theta[j, ]
+        o@true_theta <- true_theta[j, , drop = FALSE]
       }
 
       o@prior <- initial_theta$posterior[j, ]
