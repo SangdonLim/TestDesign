@@ -35,6 +35,7 @@ getConstants <- function(constraints, config, arg_data, true_theta, max_info) {
     }
     o$use_shadowtest    <- TRUE
     o$group_by_stimulus <- constraints@set_based
+    o$group_by_domain   <- constraints@group_by_domain
     o$test_length       <- constraints@test_length
     o$min_ni            <- constraints@test_length
     o$max_ni            <- constraints@test_length
@@ -42,6 +43,7 @@ getConstants <- function(constraints, config, arg_data, true_theta, max_info) {
   } else {
     o$use_shadowtest    <- FALSE
     o$group_by_stimulus <- FALSE
+    o$group_by_domain   <- FALSE
     o$test_length       <- NULL
     o$min_ni            <- config@stopping_criterion$min_ni
     o$max_ni            <- config@stopping_criterion$max_ni
@@ -292,6 +294,7 @@ initializeCompletedGroupingsRecord <- function() {
   o <- list()
   o$completed_stimulus_index <- NULL
   o$completed_stimulus_size  <- NULL
+  o$completed_domains <- NULL
   return(o)
 }
 

@@ -716,6 +716,7 @@ setClass("constraint",
 #'    \item{the \emph{i}-th value of \code{dir} represents the imposed constraint between LHS and RHS.}
 #' }
 #' @slot set_based \code{TRUE} if the constraint is set-based. \code{FALSE} otherwise.
+#' @slot group_by_domain \code{TRUE} if items should be grouped by domain.
 #' @slot item_order the item attribute of each item to use in imposing an item order constraint, if any.
 #' @slot item_order_by the name of the item attribute to use in imposing an item order constraint, if any.
 #' @slot stim_order the stimulus attribute of each stimulus to use in imposing a stimulus order constraint, if any.
@@ -741,6 +742,7 @@ setClass("constraints",
     dir                    = "character",
     rhs                    = "numeric",
     set_based              = "logical",
+    group_by_domain        = "logical",
     item_order             = "numeric_or_null",
     item_order_by          = "character_or_null",
     stim_order             = "numeric_or_null",
@@ -764,6 +766,7 @@ setClass("constraints",
     dir                    = character(0),
     rhs                    = numeric(0),
     set_based              = logical(0),
+    group_by_domain        = logical(0),
     item_order             = NULL,
     item_order_by          = NULL,
     stim_order             = NULL,
@@ -1069,6 +1072,14 @@ loadConstraints <- function(object, pool, item_attrib, st_attrib = NULL) {
     }
   }
 
+  group_by_domain <- FALSE
+  if (
+    pool@nd > 1 &
+    "DOMAIN" %in% names(item_attrib@data)
+  ) {
+    group_by_domain <- TRUE
+  }
+
   o <- new("constraints")
   o@constraints      <- constraints
   o@list_constraints <- list_constraints
@@ -1085,6 +1096,7 @@ loadConstraints <- function(object, pool, item_attrib, st_attrib = NULL) {
   o@dir   <- dir
   o@rhs   <- rhs
   o@set_based              <- group_by_stimulus
+  o@group_by_domain        <- group_by_domain
   o@item_order             <- item_order
   o@item_order_by          <- item_order_by
   o@stim_order             <- stim_order

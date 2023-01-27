@@ -146,6 +146,7 @@ setMethod(
       o@administered_item_index     <- rep(NA_real_, constants$max_ni)
       o@administered_item_resp      <- rep(NA_real_, constants$max_ni)
       o@administered_stimulus_index <- NaN
+      o@administered_domain_index   <- NaN
       o@theta_segment_index         <- rep(NA_real_, constants$max_ni)
       o@interim_theta_est           <- matrix(NA_real_, constants$max_ni, constants$nd)
       o@interim_se_est              <- matrix(NA_real_, constants$max_ni, constants$nd)
@@ -173,8 +174,20 @@ setMethod(
 
       if (constants$group_by_stimulus) {
         o@administered_stimulus_index <- rep(NA_real_, constants$max_ni)
-        groupings_record <- initializeCompletedGroupingsRecord()
         selection$is_last_item_in_this_set <- TRUE
+      }
+
+      # Simulee: initialize domain record
+
+      if (constants$group_by_domain) {
+        o@administered_domain_index <- rep(NA_real_, constants$max_ni)
+        selection$is_last_item_in_this_domain <- TRUE
+      }
+
+      # Simulee: initialize grouping record
+
+      if (constants$group_by_stimulus | constants$group_by_domain) {
+        groupings_record <- initializeCompletedGroupingsRecord()
       }
 
       # Simulee: initialize shadow test record
@@ -280,6 +293,7 @@ setMethod(
           o@administered_item_index[position] <- selection$item_selected
           o@shadow_test[[position]]$i         <- shadowtest$shadow_test$INDEX
           o@shadow_test[[position]]$s         <- shadowtest$shadow_test$STINDEX
+          o@shadow_test[[position]]$d         <- shadowtest$shadow_test$DOMAIN
 
         }
 
@@ -303,6 +317,20 @@ setMethod(
               o@administered_item_index[position] <- selectItemUsingDOptimality(info_current_theta, position, o, constants)
             }
           }
+
+        }
+
+        # Item position / simulee: record which domain was administered
+
+        if (constants$group_by_domain) {
+
+          o@administered_domain_index[position] <- selection$domain_selected
+          groupings_record <- updateCompletedGroupingsRecordForDomain(
+            groupings_record,
+            selection,
+            o,
+            position
+          )
 
         }
 

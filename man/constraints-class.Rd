@@ -43,6 +43,8 @@ See \code{\link{constraints-operators}} for object manipulation functions.
 
 \item{\code{set_based}}{\code{TRUE} if the constraint is set-based. \code{FALSE} otherwise.}
 
+\item{\code{group_by_domain}}{\code{TRUE} if items should be grouped by domain.}
+
 \item{\code{item_order}}{the item attribute of each item to use in imposing an item order constraint, if any.}
 
 \item{\code{item_order_by}}{the name of the item attribute to use in imposing an item order constraint, if any.}

@@ -147,6 +147,19 @@ selectItemFromShadowTest <- function(shadow_test, position, constants, x, previo
   # filter out administered items ----------------------------------------------
   shadow_test <- subset(shadow_test, !(shadow_test$INDEX %in% x@administered_item_index))
 
+  if (constants$group_by_domain) {
+    # if domain-grouping and we just completed a domain, select a new domain ---
+    # this is also triggered at the start of test
+    if (previous_selection$is_last_item_in_this_domain) {
+      current_domain_index <- shadow_test$DOMAIN[1]
+    }
+
+    # if domain-grouping and we are in mid-domain, read from previous item -----
+    if (!previous_selection$is_last_item_in_this_domain) {
+      current_domain_index <- x@administered_domain_index[position - 1]
+    }
+  }
+
   if (constants$group_by_stimulus) {
 
     # if set-based and we just completed a set, select a new set ---------------
@@ -158,6 +171,19 @@ selectItemFromShadowTest <- function(shadow_test, position, constants, x, previo
     # if set-based and we are in mid-set, read from previous item --------------
     if (!previous_selection$is_last_item_in_this_set) {
       current_stimulus_index <- x@administered_stimulus_index[position - 1]
+    }
+
+  }
+
+  # filter to current domain ---------------------------------------------------
+  if (constants$group_by_domain) {
+
+    if (!is.na(current_domain_index)) {
+
+      # for domains, assume the domain length does not change
+      # this may need to be extended later, like what we are doing for set-grouping
+      shadow_test <- subset(shadow_test, shadow_test$DOMAIN == current_domain_index)
+
     }
 
   }
@@ -200,8 +226,15 @@ selectItemFromShadowTest <- function(shadow_test, position, constants, x, previo
   # select item
   o$item_selected <- shadow_test$INDEX[1]
 
+  if (constants$group_by_domain) {
+    o$domain_selected <- shadow_test$DOMAIN[1]
+  }
   if (constants$group_by_stimulus) {
     o$stimulus_selected <- shadow_test$STINDEX[1]
+  }
+
+  if (constants$group_by_domain) {
+    o$is_last_item_in_this_domain <- nrow(shadow_test) == 1
   }
 
   if (constants$group_by_stimulus) {
@@ -323,6 +356,26 @@ updateCompletedGroupingsRecordForStimulus <- function(
       sum(o@administered_stimulus_index == o@administered_stimulus_index[position - 1], na.rm = TRUE)
     )
 
+  }
+
+  return(groupings_record)
+
+}
+
+#' @noRd
+updateCompletedGroupingsRecordForDomain <- function(
+  groupings_record,
+  selection,
+  o,
+  position
+) {
+
+  n_domain_items <- sum(o@administered_domain_index[0:position] == selection$domain_selected)
+
+  if (n_domain_items == 15) {
+    groupings_record$completed_domains <- c(
+      groupings_record$completed_domains, selection$domain_selected
+    )
   }
 
   return(groupings_record)

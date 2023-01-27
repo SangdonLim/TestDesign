@@ -508,6 +508,7 @@ setClass("output_Shadow_all",
 #' @slot administered_item_resp item responses from the simulee at each position.
 #' @slot administered_item_ncat the number of categories of each administered item.
 #' @slot administered_stimulus_index stimulus IDs administered at each position.
+#' @slot administered_domain_index domain IDs administered at each position.
 #' @slot shadow_test_refreshed \code{TRUE} indicates the shadow test was refreshed for the position.
 #' @slot shadow_test_feasible \code{TRUE} indicates the MIP was feasible with all constraints.
 #' @slot solve_time elapsed time in running the solver at each position.
@@ -540,6 +541,7 @@ setClass("output_Shadow",
     administered_item_resp      = "numeric",
     administered_item_ncat      = "numeric",
     administered_stimulus_index = "numeric",
+    administered_domain_index   = "numeric",
     shadow_test_refreshed       = "logical",
     shadow_test_feasible        = "logical",
     solve_time                  = "numeric",
@@ -570,6 +572,7 @@ setClass("output_Shadow",
     administered_item_resp      = numeric(0),
     administered_item_ncat      = numeric(0),
     administered_stimulus_index = numeric(0),
+    administered_domain_index   = numeric(0),
     shadow_test_refreshed       = logical(0),
     shadow_test_feasible        = logical(0),
     solve_time                  = numeric(0),

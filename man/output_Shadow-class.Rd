@@ -28,6 +28,8 @@
 
 \item{\code{administered_stimulus_index}}{stimulus IDs administered at each position.}
 
+\item{\code{administered_domain_index}}{domain IDs administered at each position.}
+
 \item{\code{shadow_test_refreshed}}{\code{TRUE} indicates the shadow test was refreshed for the position.}
 
 \item{\code{shadow_test_feasible}}{\code{TRUE} indicates the MIP was feasible with all constraints.}

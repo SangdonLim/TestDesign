@@ -232,6 +232,13 @@ runAssembly <- function(config, constraints, xdata = NULL, objective = NULL) {
 
       }
     }
+
+    # Append domain-level info columns
+
+    if (constraints@group_by_domain) {
+      shadow_test <- appendMeanInfo(shadow_test, "DOMAIN", "domain_info")
+    }
+
   }
 
   if (sort_by_info) {
@@ -242,6 +249,9 @@ runAssembly <- function(config, constraints, xdata = NULL, objective = NULL) {
   }
   if (constraints@set_based & sort_by_info) {
     shadow_test <- shadow_test[order(shadow_test$set_info, decreasing = TRUE), ]
+  }
+  if (constraints@group_by_domain & sort_by_info) {
+    shadow_test <- shadow_test[order(shadow_test$domain_info, decreasing = TRUE), ]
   }
   if (!is.null(constraints@item_order_by)) {
     shadow_test <- shadow_test[order(shadow_test[[constraints@item_order_by]]), ]
