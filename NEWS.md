@@ -1,3 +1,9 @@
+# TestDesign 1.5.1.9000
+
+## Updates
+
+* Removed deprecated arguments.
+
 # TestDesign 1.5.1
 
 ## Updates
