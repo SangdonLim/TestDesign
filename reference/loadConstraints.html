@@ -73,7 +73,7 @@ The contents must be in the expected format; see the vignette in <code><a href="
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">loadConstraints</span><span class="op">(</span><span class="va">object</span>, <span class="va">pool</span>, <span class="va">item_attrib</span>, st_attrib <span class="op">=</span> <span class="cn">NULL</span>, file <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">loadConstraints</span><span class="op">(</span><span class="va">object</span>, <span class="va">pool</span>, <span class="va">item_attrib</span>, st_attrib <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -92,10 +92,6 @@ The contents must be in the expected format; see the vignette in <code><a href="
 
 <dt>st_attrib</dt>
 <dd><p>(optional) an <code><a href="loadStAttrib.html">st_attrib</a></code> object. Use <code><a href="loadStAttrib.html">loadStAttrib</a></code> for this.</p></dd>
-
-
-<dt>file</dt>
-<dd><p>(deprecated) use <code>object</code> argument instead.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -123,12 +119,6 @@ The contents must be in the expected format; see the vignette in <code><a href="
 <span><span class="va">constraints_science</span> <span class="op">&lt;-</span> <span class="fu">loadConstraints</span><span class="op">(</span><span class="va">f</span>,</span>
 <span>  <span class="va">itempool_science</span>, <span class="va">itemattrib_science</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.remove</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">## TestDesign 1.1.0 - Deprecated arguments</span></span>
-<span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span><span class="fu">loadConstraints</span><span class="op">(</span>object <span class="op">=</span> <span class="st">"consts.csv"</span>, <span class="va">pool</span>, <span class="va">item_attrib</span><span class="op">)</span> <span class="co"># is equivalent to</span></span>
-<span><span class="fu">loadConstraints</span><span class="op">(</span>file   <span class="op">=</span> <span class="st">"consts.csv"</span>, <span class="va">pool</span>, <span class="va">item_attrib</span><span class="op">)</span> <span class="co"># pre 1.1.0</span></span>
-<span><span class="op">}</span></span>
 <span></span></code></pre></div>
     </div>
   </div>
