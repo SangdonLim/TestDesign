@@ -318,6 +318,16 @@ setMethod(
             }
           }
           if (toupper(config@content_balancing$method) == "HEURISTIC") {
+            if (toupper(config@item_selection$method) == "WEIGHTED-DEVIATION") {
+              selection <- selectItemUsingWeightedDeviation(
+                info_current_theta, position, o, constants,
+                config@interim_theta,
+                constraints,
+                selection,
+                groupings_record
+              )
+              o@administered_item_index[position] <- selection$item_selected
+            }
           }
 
         }

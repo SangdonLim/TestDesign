@@ -356,6 +356,16 @@ computeInfoAtCurrentTheta <- function(
     )
     return(info)
   }
+  if (item_method == "WEIGHTED-DEVIATION") {
+    info <- calc_info_matrix(
+      current_theta$theta,
+      item_pool@ipar,
+      item_pool@nd,
+      item_pool@NCAT,
+      model_code
+    )
+    return(info)
+  }
 }
 
 #' @noRd
