@@ -82,6 +82,7 @@ Collate:
     'exposure_control_functions.R'
     'solver_functions.R'
     'helper_functions.R'
+    'heuristic_item_selection_functions.r'
     'optimality_functions.r'
     'other_functions.R'
     'partitioning_class.r'

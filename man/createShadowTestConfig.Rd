@@ -32,7 +32,9 @@ createShadowTestConfig(
 
 \item{content_balancing}{a named list containing content balancing options.
 \itemize{
-  \item{\code{method}} the type of balancing method. Accepts \code{NONE, STA}. (default = \code{STA})
+  \item{\code{method}} the type of balancing method. Accepts \code{NONE, STA, HEURISTIC}. (default = \code{STA})
+  \item{\code{heuristic_information_lb}} the lower bound to use in evaluating information deviation for heuristic methods.
+  \item{\code{heuristic_information_weight}} the weight on information term for heuristic methods.
 }}
 
 \item{MIP}{a named list containing solver options.

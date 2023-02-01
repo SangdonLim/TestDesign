@@ -35,7 +35,9 @@ setClass("config_Shadow",
       KL_use_ellipse            = TRUE
     ),
     content_balancing = list(
-      method                    = "STA"
+      method                       = "STA",
+      heuristic_information_lb     = 2.0,
+      heuristic_information_weight = 1.0
     ),
     MIP = list(
       solver                    = "LPSOLVE",
@@ -149,8 +151,8 @@ setClass("config_Shadow",
       }
     }
 
-    if (!object@content_balancing$method %in% c("NONE", "STA")) {
-      msg <- sprintf("config@content_balancing: unrecognized $method '%s' (accepts NONE, or STA)", object@content_balancing$method)
+    if (!object@content_balancing$method %in% c("NONE", "STA", "HEURISTIC")) {
+      msg <- sprintf("config@content_balancing: unrecognized $method '%s' (accepts NONE, STA, HEURISTIC)", object@content_balancing$method)
       err <- c(err, msg)
     }
     if (!object@exclude_policy$method %in%
@@ -261,7 +263,9 @@ setClass("config_Shadow",
 #' }
 #' @param content_balancing a named list containing content balancing options.
 #' \itemize{
-#'   \item{\code{method}} the type of balancing method. Accepts \code{NONE, STA}. (default = \code{STA})
+#'   \item{\code{method}} the type of balancing method. Accepts \code{NONE, STA, HEURISTIC}. (default = \code{STA})
+#'   \item{\code{heuristic_information_lb}} the lower bound to use in evaluating information deviation for heuristic methods.
+#'   \item{\code{heuristic_information_weight}} the weight on information term for heuristic methods.
 #' }
 #' @param MIP a named list containing solver options.
 #' \itemize{

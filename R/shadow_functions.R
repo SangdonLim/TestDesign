@@ -317,6 +317,8 @@ setMethod(
               o@administered_item_index[position] <- selectItemUsingDOptimality(info_current_theta, position, o, constants)
             }
           }
+          if (toupper(config@content_balancing$method) == "HEURISTIC") {
+          }
 
         }
 

@@ -40,7 +40,17 @@ getConstants <- function(constraints, config, arg_data, true_theta, max_info) {
     o$min_ni            <- constraints@test_length
     o$max_ni            <- constraints@test_length
     o$max_se            <- NULL
-  } else {
+  }
+  if (content_balancing_method %in% "HEURISTIC") {
+    o$use_shadowtest    <- FALSE
+    o$group_by_stimulus <- FALSE
+    o$group_by_domain   <- constraints@group_by_domain
+    o$test_length       <- constraints@test_length
+    o$min_ni            <- constraints@test_length
+    o$max_ni            <- constraints@test_length
+    o$max_se            <- NULL
+  }
+  if (content_balancing_method %in% "NONE") {
     o$use_shadowtest    <- FALSE
     o$group_by_stimulus <- FALSE
     o$group_by_domain   <- FALSE
@@ -49,6 +59,65 @@ getConstants <- function(constraints, config, arg_data, true_theta, max_info) {
     o$max_ni            <- config@stopping_criterion$max_ni
     o$max_se            <- config@stopping_criterion$se_threshold
   }
+
+  # parse constraints for heuristic methods ------------------------------------
+  if (content_balancing_method %in% "HEURISTIC") {
+
+    constraints_data <- constraints@constraints
+
+    h <- list()
+
+    for (idx_c in 1:nrow(constraints_data)) {
+
+      if (!constraints_data$TYPE[idx_c] %in% c("NUMBER", "SUM")) {
+        stop("constraints on other than the number of items are not supported on heuristic methods")
+      }
+
+      if (constraints_data$TYPE[idx_c] == "NUMBER") {
+        if (constraints_data$CONDITION[idx_c] == "") {
+          # skip test length constraint
+          next
+        }
+        v <- with(constraints@item_attrib@data, eval(parse(text = constraints_data$CONDITION[idx_c])))
+      }
+      if (constraints_data$TYPE[idx_c] == "SUM") {
+        v <- with(constraints@item_attrib@data, eval(parse(text = constraints_data$CONDITION[idx_c])))
+      }
+
+      h[[idx_c]] <- list()
+      h[[idx_c]]$value  <- v
+      h[[idx_c]]$p      <- mean(v)
+      h[[idx_c]]$lb     <- constraints_data$LB[idx_c]
+      h[[idx_c]]$ub     <- constraints_data$UB[idx_c]
+      h[[idx_c]]$lp     <- constraints_data$LB[idx_c] / o$test_length
+      h[[idx_c]]$up     <- constraints_data$UB[idx_c] / o$test_length
+      h[[idx_c]]$mp     <- mean(c(h[[idx_c]]$lp, h[[idx_c]]$up))
+      h[[idx_c]]$weight <- constraints_data$WEIGHT[idx_c]
+
+    }
+
+    hh <- list()
+    hh$value  <- do.call(rbind, lapply(h, function(x) x$value))
+    hh$value_binary <- hh$value > 0
+    hh$p      <- do.call(rbind, lapply(h, function(x) x$p))
+    hh$lb     <- do.call(rbind, lapply(h, function(x) x$lb))
+    hh$ub     <- do.call(rbind, lapply(h, function(x) x$ub))
+    hh$lp     <- do.call(rbind, lapply(h, function(x) x$lp))
+    hh$up     <- do.call(rbind, lapply(h, function(x) x$up))
+    hh$mp     <- do.call(rbind, lapply(h, function(x) x$mp))
+    hh$ld     <- hh$lp - hh$mp
+    hh$ud     <- hh$up - hh$mp
+    hh$weight <- do.call(rbind, lapply(h, function(x) x$weight))
+    hh$nc     <- nrow(hh$value)
+    hh$k      <- 2
+
+    o$h <- hh
+
+  }
+
+  # parse options for heuristic methods ----------------------------------------
+  o$heuristic_information_lb     <- config@content_balancing$heuristic_information_lb
+  o$heuristic_information_weight <- config@content_balancing$heuristic_information_weight
 
   o$exclude_method <- toupper(config@exclude_policy$method)
   o$exclude_M      <- config@exclude_policy$M

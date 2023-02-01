@@ -26,6 +26,8 @@ normalizeConstraintData <- function(x) {
   x$ONOFF[is.na(x$ONOFF)] <- ""
   x$CONDITION <- trimws(x$CONDITION)
 
+  x$WEIGHT    <- as.numeric(x$WEIGHT)
+
   return(x)
 
 }
