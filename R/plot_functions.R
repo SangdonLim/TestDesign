@@ -652,7 +652,13 @@ plotShadowAudit <- function(x, dimension, theta_range, z_ci, use_par, ...) {
   if (length(dimension) == 1) {
     # do 1D plot
 
-    plot(1:n_items, seq(min_theta, max_theta, length = n_items), ylab = "Theta", type = "n", las = 1, xlim = c(0, n_items), xaxt = "n", yaxt = "n")
+    plot(
+      1:n_items,
+      seq(min_theta, max_theta, length = n_items),
+      ylab = "Theta", type = "n",
+      las = 1, xlim = c(0, n_items),
+      xaxt = "n", yaxt = "n"
+    )
     grid()
 
     text(n_items / 2, max_theta, paste0("Examinee ID: ", x@simulee_id), adj = c(0.5, 0.5), cex = 2)
@@ -691,8 +697,8 @@ plotShadowAudit <- function(x, dimension, theta_range, z_ci, use_par, ...) {
         if (is.null(x@initial_theta_est$se)) {
           next
         }
-        ci_lower <- x@initial_theta_est$theta - z_ci * x@initial_theta_est$se
-        ci_upper <- x@initial_theta_est$theta + z_ci * x@initial_theta_est$se
+        ci_lower <- x@initial_theta_est$theta[dimension] - z_ci * x@initial_theta_est$se[dimension]
+        ci_upper <- x@initial_theta_est$theta[dimension] + z_ci * x@initial_theta_est$se[dimension]
       }
       if (i > 0) {
         ci_lower <- x@interim_theta_est[i, dimension] - z_ci * x@interim_se_est[i, dimension]
@@ -715,7 +721,7 @@ plotShadowAudit <- function(x, dimension, theta_range, z_ci, use_par, ...) {
       abline(h = x@true_theta[dimension], lty = 1, col = "red")
     }
     if (length(x@shadow_test_refreshed) > 0) {
-      for (i in 1:n_items) {      
+      for (i in 1:n_items) {
         if (x@shadow_test_refreshed[i]) {
           text(i, min_theta, "S", col = "red", cex = 1.5)
         }
