@@ -141,7 +141,8 @@ setClass("config_Shadow",
       "MKL", "MMI",
       "D-OPTIMAL",
       "WEIGHTED-DEVIATION",
-      "MAXIMUM-PRIORITY-INDEX"
+      "MAXIMUM-PRIORITY-INDEX",
+      "WEIGHTED-PENALTY"
     )) {
       msg <- sprintf("config@item_selection: unrecognized $method '%s')", object@item_selection$method)
       err <- c(err, msg)
