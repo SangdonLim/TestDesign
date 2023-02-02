@@ -140,7 +140,8 @@ setClass("config_Shadow",
       "DIRINFO-THISANGLE",
       "MKL", "MMI",
       "D-OPTIMAL",
-      "WEIGHTED-DEVIATION"
+      "WEIGHTED-DEVIATION",
+      "MAXIMUM-PRIORITY-INDEX"
     )) {
       msg <- sprintf("config@item_selection: unrecognized $method '%s')", object@item_selection$method)
       err <- c(err, msg)

@@ -328,6 +328,16 @@ setMethod(
               )
               o@administered_item_index[position] <- selection$item_selected
             }
+            if (toupper(config@item_selection$method) == "MAXIMUM-PRIORITY-INDEX") {
+              selection <- selectItemUsingMaximumPriorityIndex(
+                info_current_theta, position, o, constants,
+                config@interim_theta,
+                constraints,
+                selection,
+                groupings_record
+              )
+              o@administered_item_index[position] <- selection$item_selected
+            }
           }
 
         }
