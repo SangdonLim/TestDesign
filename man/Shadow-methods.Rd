@@ -16,7 +16,9 @@ Shadow(
   include_items_for_estimation = NULL,
   force_solver = FALSE,
   session = NULL,
-  seed = NULL
+  seed = NULL,
+  progress_fn = NULL,
+  progress_frequency = NULL
 )
 
 \S4method{Shadow}{config_Shadow}(
@@ -30,7 +32,9 @@ Shadow(
   include_items_for_estimation = NULL,
   force_solver = FALSE,
   session = NULL,
-  seed = NULL
+  seed = NULL,
+  progress_fn = NULL,
+  progress_frequency = NULL
 )
 }
 \arguments{
@@ -65,6 +69,10 @@ This overrides \code{prior_dist} and \code{prior_par} in the config.
 \item{session}{(optional) used to communicate with Shiny app \code{\link{TestDesign}}.}
 
 \item{seed}{(optional) used to perform data generation internally.}
+
+\item{progress_fn}{(optional) the base filename to use for writing empty files for progress monitoring. Useful in parallel simulations where progress bars are not readily available.}
+
+\item{progress_frequency}{(optional) the frequency to use for writing empty files for progress monitoring.}
 }
 \value{
 \code{\link{Shadow}} returns an \code{\linkS4class{output_Shadow_all}} object containing assembly results.

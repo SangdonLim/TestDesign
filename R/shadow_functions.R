@@ -27,6 +27,8 @@ NULL
 #' @template force_solver_param
 #' @param session (optional) used to communicate with Shiny app \code{\link{TestDesign}}.
 #' @param seed (optional) used to perform data generation internally.
+#' @param progress_fn (optional) the base filename to use for writing empty files for progress monitoring. Useful in parallel simulations where progress bars are not readily available.
+#' @param progress_frequency (optional) the frequency to use for writing empty files for progress monitoring.
 #'
 #' @return \code{\link{Shadow}} returns an \code{\linkS4class{output_Shadow_all}} object containing assembly results.
 #'
@@ -44,7 +46,12 @@ NULL
 #' @export
 setGeneric(
   name = "Shadow",
-  def = function(config, constraints = NULL, true_theta = NULL, data = NULL, prior = NULL, prior_par = NULL, exclude = NULL, include_items_for_estimation = NULL, force_solver = FALSE, session = NULL, seed = NULL) {
+  def = function(
+    config, constraints = NULL, true_theta = NULL, data = NULL,
+    prior = NULL, prior_par = NULL, exclude = NULL, include_items_for_estimation = NULL,
+    force_solver = FALSE, session = NULL, seed = NULL,
+    progress_fn = NULL, progress_frequency = NULL
+  ) {
     standardGeneric("Shadow")
   }
 )
@@ -54,7 +61,12 @@ setGeneric(
 setMethod(
   f = "Shadow",
   signature = "config_Shadow",
-  definition = function(config, constraints, true_theta, data, prior, prior_par, exclude, include_items_for_estimation, force_solver = FALSE, session, seed = NULL) {
+  definition = function(
+    config, constraints, true_theta, data,
+    prior, prior_par, exclude, include_items_for_estimation,
+    force_solver = FALSE, session, seed = NULL,
+    progress_fn = NULL, progress_frequency = NULL
+  ) {
 
     if (!validObject(config)) {
       stop("'config' argument is not a valid 'config_Shadow' object")
@@ -452,8 +464,23 @@ setMethod(
           o@posterior  <- current_theta$posterior
         }
 
+        # Update progress
+
         if (has_progress_pkg) {
           pb$tick(0)
+        }
+
+        if (!is.null(progress_frequency)) {
+          if ((j %% progress_frequency) == 0) {
+            x <- try(write.csv(
+              NULL,
+              sprintf(
+                "%s_%s.progress",
+                progress_fn,
+                j
+              )
+            ))
+          }
         }
 
       }
