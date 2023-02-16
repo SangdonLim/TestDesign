@@ -120,8 +120,8 @@ setClass("config_Shadow",
   ),
   validity = function(object) {
     err <- NULL
-    if (!toupper(object@MIP$solver) %in% c("RSYMPHONY", "LPSOLVE", "GUROBI", "RGLPK")) {
-      msg <- sprintf("config@MIP: unrecognized $solver '%s' (accepts RSYMPHONY, LPSOLVE, GUROBI, RGLPK)", object@MIP$solver)
+    if (!toupper(object@MIP$solver) %in% c("RSYMPHONY", "LPSOLVE", "GUROBI", "RGLPK", "NONE")) {
+      msg <- sprintf("config@MIP: unrecognized $solver '%s' (accepts RSYMPHONY, LPSOLVE, GUROBI, RGLPK, NONE)", object@MIP$solver)
       err <- c(err, msg)
     }
 
@@ -158,6 +158,13 @@ setClass("config_Shadow",
       msg <- sprintf("config@content_balancing: unrecognized $method '%s' (accepts NONE, STA, HEURISTIC)", object@content_balancing$method)
       err <- c(err, msg)
     }
+    if (toupper(object@MIP$solver) %in% c("NONE")) {
+      if (!object@content_balancing$method %in% c("HEURISTIC")) {
+        msg <- sprintf("config@MIP: unexpected $solver '%s' (this is only allowed when @content_balancing$method is 'HEURISTIC')", object@MIP$solver)
+        err <- c(err, msg)
+      }
+    }
+
     if (!object@exclude_policy$method %in%
       c("HARD", "SOFT")) {
       msg <- sprintf("config@exclude_policy: unrecognized $method '%s' (accepts HARD, or SOFT)", object@exclude_policy$method)
