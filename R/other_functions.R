@@ -60,6 +60,44 @@ getConstants <- function(constraints, config, arg_data, true_theta, max_info) {
     o$max_se            <- config@stopping_criterion$se_threshold
   }
 
+  # preconstruct domain-level angles -------------------------------------------
+
+  d_matrix <- matrix(0, o$ni, o$nd)
+
+  for (i in 1:o$ni) {
+    d_matrix[
+      i,
+      constraints@item_attrib@data$DOMAIN[i]
+    ] <- 1
+  }
+
+  alpha_matrix <- matrix(0, o$ni, o$nd)
+
+  for (i in 1:o$ni) {
+    alpha_matrix[i, ] <- a_to_alpha(d_matrix[i, ])
+  }
+
+  o$alpha_angle_alldomains <- alpha_matrix
+
+  # preconstruct domain-level angles -------------------------------------------
+
+  o$alpha_angle_by_domain <- list()
+
+  for (d in 1:o$nd) {
+
+    d_matrix <- matrix(0, o$ni, o$nd)
+    d_matrix[, d] <- 1
+
+    alpha_matrix <- matrix(0, o$ni, o$nd)
+
+    for (i in 1:o$ni) {
+      alpha_matrix[i, ] <- a_to_alpha(d_matrix[i, ])
+    }
+
+    o$alpha_angle_by_domain[[d]] <- alpha_matrix
+
+  }
+
   # parse constraints for heuristic methods ------------------------------------
   if (content_balancing_method %in% "HEURISTIC") {
 
@@ -248,7 +286,9 @@ computeInfoAtCurrentTheta <- function(
   info_fixed_theta,
   info_grid,
   prob_grid,
-  item_parameter_sample
+  item_parameter_sample,
+  selection,
+  constants
 ) {
 
   item_method <- toupper(item_selection$method)
@@ -305,6 +345,32 @@ computeInfoAtCurrentTheta <- function(
         item_selection$alpha_vec
       )
       return(info)
+    }
+  }
+  if (item_method == "DIRINFO-DOMAIN-ANGLE") {
+    if (item_pool@nd > 1) {
+      if (selection$is_last_item_in_this_domain) {
+        info <- calc_thesedirsinfo(
+          current_theta$theta,
+          item_pool@ipar,
+          item_pool@nd,
+          item_pool@NCAT,
+          model_code,
+          constants$alpha_angle_alldomains
+        )
+        return(info)
+      }
+      if (!selection$is_last_item_in_this_domain) {
+        info <- calc_thesedirsinfo(
+          current_theta$theta,
+          item_pool@ipar,
+          item_pool@nd,
+          item_pool@NCAT,
+          model_code,
+          constants$alpha_angle_by_domain[[selection$domain_selected]]
+        )
+        return(info)
+      }
     }
   }
   if (item_method == "MKL") {

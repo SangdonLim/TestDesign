@@ -249,7 +249,9 @@ setMethod(
             info_fixed_theta,                # Only used if config@item_selection$method = "FIXED"
             simulation_data_cache@info_grid, # Only used if config@item_selection$method = "MPWI"
             simulation_data_cache@prob_grid, # Only used if config@item_selection$method = "MMI"
-            item_parameter_sample            # Only used if config@item_selection$method = "FB"
+            item_parameter_sample,           # Only used if config@item_selection$method = "FB"
+            selection,                       # Only used if config@item_selection$method = "DIRINFO-DOMAIN-ANGLE"
+            constants
           )
 
           o@theta_segment_index[position] <- parseThetaSegment(
