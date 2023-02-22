@@ -205,6 +205,12 @@ calc_thisdirinfo <- function(x, item_parm, nd, ncat, model, alpha_vec) {
     .Call('_TestDesign_calc_thisdirinfo', PACKAGE = 'TestDesign', x, item_parm, nd, ncat, model, alpha_vec)
 }
 
+#' @rdname calc_thesedirsinfo
+#' @export
+calc_thesedirsinfo <- function(x, item_parm, nd, ncat, model, alpha_mat) {
+    .Call('_TestDesign_calc_thesedirsinfo', PACKAGE = 'TestDesign', x, item_parm, nd, ncat, model, alpha_mat)
+}
+
 #' @rdname calc_info
 #' @export
 calc_info_array <- function(x, item_parm, ncat, model) {
