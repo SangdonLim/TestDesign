@@ -9,6 +9,7 @@ NULL
 #' @param item_pool an \code{\linkS4class{item_pool}} object.
 #' @param info_type the type of information.
 #' @param theta_grid a grid of theta values.
+#' @param theta_grid_weights (optional) weights to be applied to quadrature points.
 #' @param seed (optional) seed to use for generating response data if needed.
 #' @param true_theta (optional) true theta values of all simulees.
 #' @param response_data (optional) response data on all items for all simulees.
@@ -17,7 +18,15 @@ NULL
 #' @rdname makeSimulationDataCache-methods
 setGeneric(
   name = "makeSimulationDataCache",
-  def = function(item_pool, info_type = "FISHER", theta_grid = seq(-4, 4, .1), seed = NULL, true_theta = NULL, response_data = NULL) {
+  def = function(
+    item_pool,
+    info_type = "FISHER",
+    theta_grid = seq(-4, 4, .1),
+    theta_grid_weights = NULL,
+    seed = NULL,
+    true_theta = NULL,
+    response_data = NULL
+  ) {
     standardGeneric("makeSimulationDataCache")
   }
 )
@@ -28,7 +37,15 @@ setGeneric(
 setMethod(
   f = "makeSimulationDataCache",
   signature = "item_pool",
-  definition = function(item_pool, info_type = "FISHER", theta_grid = seq(-4, 4, .1), seed = NULL, true_theta = NULL, response_data = NULL) {
+  definition = function(
+    item_pool,
+    info_type = "FISHER",
+    theta_grid = seq(-4, 4, .1),
+    theta_grid_weights = NULL,
+    seed = NULL,
+    true_theta = NULL,
+    response_data = NULL
+  ) {
 
     o <- new("simulation_data_cache")
 
@@ -45,6 +62,12 @@ setMethod(
         # used only for MPWI (maximum posterior weighted information)
         o@info_grid <- calcFisher(item_pool, theta_grid)
       }
+    }
+
+    # multiply by quadrature weights
+    if (!is.null(theta_grid_weights)) {
+      o@prob_grid <- o@prob_grid * theta_grid_weights
+      o@info_grid <- o@info_grid * theta_grid_weights
     }
 
     o@max_info <- max(o@info_grid)

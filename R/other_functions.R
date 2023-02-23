@@ -14,6 +14,11 @@ getConstants <- function(constraints, config, arg_data, true_theta, max_info) {
   if (inherits(o$theta_q, "numeric")) {
     o$theta_q <- matrix(o$theta_q, , 1)
   }
+  o$theta_q_w <- config@theta_grid_weights
+  if (inherits(o$theta_q_w, "numeric")) {
+    o$theta_q_w <- matrix(o$theta_q_w, , 1)
+  }
+
   o$nq      <- nrow(o$theta_q)
   o$min_q   <- min(o$theta_q)
   o$max_q   <- max(o$theta_q)

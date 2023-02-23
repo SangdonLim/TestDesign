@@ -14,6 +14,8 @@
 
 \item{\code{theta_grid}}{the theta grid to use as quadrature points.}
 
+\item{\code{theta_grid_weights}}{the weights to use on quadrature points.}
+
 \item{\code{prob_grid}}{the list containing item response probabilities at theta quadratures.}
 
 \item{\code{info_grid}}{the matrix containing item information values at theta quadratures.}

@@ -20,7 +20,8 @@ setClass("config_Shadow",
     stopping_criterion = "list",
     interim_theta      = "list",
     final_theta        = "list",
-    theta_grid         = "matrix_or_numeric"
+    theta_grid         = "matrix_or_numeric",
+    theta_grid_weights = "matrix_or_numeric_or_null"
   ),
   prototype = list(
     item_selection = list(
@@ -116,7 +117,8 @@ setClass("config_Shadow",
       fence_slope               = 5,
       fence_difficulty          = c(-5, 5)
     ),
-    theta_grid                  = seq(-4, 4, .1)
+    theta_grid                  = seq(-4, 4, .1),
+    theta_grid_weights          = NULL
   ),
   validity = function(object) {
     err <- NULL
@@ -364,6 +366,7 @@ setClass("config_Shadow",
 #'   \item{\code{fence_difficulty}} difficulty parameters to use for \code{method = 'MLEF'}. This must have two values in total, for the lower and upper bound item respectively. (default = \code{c(-5, 5)})
 #' }
 #' @param theta_grid the theta grid to use as quadrature points.
+#' @param theta_grid_weights (optional) the weights to use for quadrature points. Must be non-negative.
 #'
 #' @examples
 #' cfg1 <- createShadowTestConfig(refresh_policy = list(
@@ -378,7 +381,10 @@ setClass("config_Shadow",
 createShadowTestConfig <- function(
   item_selection = NULL, content_balancing = NULL, MIP = NULL, MCMC = NULL,
   exclude_policy = NULL, refresh_policy = NULL, exposure_control = NULL, stopping_criterion = NULL,
-  interim_theta = NULL, final_theta = NULL, theta_grid = seq(-4, 4, .1)) {
+  interim_theta = NULL, final_theta = NULL,
+  theta_grid = seq(-4, 4, .1), theta_grid_weights = NULL
+) {
+
   cfg <- new("config_Shadow")
 
   arg_names <- c(
@@ -420,6 +426,10 @@ createShadowTestConfig <- function(
   if (!is.null(theta_grid)) {
     cfg@theta_grid <- theta_grid
   }
+  if (!is.null(theta_grid_weights)) {
+    cfg@theta_grid_weights <- theta_grid_weights
+  }
+
   if (length(cfg@exposure_control$max_exposure_rate) == 1) {
     cfg@exposure_control$max_exposure_rate <- rep(
       cfg@exposure_control$max_exposure_rate,

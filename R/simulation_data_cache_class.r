@@ -7,6 +7,7 @@ NULL
 #'
 #' @slot item_pool the \code{\linkS4class{item_pool}} object.
 #' @slot theta_grid the theta grid to use as quadrature points.
+#' @slot theta_grid_weights the weights to use on quadrature points.
 #' @slot prob_grid the list containing item response probabilities at theta quadratures.
 #' @slot info_grid the matrix containing item information values at theta quadratures.
 #' @slot max_info the maximum value of \code{info_grid}.
@@ -16,22 +17,24 @@ NULL
 #' @export
 setClass("simulation_data_cache",
   slots = c(
-    item_pool     = "item_pool",
-    theta_grid    = "matrix_or_numeric",
-    prob_grid     = "list",
-    info_grid     = "matrix",
-    max_info      = "numeric",
-    true_theta    = "numeric_or_null",
-    response_data = "matrix_or_null"
+    item_pool          = "item_pool",
+    theta_grid         = "matrix_or_numeric",
+    theta_grid_weights = "matrix_or_numeric_or_null",
+    prob_grid          = "list",
+    info_grid          = "matrix",
+    max_info           = "numeric",
+    true_theta         = "numeric_or_null",
+    response_data      = "matrix_or_null"
   ),
   prototype = list(
-    item_pool     = new("item_pool"),
-    theta_grid    = numeric(0),
-    prob_grid     = list(0),
-    info_grid     = matrix(0),
-    max_info      = numeric(0),
-    true_theta    = numeric(0),
-    response_data = matrix(NA, 0, 0)
+    item_pool          = new("item_pool"),
+    theta_grid         = numeric(0),
+    theta_grid_weights = numeric(0),
+    prob_grid          = list(0),
+    info_grid          = matrix(0),
+    max_info           = numeric(0),
+    true_theta         = numeric(0),
+    response_data      = matrix(NA, 0, 0)
   ),
   validity = function(object) {
     x <- NULL

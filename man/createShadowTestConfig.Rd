@@ -17,7 +17,8 @@ createShadowTestConfig(
   stopping_criterion = NULL,
   interim_theta = NULL,
   final_theta = NULL,
-  theta_grid = seq(-4, 4, 0.1)
+  theta_grid = seq(-4, 4, 0.1),
+  theta_grid_weights = NULL
 )
 }
 \arguments{
@@ -131,6 +132,8 @@ createShadowTestConfig(
 }}
 
 \item{theta_grid}{the theta grid to use as quadrature points.}
+
+\item{theta_grid_weights}{(optional) the weights to use for quadrature points. Must be non-negative.}
 }
 \description{
 \code{\link{createShadowTestConfig}} is a config function to create a \code{\linkS4class{config_Shadow}} object for Shadow test assembly.

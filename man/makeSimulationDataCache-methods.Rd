@@ -10,6 +10,7 @@ makeSimulationDataCache(
   item_pool,
   info_type = "FISHER",
   theta_grid = seq(-4, 4, 0.1),
+  theta_grid_weights = NULL,
   seed = NULL,
   true_theta = NULL,
   response_data = NULL
@@ -19,6 +20,7 @@ makeSimulationDataCache(
   item_pool,
   info_type = "FISHER",
   theta_grid = seq(-4, 4, 0.1),
+  theta_grid_weights = NULL,
   seed = NULL,
   true_theta = NULL,
   response_data = NULL
@@ -30,6 +32,8 @@ makeSimulationDataCache(
 \item{info_type}{the type of information.}
 
 \item{theta_grid}{a grid of theta values.}
+
+\item{theta_grid_weights}{(optional) weights to be applied to quadrature points.}
 
 \item{seed}{(optional) seed to use for generating response data if needed.}
 
