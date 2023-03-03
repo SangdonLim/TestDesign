@@ -285,7 +285,11 @@ selectItemUsingWeightedPenalty <- function(
 
   d_ci <- t(constants$h$weight) %*% d_ci
 
-  d_ci <- (d_ci - min(d_ci)) / (max(d_ci) - min(d_ci))
+  if (min(d_ci) != max(d_ci)) {
+    d_ci <- (d_ci - min(d_ci)) / (max(d_ci) - min(d_ci))
+  } else if (min(d_ci) == max(d_ci)) {
+    d_ci <- (d_ci - min(d_ci))
+  }
 
   # add information from administered items ------------------------------------
   if (length(administered_items) > 0) {
