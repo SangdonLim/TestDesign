@@ -85,6 +85,7 @@ setMethod("summary", "output_Static", function(object, simple = FALSE) {
 #' @docType methods
 #' @rdname summary-methods
 setMethod("summary", "output_Shadow_all", function(object, simple = FALSE) {
+
   o <- new("summary_output_Shadow_all")
   o@n_simulee    <- length(object@output)
   o@test_length  <- object@constraints@test_length
@@ -101,35 +102,49 @@ setMethod("summary", "output_Shadow_all", function(object, simple = FALSE) {
 
   # achieved attribute matching each constraint
   nc <- length(object@constraints@list_constraints)
-  tmp <- sapply(object@output, function(x) {
+  test_attributes <- sapply(object@output, function(x) {
     getSolutionAttributes(
       object@constraints,
       x@administered_item_index,
       TRUE
     )
   })
+  satisfied <- sapply(object@output, function(x) {
+    evaluateSatisfaction(
+      object@constraints,
+      x@administered_item_index
+    )
+  })
 
-  achieved <- vector("list", nc)
+  test_attributes_averaged <- vector("list", nc)
   for (i in 1:nc) {
-    achieved[[i]] <- NA
+    test_attributes_averaged[[i]] <- NA
     if (nc == 1) {
-      x <- do.call("c", tmp)
+      x <- do.call("c", test_attributes)
     } else {
-      x <- do.call("c", tmp[i, ])
+      x <- do.call("c", test_attributes[i, ])
     }
-    if (!is.null(achieved)) {
-      achieved[[i]] <- x
+    if (!is.null(test_attributes_averaged)) {
+      test_attributes_averaged[[i]] <- x
     }
   }
-  a_mean <- sapply(achieved, mean)
-  a_sd   <- sapply(achieved, sd)
-  a_min  <- sapply(achieved, min)
-  a_max  <- sapply(achieved, max)
-  tmp <- object@constraints@constraints
-  tmp <- cbind(tmp, mean = a_mean, sd = a_sd, min = a_min, max = a_max)
+  a_mean <- sapply(test_attributes_averaged, mean)
+  a_sd   <- sapply(test_attributes_averaged, sd)
+  a_min  <- sapply(test_attributes_averaged, min)
+  a_max  <- sapply(test_attributes_averaged, max)
+
+  satisfaction_rate <- apply(satisfied, 1, mean)
+
+  x <- object@constraints@constraints
+  x <- cbind(
+    x,
+    mean = a_mean, sd = a_sd,
+    min = a_min, max = a_max,
+    satisfaction_rate = satisfaction_rate
+  )
 
   if (!simple) {
-    o@achieved <- tmp
+    o@achieved <- x
   } else {
     o@achieved <- NULL
   }
