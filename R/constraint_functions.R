@@ -809,3 +809,32 @@ getSolutionAttributes <- function(constraints, item_idx, all_values = FALSE) {
   }
 
 }
+
+#' Evaluate a test for constraint satisfaction
+#'
+#' \code{\link{evaluateSatisfaction}} is a helper function for evaluating a test for its constraint satisfaction.
+#'
+#' @param constraints a \code{\linkS4class{constraints}} object.
+#' @param item_idx item indices of a test.
+#'
+#' @return
+#' \code{\link{evaluateSatisfaction}} returns a vector of \code{TRUE} and \code{FALSE} values.
+#'
+#' @examples
+#' set.seed(1)
+#' item_idx <- sample(1:1000, 30)
+#'
+#' evaluateSatisfaction(constraints_science, item_idx, FALSE)
+#' evaluateSatisfaction(constraints_science, item_idx, TRUE)
+#'
+#' @export
+evaluateSatisfaction <- function(constraints, item_idx) {
+
+  o <- getSolutionAttributes(constraints, item_idx, FALSE)
+  satisfied <-
+    (o$LB <= o$solution) &
+    (o$UB >= o$solution)
+
+  return(satisfied)
+
+}
