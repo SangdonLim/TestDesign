@@ -372,7 +372,7 @@ updateCompletedGroupingsRecordForDomain <- function(
 
   n_domain_items <- sum(o@administered_domain_index[0:position] == selection$domain_selected)
 
-  if (n_domain_items == 15) {
+  if (n_domain_items == 20) {
     groupings_record$completed_domains <- c(
       groupings_record$completed_domains, selection$domain_selected
     )

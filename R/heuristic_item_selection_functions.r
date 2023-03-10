@@ -56,7 +56,7 @@ selectItemUsingWeightedDeviation <- function(
       previous_selection$domain_selected
     )
     # if domain item limit has not been reached yet ----------------------------
-    if (n_domain_items < 15) {
+    if (n_domain_items < 20) {
       idx_to_filter_out <- constraints@item_attrib@data$DOMAIN != previous_selection$domain_selected
       candidate_tests[idx_to_filter_out] <- NA
     }
@@ -203,7 +203,7 @@ selectItemUsingMaximumPriorityIndex <- function(
       previous_selection$domain_selected
     )
     # if domain item limit has not been reached yet ----------------------------
-    if (n_domain_items < 15) {
+    if (n_domain_items < 20) {
       idx_to_filter_out <- constraints@item_attrib@data$DOMAIN != previous_selection$domain_selected
       wd[idx_to_filter_out] <- -Inf
     }
@@ -384,7 +384,7 @@ selectItemUsingWeightedPenalty <- function(
       previous_selection$domain_selected
     )
     # if domain item limit has not been reached yet ----------------------------
-    if (n_domain_items < 15) {
+    if (n_domain_items < 20) {
       idx_to_filter_out <- constraints@item_attrib@data$DOMAIN != previous_selection$domain_selected
       d_i[idx_to_filter_out] <- Inf
     }
