@@ -207,46 +207,6 @@ List estimate_theta_map(
 
   }
 
-  // makeHessian for deriv2
-
-  H.zeros();
-
-  for (int i=0; i<ni; i++) {
-    switch (item_model(i)) {
-      case 102: {
-        a = ipar(i, span(0, nd - 1));
-        d = ipar(i, nd);
-        H = H + h_m_2pl(new_estimate, a, d, response(i));
-      }
-      break;
-      case 103: {
-        a = ipar(i, span(0, nd - 1));
-        d = ipar(i, nd);
-        c = ipar(i, nd + 1);
-        H = H + h_m_3pl(new_estimate, a, d, c, response(i));
-      }
-      break;
-      case 105: {
-        a  = ipar(i, span(0, nd - 1));
-        dd = ipar(i, span(nd, n_pars(i) - 1));
-        H = H + h_m_gpc(new_estimate, a, dd, response(i));
-      }
-      break;
-      case 106: {
-        a  = ipar(i, span(0, nd - 1));
-        dd = ipar(i, span(nd, n_pars(i) - 1));
-        H = H + h_m_gr(new_estimate, a, dd, response(i));
-      }
-      break;
-    }
-  }
-
-  if (addsigma == true) {
-    H = H - sigma_inv;
-  }
-
-  deriv2 = H;
-
   theta = new_estimate;
   d2_inv = inv(deriv2);
   d2_diag = d2_inv.diag();
@@ -255,7 +215,7 @@ List estimate_theta_map(
   return List::create(
     Named("theta") = theta,
     Named("se") = se,
-    Named("vcov") = inv(-H),
+    Named("vcov") = inv(-deriv2),
     Named("hessian") = deriv2,
     Named("iteration") = iteration
   );
