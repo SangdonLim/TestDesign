@@ -21,7 +21,6 @@ evaluateSatisfaction(constraints, item_idx)
 set.seed(1)
 item_idx <- sample(1:1000, 30)
 
-evaluateSatisfaction(constraints_science, item_idx, FALSE)
-evaluateSatisfaction(constraints_science, item_idx, TRUE)
+evaluateSatisfaction(constraints_science, item_idx)
 
 }
