@@ -88,12 +88,14 @@ NULL
 
 #' (C++) For multiple items, calculate directional information
 #'
-#' \code{calc_thisdirinfo()} is a function for calculating directional information using a specific angle.
+#' \code{calc_thisdirinfo()} and \code{calc_thesedirsinfo()} are functions for calculating directional information using specific angles.
 #' These functions are designed for multiple items.
 #'
-#' \code{calc_thisdirinfo()} accepts a single theta value.
+#' \code{calc_thisdirinfo()} and \code{calc_thesedirsinfo()} both accept a single theta value.
 #'
-#' This function is designed for multidimensional models.
+#' \code{calc_thisdirinfo()} uses the same angle vector for all items. \code{calc_thesedirsinfo()} allows using an angle vector for each item.
+#'
+#' These functions are designed for multidimensional models.
 #'
 #' @param x the theta value. This must be a row vector in matrix form. Each column should represent a dimension.
 #' @param item_parm a matrix containing item parameters. Each row should represent an item.
@@ -105,7 +107,8 @@ NULL
 #'   \item{\code{105}}: MGPC model
 #'   \item{\code{106}}: MGR model
 #' }
-#' @param alpha_vec the alpha angle vector.
+#' @param alpha_vec the alpha angle vector. Used for \code{calc_thisdirinfo()}.
+#' @param alpha_mat a matrix containing one alpha angle vector for each item. Each row should represent an item. Used for \code{calc_thesedirsinfo()}.
 #'
 #' @template 1pl-ref
 #' @template 2pl-ref
@@ -115,6 +118,7 @@ NULL
 #' @template gr-ref
 #'
 #' @name calc_thisdirinfo
+#' @aliases calc_thesedirsinfo
 NULL
 
 #' (C++) For multiple items, calculate likelihoods

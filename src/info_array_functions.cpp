@@ -106,7 +106,7 @@ arma::colvec calc_thisdirinfo(
 
 }
 
-//' @rdname calc_thesedirsinfo
+//' @rdname calc_thisdirinfo
 //' @export
 // [[Rcpp::export]]
 arma::colvec calc_thesedirsinfo(

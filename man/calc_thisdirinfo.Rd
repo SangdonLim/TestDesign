@@ -2,9 +2,12 @@
 % Please edit documentation in R/RcppExports.R, R/cpp_calc_documents.r
 \name{calc_thisdirinfo}
 \alias{calc_thisdirinfo}
+\alias{calc_thesedirsinfo}
 \title{(C++) For multiple items, calculate directional information}
 \usage{
 calc_thisdirinfo(x, item_parm, nd, ncat, model, alpha_vec)
+
+calc_thesedirsinfo(x, item_parm, nd, ncat, model, alpha_mat)
 }
 \arguments{
 \item{x}{the theta value. This must be a row vector in matrix form. Each column should represent a dimension.}
@@ -22,16 +25,20 @@ calc_thisdirinfo(x, item_parm, nd, ncat, model, alpha_vec)
   \item{\code{106}}: MGR model
 }}
 
-\item{alpha_vec}{the alpha angle vector.}
+\item{alpha_vec}{the alpha angle vector. Used for \code{calc_thisdirinfo()}.}
+
+\item{alpha_mat}{a matrix containing one alpha angle vector for each item. Each row should represent an item. Used for \code{calc_thesedirsinfo()}.}
 }
 \description{
-\code{calc_thisdirinfo()} is a function for calculating directional information using a specific angle.
+\code{calc_thisdirinfo()} and \code{calc_thesedirsinfo()} are functions for calculating directional information using specific angles.
 These functions are designed for multiple items.
 }
 \details{
-\code{calc_thisdirinfo()} accepts a single theta value.
+\code{calc_thisdirinfo()} and \code{calc_thesedirsinfo()} both accept a single theta value.
 
-This function is designed for multidimensional models.
+\code{calc_thisdirinfo()} uses the same angle vector for all items. \code{calc_thesedirsinfo()} allows using an angle vector for each item.
+
+These functions are designed for multidimensional models.
 }
 \references{
 Rasch, G. (1960). \emph{Probabilistic models for some intelligence and attainment tests.}
