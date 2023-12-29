@@ -1,5 +1,8 @@
 # TestDesign 1.3.0.9000
 
+temporary note for me: this is the branch state before cherry-picking commits from hybrid-old branch
+TODO: remove this note after hybrid-old branch is cleaned up
+
 ## New features
 * Added segment-wise Progressive-Restricted exposure control with fading.
 * `loadConstraints()` now explicitly errors when the test length constraint has different LB and UB values.
