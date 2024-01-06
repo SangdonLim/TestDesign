@@ -139,7 +139,13 @@
     <loc>/reference/find_segment.html</loc>
   </url>
   <url>
+    <loc>/reference/flagAdministeredAsEligible.html</loc>
+  </url>
+  <url>
     <loc>/reference/flagIneligible.html</loc>
+  </url>
+  <url>
+    <loc>/reference/getEligibilityFlagInSegment.html</loc>
   </url>
   <url>
     <loc>/reference/getSolution-methods.html</loc>
