@@ -49,6 +49,12 @@
     <loc>/reference/a_to_alpha.html</loc>
   </url>
   <url>
+    <loc>/reference/applyEligibilityConstraintsToInfo.html</loc>
+  </url>
+  <url>
+    <loc>/reference/applyEligibilityConstraintsToXdata.html</loc>
+  </url>
+  <url>
     <loc>/reference/buildConstraints.html</loc>
   </url>
   <url>
@@ -152,6 +158,9 @@
   </url>
   <url>
     <loc>/reference/getSolutionAttributes.html</loc>
+  </url>
+  <url>
+    <loc>/reference/getXdataOfAdministered.html</loc>
   </url>
   <url>
     <loc>/reference/h_item.html</loc>
