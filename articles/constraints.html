@@ -103,11 +103,13 @@ Lim</h4>
 <h3 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h3>
 <p>This document explains how to create constraints data for
-<code><a href="../reference/loadConstraints.html">loadConstraints()</a></code>. In test assembly, practitioners often
-want to select items satisfying various types of constraints. As of
-<em>TestDesign</em> version 1.1.0, constraints can be read in from
-<code>data.frame</code> objects or <code>.csv</code> spreadsheet files.
-Data is expected to be in the following structure:</p>
+<code><a href="../reference/loadConstraints.html">loadConstraints()</a></code>. Automated test assembly in practice is
+often desired to assemble a test so that its contents adhere to a test
+blueprint, which asserts various requirements the assembled test should
+satisfy. As of <em>TestDesign</em> version 1.1.0, constraints can be
+read in from <code>data.frame</code> objects or <code>.csv</code>
+spreadsheet files. The input data is expected to be in the following
+structure:</p>
 <table class="table table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
 <thead><tr>
 <th style="text-align:left;">
@@ -251,13 +253,26 @@ STANDARD == 1
 row must have corresponding values for each column. A convenient way to
 creating constraints is to use a spreadsheet application (e.g. Excel)
 and work on the content from there.</p>
+<p>Readers are also encouraged to tinker with example constraints
+included in the package:</p>
+<ul>
+<li>
+<code>constraints_science_data</code> (all discrete items)</li>
+<li>
+<code>constraints_reading_data</code> (set-based blueprint)</li>
+<li>
+<code>constraints_fatigue_data</code> (uses enemy items)</li>
+<li>
+<code>constraints_bayes_data</code> (uses word count
+constraints)</li>
+</ul>
 <p><br></p>
 <hr>
 <div class="section level4">
 <h4 id="constraint_id">CONSTRAINT_ID<a class="anchor" aria-label="anchor" href="#constraint_id"></a>
 </h4>
-<p>This column serves as identifiers. Character values can be used as
-long as the values are unique.</p>
+<p>This column specifies the identifier of each constraint. Character
+values can be used as long as the values are unique.</p>
 <p><br></p>
 <hr>
 </div>
@@ -992,6 +1007,7 @@ OFF
 </tr></tbody>
 </table>
 <p><br></p>
+<hr>
 </div>
 </div>
   </div>
