@@ -1,5 +1,14 @@
 
-#' @noRd
+#' (Internal) Sanitize constraints data
+#'
+#' \code{\link{sanitizeConstraintsData}} is an internal function for
+#' sanitizing constraints data.
+#'
+#' @param x a \code{\link{data.frame}} containing constraints data.
+#'
+#' @returns \code{\link{sanitizeConstraintsData}} returns sanitized constraints data.
+#'
+#' @keywords internal
 sanitizeConstraintsData <- function(x) {
 
   names(x)    <- toupper(names(x))
@@ -30,7 +39,18 @@ sanitizeConstraintsData <- function(x) {
 
 }
 
-#' @noRd
+#' (Internal) Validate constraint lower/upper bounds
+#'
+#' \code{\link{validateLBUB}} is an internal function for
+#' validating a constraint's lower/upper bounds.
+#'
+#' @param x a \code{\link{data.frame}} row containing a single constraint data.
+#' @param allow_range whether to allow unequal LB and UB values as valid. (default = \code{TRUE})
+#'
+#' @returns \code{\link{validateLBUB}} does not return any values;
+#' it \code{\link{stop}}s if the input constraint is not valid.
+#'
+#' @keywords internal
 validateLBUB <- function(x, allow_range = TRUE) {
   if (any(c(x$LB, x$UB) < 0)) {
     stop(sprintf("constraint %s: LB and UB must be >= 0; this condition was not met.", x$CONSTRAINT))
@@ -45,7 +65,22 @@ validateLBUB <- function(x, allow_range = TRUE) {
   }
 }
 
-#' @noRd
+#' (Internal) Validate constraint condition expression
+#'
+#' \code{\link{validateExpression}} is an internal function for
+#' validating a constraint's condition expression.
+#'
+#' @param x a \code{\link{data.frame}} row containing a single constraint data.
+#' @param attrib an \code{\linkS4class{item_attrib}} object or a \code{\linkS4class{st_attrib}} object.
+#' @param unit_name \code{items} or \code{stimuli}.
+#' @param use_lt
+#' if \code{TRUE}, will raise an error when number of matching items/stimuli is less than 2.
+#' if \code{FALSE}, will raise an error when number of matching items/stimuli is 0.
+#'
+#' @returns \code{\link{validateExpression}} does not return any values;
+#' it \code{\link{stop}}s if the input constraint is not valid.
+#'
+#' @keywords internal
 validateExpression <- function(x, attrib, unit_name, use_lt) {
 
   try_parse <- try(parse(text = x$CONDITION))
@@ -63,7 +98,19 @@ validateExpression <- function(x, attrib, unit_name, use_lt) {
 
 }
 
-#' @noRd
+#' (Internal) Validate constraint for completeness of its required attribute column
+#'
+#' \code{\link{validateFullColumn}} is an internal function for
+#' validating a constraint for whether its required attribute column is complete (i.e., does not have NA values).
+#'
+#' @param x a \code{\link{data.frame}} row containing a single constraint data.
+#' @param attrib an \code{\linkS4class{item_attrib}} object or a \code{\linkS4class{st_attrib}} object.
+#' @param class_name \code{item_attrib} or \code{st_attrib}.
+#'
+#' @returns \code{\link{validateFullColumn}} does not return any values;
+#' it \code{\link{stop}}s if the input constraint is not valid.
+#'
+#' @keywords internal
 validateFullColumn <- function(x, attrib, class_name) {
 
   if (!(x$CONDITION %in% names(attrib@data))) {
@@ -76,7 +123,19 @@ validateFullColumn <- function(x, attrib, class_name) {
 
 }
 
-#' @noRd
+#' (Internal) Validate constraint (wrapper for other validators)
+#'
+#' \code{\link{validateConstraintData}} is an internal function for
+#' validating a constraint. This is a wrapper function that calls other validator functions
+#' depending on the constraint.
+#'
+#' @param x a \code{\link{data.frame}} row containing a single constraint data.
+#' @param attrib an \code{\linkS4class{item_attrib}} object or a \code{\linkS4class{st_attrib}} object.
+#'
+#' @returns \code{\link{validateConstraintData}} does not return any values;
+#' it \code{\link{stop}}s if the input constraint is not valid.
+#'
+#' @keywords internal
 validateConstraintData <- function(x, attrib) {
 
   if (inherits(attrib, "item_attrib")) {

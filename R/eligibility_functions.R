@@ -1,7 +1,27 @@
 #' @include shadow_functions.R
 NULL
 
-#' @noRd
+#' (Internal) Obtain item/set level eligibility flags
+#'
+#' \code{\link{flagIneligible}} is an internal function for obtaining item/set-level eligibility flags based on segment-wise exposure rates.
+#'
+#' @param exposure_record a list containing exposure record.
+#' @param constants a named list containing constants.
+#' @param item_index_by_stimulus a list containing item indices by stimulus.
+#' @param seed,j (optional) a random seed, and the examinee index. Used to determine the random seed as \code{seed * 123 + j}.
+#'
+#' @returns \code{\link{flagIneligible}} returns a named list containing the following:
+#' \describe{
+#'   \item{\code{i}}{a (\emph{n_segment}, \emph{ni}) matrix of 1 and 0 values.}
+#'   \item{\code{s}}{a (\emph{n_segment}, \emph{ns}) matrix of 1 and 0 values. Only returned when \code{constants$group_by_stimulus} is \code{TRUE}.}
+#' }
+#' In each matrix,
+#' 1 indicates the item/set is eligible to be selected in a shadow test, and
+#' 0 indicates the item/set is not eligible to be selected in a shadow test.
+#' The higher the observed exposure rate, the more likely the item/set will be flagged as 0.
+#' The rows represent theta segments, and the flags in the row corresponding to the examinee's current interim theta estimate is used for the shadow test assembly.
+#'
+#' @keywords internal
 flagIneligible <- function(exposure_record, constants, item_index_by_stimulus, seed, j) {
 
   if (!is.null(seed)) {
@@ -44,7 +64,25 @@ flagIneligible <- function(exposure_record, constants, item_index_by_stimulus, s
 
 }
 
-#' @noRd
+#' (Internal) Parse eligibility flags for a specific theta segment
+#'
+#' \code{\link{getEligibilityFlagInSegment}} is an internal function for obtaining item/set-level eligibility flags for a specific theta segment.
+#'
+#' @param eligiblity_flag a list containing segment-wise eligibility flags.
+#' @param segment the segment index to read from.
+#' @param constants a named list containing constants.
+#'
+#' @returns \code{\link{getEligibilityFlagInSegment}} returns a named list containing the following:
+#' \describe{
+#'   \item{\code{i}}{a length-\emph{ni}) vector of 1 and 0 values.}
+#'   \item{\code{s}}{a length-\emph{ns}) vector of 1 and 0 values. Only returned when \code{constants$group_by_stimulus} is \code{TRUE}.}
+#' }
+#' In each vector,
+#' 1 indicates the item/set is eligible to be selected in a shadow test, and
+#' 0 indicates the item/set is not eligible to be selected in a shadow test.
+#' The higher the observed exposure rate, the more likely the item/set will be flagged as 0.
+#'
+#' @keywords internal
 getEligibilityFlagInSegment <- function(eligiblity_flag, segment, constants) {
   o <- list()
   o$i <- eligiblity_flag$i[segment, ]
@@ -55,7 +93,20 @@ getEligibilityFlagInSegment <- function(eligiblity_flag, segment, constants) {
   return(o)
 }
 
-#' @noRd
+#' (Internal) Update eligibility flags to mark administered items as eligible
+#'
+#' \code{\link{flagAdministeredAsEligible}} is an internal function for updating eligibility flags.
+#' Specifically, the function marks items/sets that are already administered to the current examinee as eligible.
+#' This is necessary to ensure already administered items/sets are included in the shadow test.
+#'
+#' @param eligibility_flag_in_current_theta_segment a list containing eligibility flags for the current theta segment.
+#' @param x an \code{\linkS4class{output_Shadow}} object, containing data for a single examinee.
+#' @param position the item position, ranging from 1 to test length.
+#' @param constants a named list containing constants.
+#'
+#' @returns \code{\link{flagAdministeredAsEligible}} returns an updated eligibility flag list.
+#'
+#' @keywords internal
 flagAdministeredAsEligible <- function(eligibility_flag_in_current_theta_segment, x, position, constants) {
 
   eligibility_flag_in_current_theta_segment$i[
@@ -72,7 +123,19 @@ flagAdministeredAsEligible <- function(eligibility_flag_in_current_theta_segment
 
 }
 
-#' @noRd
+#' (Internal) Augment constraint matrix-data with eligibility constraints
+#'
+#' \code{\link{applyEligibilityConstraintsToXdata}} is an internal function for augmenting constraint matrix-data with eligibility constraints.
+#' The function marks items/sets marked as ineligibile to be formally excluded in the constraint matrix-data.
+#'
+#' @param xdata the constriant matrix-data.
+#' @param eligibility_flag_in_current_theta_segment a list containing eligibility flags for the current theta segment.
+#' @param constants a named list containing constants.
+#' @param constraints a list containing constants.
+#'
+#' @returns \code{\link{applyEligibilityConstraintsToXdata}} returns an updated constriant matrix-data.
+#'
+#' @keywords internal
 applyEligibilityConstraintsToXdata <- function(xdata, eligibility_flag_in_current_theta_segment, constants, constraints) {
 
   o <- list()
@@ -107,7 +170,21 @@ applyEligibilityConstraintsToXdata <- function(xdata, eligibility_flag_in_curren
 
 }
 
-#' @noRd
+#' (Internal) Modify item information using eligibility constraints
+#'
+#' \code{\link{applyEligibilityConstraintsToInfo}} is an internal function for modifying item information using eligibility constraints.
+#' This is known as the big M method.
+#' The function penalizes item information of items that are marked as ineligibile.
+#' This leads to those items being deterred from selected in shadow test assembly, unless necessary.
+#'
+#' @param info a length-\emph{ni} vector containing item information on each item, intended for shadow-test assembly.
+#' @param eligibility_flag_in_current_theta_segment a list containing eligibility flags for the current theta segment.
+#' @param config a config object.
+#' @param constants a named list containing constants.
+#'
+#' @returns \code{\link{applyEligibilityConstraintsToInfo}} returns an updated item information vector.
+#'
+#' @keywords internal
 applyEligibilityConstraintsToInfo <- function(info, eligibility_flag_in_current_theta_segment, config, constants) {
 
   if (config@item_selection$method == "GFI") {
@@ -123,7 +200,23 @@ applyEligibilityConstraintsToInfo <- function(info, eligibility_flag_in_current_
 
 }
 
-#' @noRd
+#' (Internal) Apply fading to exposure record
+#'
+#' \code{\link{applyFading}} is an internal function for applying fading to exposure record.
+#' Specifically, the following exposure records are multiplied by \code{fading_factor}:
+#' \itemize{
+#'   \item{\code{n_k}: the number of examinees completed the test so far, at each segment \emph{k}.}
+#'   \item{\code{f_k}: }
+#'   \item{\code{a_ik}: the number of times each item \emph{i} was administered to examinees, at each segment \emph{k}}
+#'   \item{\code{r_ik}: }
+#' }
+#' @param exposure_record a named list containing exposure records.
+#' @param segments_to_apply which segments to apply fading to.
+#' @param constants a named list containing constants.
+#'
+#' @returns \code{\link{applyFading}} returns an updated exposure record.
+#'
+#' @keywords internal
 applyFading <- function(exposure_record, segments_to_apply, constants) {
 
   fading_factor <- constants$fading_factor
@@ -148,7 +241,19 @@ applyFading <- function(exposure_record, segments_to_apply, constants) {
 
 }
 
-#' @noRd
+#' (Internal) Increment exposure record variable: n
+#'
+#' \code{\link{incrementPhi}} is an internal function for incrementing an exposure record variable.
+#' Specifically, the \code{n_k} is incremented by one.
+#'
+#' @param exposure_record a named list containing exposure records.
+#' @param segments_to_apply which segments to apply the incrementing.
+#' @param segment_prob the amount of increment.
+#' @param constants a named list containing constants.
+#'
+#' @returns \code{\link{incrementN}} returns an updated exposure record.
+#'
+#' @keywords internal
 incrementN <- function(exposure_record, segments_to_apply, segment_prob, constants) {
 
   exposure_record$n_jk[segments_to_apply] <-
@@ -162,7 +267,22 @@ incrementN <- function(exposure_record, segments_to_apply, segment_prob, constan
 
 }
 
-#' @noRd
+#' (Internal) Increment exposure record variable: phi
+#'
+#' \code{\link{incrementPhi}} is an internal function for incrementing an exposure record variable.
+#' Specifically, the \code{f_k} is incremented by one if the following conditions are simultaneously met:
+#' \itemize{
+#'   \item{For the final theta segment \emph{k}, shadow test assembly was feasible at least one times in any item position while interim theta segment was \emph{k}.}
+#' }
+#'
+#' @param exposure_record a named list containing exposure records.
+#' @param segments_to_apply which segments to apply fading to.
+#' @param segment_prob a vector containing segment-wise classification probabilities of an ability estimate.
+#' @param theta_is_feasible \code{TRUE} if the above conditions are met, \code{FALSE} otherwise.
+#'
+#' @returns \code{\link{incrementPhi}} returns an updated exposure record.
+#'
+#' @keywords internal
 incrementPhi <- function(exposure_record, segments_to_apply, segment_prob, theta_is_feasible) {
 
   # for soft constraint exposure control, incrementPhi() is not called for the purpose of code optimization
@@ -180,7 +300,20 @@ incrementPhi <- function(exposure_record, segments_to_apply, segment_prob, theta
 
 }
 
-#' @noRd
+#' (Internal) Increment exposure record variable: alpha
+#'
+#' \code{\link{incrementAlpha}} is an internal function for incrementing an exposure record variable.
+#' Specifically, the \code{a_ijk} is incremented by one for administered items/sets.
+#'
+#' @param exposure_record a named list containing exposure records.
+#' @param segments_to_apply which segments to apply the incrementing.
+#' @param segment_prob the amount of increment.
+#' @param x an \code{\linkS4class{output_Shadow}} object, containing data for a single examinee.
+#' @param constants a named list containing constants.
+#'
+#' @returns \code{\link{incrementAlpha}} returns an updated exposure record.
+#'
+#' @keywords internal
 incrementAlpha <- function(exposure_record, segments_to_apply, segment_prob, x, constants) {
 
   # van der Linden & Veldkamp (2007)
@@ -217,8 +350,22 @@ incrementAlpha <- function(exposure_record, segments_to_apply, segment_prob, x, 
 
 }
 
-#' @noRd
-incrementRho <- function(o, segments_to_apply, segment_prob, eligibility_flag, theta_is_feasible, constants) {
+#' (Internal) Increment exposure record variable: rho
+#'
+#' \code{\link{incrementRho}} is an internal function for incrementing an exposure record variable.
+#' Specifically, the \code{s_ijk} variable is incremented for accounting for infeasible shadow tests.
+#'
+#' @param exposure_record a named list containing exposure records.
+#' @param segments_to_apply which segments to apply the incrementing.
+#' @param segment_prob the amount of increment.
+#' @param eligibility_flag a named list containing eligibility flags.
+#' @param theta_is_feasible
+#' @param constants a named list containing constants.
+#'
+#' @returns \code{\link{incrementRho}} returns an updated exposure record.
+#'
+#' @keywords internal
+incrementRho <- function(exposure_record, segments_to_apply, segment_prob, eligibility_flag, theta_is_feasible, constants) {
 
   # van der Linden & Veldkamp (2007)
   # Conditional Item-Exposure Control in Adaptive Testing Using Item-Ineligibility Probabilities
@@ -230,9 +377,9 @@ incrementRho <- function(o, segments_to_apply, segment_prob, eligibility_flag, t
 
   r_flag_i <- eligibility_flag$i
   if (!theta_is_feasible) r_flag_i <- TRUE
-  o$r_ijk <- o$r_ijk + r_flag_i * segments_to_apply * segment_prob
+  exposure_record$r_ijk <- exposure_record$r_ijk + r_flag_i * segments_to_apply * segment_prob
   if (constants$fading_factor != 1) {
-    o$r_ijk_nofade <- o$r_ijk_nofade + r_flag_i * segments_to_apply * segment_prob
+    exposure_record$r_ijk_nofade <- exposure_record$r_ijk_nofade + r_flag_i * segments_to_apply * segment_prob
   }
 
   if (!constants$group_by_stimulus) {
@@ -241,29 +388,39 @@ incrementRho <- function(o, segments_to_apply, segment_prob, eligibility_flag, t
 
   r_flag_s <- eligibility_flag$s
   if (!theta_is_feasible) r_flag_s <- TRUE
-  o$r_sjk <- o$r_sjk + r_flag_s * segments_to_apply * segment_prob
+  exposure_record$r_sjk <- exposure_record$r_sjk + r_flag_s * segments_to_apply * segment_prob
   if (constants$fading_factor != 1) {
-    o$r_sjk_nofade <- o$r_sjk_nofade + r_flag_s * segments_to_apply * segment_prob
+    exposure_record$r_sjk_nofade <- exposure_record$r_sjk_nofade + r_flag_s * segments_to_apply * segment_prob
   }
 
-  return(o)
+  return(exposure_record)
 
 }
 
-#' @noRd
-clipEligibilityRates <- function(o, constants) {
+#' (Internal) Clip eligibility rates into 0-1 bounds
+#'
+#' \code{\link{clipEligibilityRates}} is an internal function for
+#' processing eligibility rate updates.
+#'
+#' @param exposure_record a named list containing exposure records.
+#' @param constants a named list containing constants.
+#'
+#' @returns \code{\link{clipEligibilityRates}} returns an updated exposure record.
+#'
+#' @keywords internal
+clipEligibilityRates <- function(exposure_record, constants) {
 
-  o$p_e_i[is.na(o$p_e_i) | o$a_ijk == 0] <- 1
-  o$p_e_i[o$p_e_i > 1] <- 1
+  exposure_record$p_e_i[is.na(exposure_record$p_e_i) | exposure_record$a_ijk == 0] <- 1
+  exposure_record$p_e_i[exposure_record$p_e_i > 1] <- 1
 
   if (!constants$group_by_stimulus) {
-    return(o)
+    return(exposure_record)
   }
 
-  o$p_e_s[is.na(o$p_e_s) | o$a_sjk == 0] <- 1
-  o$p_e_s[o$p_e_s > 1] <- 1
+  exposure_record$p_e_s[is.na(exposure_record$p_e_s) | exposure_record$a_sjk == 0] <- 1
+  exposure_record$p_e_s[exposure_record$p_e_s > 1] <- 1
 
-  return(o)
+  return(exposure_record)
 
 }
 

@@ -1,7 +1,27 @@
 #' @include shadow_functions.R
 NULL
 
-#' @noRd
+#' (Internal) Obtain constraint matrix-data of administered items/sets
+#'
+#' \code{\link{getXdataOfAdministered}} is an internal function for obtaining constraint matrix-data of administered items/sets.
+#' Specifically, it returns a constraint matrix-data that tells the solver to include items/sets that are already administered to the current examinee.
+#' This is necessary for shadow-test assembly for adaptive test assembly.
+#'
+#' @param constants a named list containing constants.
+#' @param position the item position, ranging from 1 to test length.
+#' @param x an \code{\linkS4class{output_Shadow}} object, containing data for a single examinee.
+#' @param groupings_record a list containing data on completed item sets.
+#' @param constraints a constraints object.
+#'
+#' @returns \code{\link{getXdataOfAdministered}} returns a constraint matrix-data.
+#' A constraint matrix-data is a named list containing the following:
+#' \describe{
+#'   \item{\code{xmat}}{a (\emph{nc}, \emph{ni}) matrix for the left-hand side in a MIP problem.}
+#'   \item{\code{xdir}}{a length-\emph{nc}) vector of relational operators, for comparing the two sides in a MIP problem.}
+#'   \item{\code{xrhs}}{a length-\emph{nc}) vector, for the right-hand side in a MIP problem.}
+#' }
+#'
+#' @keywords internal
 getXdataOfAdministered <- function(constants, position, x, groupings_record, constraints) {
 
   o <- list()

@@ -1191,7 +1191,16 @@ updateThetaPosterior <- function(o, prob_resp) {
 
 }
 
-#' @noRd
+#' (Internal) Convert posterior densities into an EAP estimate
+#'
+#' \code{\link{computeEAPFromPosterior}} is an internal function for converting posterior densities into an EAP estimate.
+#'
+#' @param posterior a named list posterior densities and likelihoods.
+#' @param theta_grid a vector containing quadrature points corresponding to the above.
+#'
+#' @returns \code{\link{computeEAPFromPosterior}} returns a named list containing an EAP theta estimate.
+#'
+#' @keywords internal
 computeEAPFromPosterior <- function(posterior, theta_grid) {
   o <- list()
   o$theta <- sum(posterior * theta_grid) / sum(posterior)
@@ -1199,7 +1208,17 @@ computeEAPFromPosterior <- function(posterior, theta_grid) {
   return(o)
 }
 
-#' @noRd
+#' (Internal) Apply shrinkage correction to theta estimate
+#'
+#' \code{\link{applyShrinkageCorrection}} is an internal function for applying shrinkage correction to a theta estimate.
+#'
+#' @param EAP a named list containing an EAP theta estimate.
+#' @param config_theta a list containing theta estimation configurations.
+#' @param j the examinee index. Used to parse the prior SD from the config.
+#'
+#' @returns \code{\link{applyShrinkageCorrection}} returns an updated list containing corrected EAP theta estimate.
+#'
+#' @keywords internal
 applyShrinkageCorrection <- function(EAP, config_theta, j) {
 
   if (toupper(config_theta$prior_dist) == "NORMAL" && config_theta$shrinkage_correction) {

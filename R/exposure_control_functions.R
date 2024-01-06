@@ -1,7 +1,22 @@
 #' @include shadow_functions.R
 NULL
 
-#' @noRd
+#' (Internal) Perform exposure control
+#'
+#' \code{\link{doExposureControl}} is an internal function for performing exposure control.
+#' This is a wrapper function for calling other low-level functions for respective exposure control methods.
+#'
+#' @param exposure_record a named list containing exposure control records.
+#' @param segment_record a named list containing counts on theta segments.
+#' @param o an \code{\linkS4class{output_Shadow}} object, containing data for a single examinee.
+#' @param j the numeric index of the examinee.
+#' @param current_theta a named list containing data on current theta estimate.
+#' @param eligibility_flag a named list containing eligibility flags.
+#' @param constants a named list containing constants.
+#'
+#' @returns \code{\link{doExposureControl}} returns an updated list for exposure control records.
+#'
+#' @keywords internal
 doExposureControl <- function(
   exposure_record, segment_record,
   o, j,
@@ -293,7 +308,18 @@ updateExposureRecordSegmentwise <- function(o, j, x, constants) {
 
 }
 
-#' @noRd
+#' (Internal) Initialize item usage matrix
+#'
+#' \code{\link{initializeUsageMatrix}} is an internal function for
+#' creating a new item usage matrix. An item usage matrix is a
+#' (\emph{nj}, \emph{nv}) matrix with \code{TRUE} or \code{FALSE} values.
+#' The rows represent examinees, and the columns represent decision variables.
+#'
+#' @param constants a named list containing constants.
+#'
+#' @returns \code{\link{initializeUsageMatrix}} returns a new item usage matrix.
+#'
+#' @keywords internal
 initializeUsageMatrix <- function(constants) {
 
   if (!constants$group_by_stimulus) {
@@ -307,7 +333,21 @@ initializeUsageMatrix <- function(constants) {
 
 }
 
-#' @noRd
+#' (Internal) Update item usage matrix
+#'
+#' \code{\link{updateUsageMatrix}} is an internal function for
+#' updating an item usage matrix. An item usage matrix is a
+#' (\emph{nj}, \emph{nv}) matrix with \code{TRUE} or \code{FALSE} values.
+#' The rows represent examinees, and the columns represent decision variables.
+#'
+#' @param usage_matrix a (\emph{nj}, \emph{nv}) matrix containing item usage.
+#' @param j the examinee index.
+#' @param x an \code{\linkS4class{output_Shadow}} object containing the examinee's simulation data.
+#' @param constants a named list containing constants.
+#'
+#' @returns \code{\link{updateUsageMatrix}} returns an updated item usage matrix.
+#'
+#' @keywords internal
 updateUsageMatrix <- function(usage_matrix, j, x, constants) {
 
   usage_matrix[j, x@administered_item_index] <- TRUE
@@ -322,7 +362,18 @@ updateUsageMatrix <- function(usage_matrix, j, x, constants) {
 
 }
 
-#' @noRd
+#' (Internal) Aggregate item usage matrix into exposure rate table
+#'
+#' \code{\link{aggregateUsageMatrix}} is an internal function for
+#' aggregating item usage matrix into an exposure rate table.
+#'
+#' @param usage_matrix a (\emph{nj}, \emph{nv}) matrix containing item usage.
+#' @param constants a named list containing constants.
+#' @param constraints a \code{\linkS4class{constraints}} object.
+#'
+#' @returns \code{\link{aggregateUsageMatrix}} returns a \code{\link{data.frame}} containing exposure rates.
+#'
+#' @keywords internal
 aggregateUsageMatrix <- function(usage_matrix, constants, constraints) {
 
   if (!constants$group_by_stimulus) {
