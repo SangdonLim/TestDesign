@@ -166,6 +166,12 @@
     <loc>/reference/generateDensityFromPriorPar.html</loc>
   </url>
   <url>
+    <loc>/reference/generateItemParameterSample.html</loc>
+  </url>
+  <url>
+    <loc>/reference/generateSampleFromPriorPar.html</loc>
+  </url>
+  <url>
     <loc>/reference/getBayesianConstants.html</loc>
   </url>
   <url>
@@ -245,6 +251,9 @@
   </url>
   <url>
     <loc>/reference/mlef-methods.html</loc>
+  </url>
+  <url>
+    <loc>/reference/normalizeConstraintData.html</loc>
   </url>
   <url>
     <loc>/reference/output_Shadow-class.html</loc>
