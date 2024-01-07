@@ -106,6 +106,12 @@
     <loc>/reference/checkConstraints.html</loc>
   </url>
   <url>
+    <loc>/reference/combineConstraintsData.html</loc>
+  </url>
+  <url>
+    <loc>/reference/combineItemPoolData.html</loc>
+  </url>
+  <url>
     <loc>/reference/constraint-class.html</loc>
   </url>
   <url>
@@ -139,6 +145,9 @@
     <loc>/reference/detectBestSolver.html</loc>
   </url>
   <url>
+    <loc>/reference/doExposureControl.html</loc>
+  </url>
+  <url>
     <loc>/reference/e_item.html</loc>
   </url>
   <url>
@@ -155,6 +164,9 @@
   </url>
   <url>
     <loc>/reference/generateDensityFromPriorPar.html</loc>
+  </url>
+  <url>
+    <loc>/reference/getBayesianConstants.html</loc>
   </url>
   <url>
     <loc>/reference/getEligibilityFlagInSegment.html</loc>
