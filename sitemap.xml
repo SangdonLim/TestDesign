@@ -55,6 +55,9 @@
     <loc>/reference/applyEligibilityConstraintsToXdata.html</loc>
   </url>
   <url>
+    <loc>/reference/applyFading.html</loc>
+  </url>
+  <url>
     <loc>/reference/buildConstraints.html</loc>
   </url>
   <url>
@@ -190,6 +193,9 @@
     <loc>/reference/h_item.html</loc>
   </url>
   <url>
+    <loc>/reference/incrementPhi.html</loc>
+  </url>
+  <url>
     <loc>/reference/index.html</loc>
   </url>
   <url>
@@ -253,9 +259,6 @@
     <loc>/reference/mlef-methods.html</loc>
   </url>
   <url>
-    <loc>/reference/normalizeConstraintData.html</loc>
-  </url>
-  <url>
     <loc>/reference/output_Shadow-class.html</loc>
   </url>
   <url>
@@ -281,6 +284,9 @@
   </url>
   <url>
     <loc>/reference/runAssembly.html</loc>
+  </url>
+  <url>
+    <loc>/reference/sanitizeConstraintsData.html</loc>
   </url>
   <url>
     <loc>/reference/show-methods.html</loc>
@@ -326,5 +332,8 @@
   </url>
   <url>
     <loc>/reference/toggleConstraints.html</loc>
+  </url>
+  <url>
+    <loc>/reference/validateLBUB.html</loc>
   </url>
 </urlset>
