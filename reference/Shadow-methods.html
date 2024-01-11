@@ -181,76 +181,9 @@ Springer Science &amp; Business Media.</p>
 <span class="r-in"><span><span class="va">true_theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">solution</span> <span class="op">&lt;-</span> <span class="fu">Shadow</span><span class="op">(</span><span class="va">config</span>, <span class="va">constraints_science</span>, <span class="va">true_theta</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: progress</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in incrementN(exposure_record, segments_to_apply, segment_prob,     constants):</span> object 'o' not found</span>
 <span class="r-in"><span><span class="va">solution</span><span class="op">@</span><span class="va">output</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simulee index          : 1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   True theta           : 0.1856401 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Final theta estimate : 0.3363086 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Final SE estimate    : 0.2364093 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    stage stimulus_index item_index item_resp item_ncat interim_theta interim_se</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      1             NA        567         2         3     0.8408900  0.7021182</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      2             NA        914         2         3     1.1452401  0.6476122</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3      3             NA        692         1         2     1.3417912  0.6383215</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4      4             NA        688         1         2     1.4345091  0.6207273</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      5             NA        908         1         2     1.5011171  0.6167497</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6      6             NA        481         0         2     1.2996308  0.5676184</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7      7             NA        453         0         2     1.0142388  0.4947122</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8      8             NA        514         1         2     1.0563398  0.4933373</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9      9             NA          4         0         2     0.8180699  0.4605449</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10    10             NA         81         1         2     0.8249088  0.4597191</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11    11             NA        262         0         3     0.6454808  0.3892993</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12    12             NA         29         0         3     0.5484764  0.3651761</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13    13             NA        290         3         4     0.6653539  0.3411980</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14    14             NA        120         0         2     0.5607373  0.3317838</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15    15             NA        664         1         2     0.5934200  0.3246896</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16    16             NA          3         1         2     0.6139251  0.3220323</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17    17             NA        210         0         2     0.5701605  0.3178652</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18    18             NA        421         1         2     0.5932124  0.3152522</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19    19             NA        378         0         2     0.5473659  0.3127441</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20    20             NA        935         1         2     0.5593546  0.3108928</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21    21             NA        791         0         3     0.4638490  0.2950281</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22    22             NA        946         1         3     0.4463615  0.2832644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23    23             NA        925         1         3     0.5081753  0.2731010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24    24             NA        382         0         3     0.3907863  0.2663215</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25    25             NA        680         0         3     0.3122057  0.2607340</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26    26             NA        563         1         3     0.3461344  0.2534282</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27    27             NA        639         0         3     0.3093749  0.2488559</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28    28             NA        305         1         3     0.4008536  0.2422026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29    29             NA        780         0         3     0.3703572  0.2390540</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30    30             NA        869         0         2     0.3363086  0.2364093</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    theta_segment</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1              4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2              5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3              5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4              5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5              5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6              6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7              5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8              5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9              5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22             4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23             4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24             5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25             4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26             4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27             4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28             4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29             4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30             4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'solution' not found</span>
 </code></pre></div>
     </div>
   </div>

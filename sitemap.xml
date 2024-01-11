@@ -61,6 +61,9 @@
     <loc>/reference/applyShrinkageCorrection.html</loc>
   </url>
   <url>
+    <loc>/reference/applyThin.html</loc>
+  </url>
+  <url>
     <loc>/reference/buildConstraints.html</loc>
   </url>
   <url>
@@ -197,6 +200,12 @@
   </url>
   <url>
     <loc>/reference/h_item.html</loc>
+  </url>
+  <url>
+    <loc>/reference/incrementAlpha.html</loc>
+  </url>
+  <url>
+    <loc>/reference/incrementN.html</loc>
   </url>
   <url>
     <loc>/reference/incrementPhi.html</loc>
@@ -341,6 +350,12 @@
   </url>
   <url>
     <loc>/reference/toggleConstraints.html</loc>
+  </url>
+  <url>
+    <loc>/reference/validateExpression.html</loc>
+  </url>
+  <url>
+    <loc>/reference/validateFullColumn.html</loc>
   </url>
   <url>
     <loc>/reference/validateLBUB.html</loc>
