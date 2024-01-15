@@ -271,14 +271,27 @@ constraints)</li>
 <div class="section level2">
 <h2 id="content-balancing-with-shadow-test-approach">Content balancing with shadow-test approach<a class="anchor" aria-label="anchor" href="#content-balancing-with-shadow-test-approach"></a>
 </h2>
+<p>This section aims to provide context on why the constraints input
+format does not have a column for weights.</p>
 <p>The <em>TestDesign</em> package performs content balancing using the
 shadow-test approach (van der Linden &amp; Reese, 1998). This means that
 the test will be assembled in a way that strictly satisfies all
 constraints with no violations. The reader may be familiar with the use
 of weights in test blueprints for indicating which constraints should be
-prioritized. Unlike with traditional content balancing methods, the
-shadow-test approach operates without needing weights, because there is
-no need to prioritize certain constraints to satisfy.</p>
+prioritized. These constraint-wise weights are mainly needed when
+traditional content balancing methods are used, where items are selected
+one by one. When items are selected one by one, there is a fundamental
+limitation that there is no guarantee that the resulting test will
+satisfy all constraints. For this reason, weights are used as
+supplements to traditional content balancing to work around this
+limitation, to guide the item selection process in a way that the number
+of violated constraints is minimized.</p>
+<p>Unlike with traditional content balancing methods, the shadow-test
+approach operates without needing weights. This is because the
+shadow-test approach directly finds a combination of items that
+satisfies all constraints, and therefore has no need to prioritize
+certain constraints to satisfy, as would be needed in traditional
+content balancing methods that select items one by one.</p>
 <p><br></p>
 </div>
 <div class="section level2">
