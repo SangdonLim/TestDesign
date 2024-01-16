@@ -49,6 +49,9 @@
     <loc>/reference/a_to_alpha.html</loc>
   </url>
   <url>
+    <loc>/reference/aggregateUsageMatrix.html</loc>
+  </url>
+  <url>
     <loc>/reference/applyEligibilityConstraintsToInfo.html</loc>
   </url>
   <url>
@@ -187,7 +190,13 @@
     <loc>/reference/getBayesianConstants.html</loc>
   </url>
   <url>
+    <loc>/reference/getConstants.html</loc>
+  </url>
+  <url>
     <loc>/reference/getEligibilityFlagInSegment.html</loc>
+  </url>
+  <url>
+    <loc>/reference/getSegmentProb.html</loc>
   </url>
   <url>
     <loc>/reference/getSolution-methods.html</loc>
@@ -308,6 +317,9 @@
   </url>
   <url>
     <loc>/reference/sanitizeConstraintsData.html</loc>
+  </url>
+  <url>
+    <loc>/reference/sanitizeModel.html</loc>
   </url>
   <url>
     <loc>/reference/show-methods.html</loc>
