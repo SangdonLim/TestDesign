@@ -226,6 +226,9 @@
     <loc>/reference/info_item.html</loc>
   </url>
   <url>
+    <loc>/reference/initializeUsageMatrix.html</loc>
+  </url>
+  <url>
     <loc>/reference/iparPosteriorSample.html</loc>
   </url>
   <url>
@@ -365,6 +368,12 @@
   </url>
   <url>
     <loc>/reference/toggleConstraints.html</loc>
+  </url>
+  <url>
+    <loc>/reference/updateUsageMatrix.html</loc>
+  </url>
+  <url>
+    <loc>/reference/validateConstraintData.html</loc>
   </url>
   <url>
     <loc>/reference/validateExpression.html</loc>
