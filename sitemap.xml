@@ -166,6 +166,9 @@
     <loc>/reference/doExposureControl.html</loc>
   </url>
   <url>
+    <loc>/reference/dot-onAttach.html</loc>
+  </url>
+  <url>
     <loc>/reference/e_item.html</loc>
   </url>
   <url>
@@ -197,6 +200,9 @@
   </url>
   <url>
     <loc>/reference/getEligibilityFlagInSegment.html</loc>
+  </url>
+  <url>
+    <loc>/reference/getInfoFixedTheta.html</loc>
   </url>
   <url>
     <loc>/reference/getSegmentProb.html</loc>
@@ -314,6 +320,9 @@
   </url>
   <url>
     <loc>/reference/print-methods.html</loc>
+  </url>
+  <url>
+    <loc>/reference/returnErrors.html</loc>
   </url>
   <url>
     <loc>/reference/runAssembly.html</loc>
