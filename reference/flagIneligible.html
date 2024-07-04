@@ -69,17 +69,23 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">flagIneligible</span><span class="op">(</span><span class="va">exposure_record</span>, <span class="va">constants</span>, <span class="va">item_index_by_stimulus</span>, <span class="va">seed</span>, <span class="va">j</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">flagIneligible</span><span class="op">(</span></span>
+<span>  <span class="va">exposure_record</span>,</span>
+<span>  <span class="va">simulation_constants</span>,</span>
+<span>  <span class="va">item_index_by_stimulus</span>,</span>
+<span>  <span class="va">seed</span>,</span>
+<span>  <span class="va">j</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>exposure_record</dt>
-<dd><p>a list containing exposure record.</p></dd>
+<dd><p>a named list containing exposure records.</p></dd>
 
 
-<dt>constants</dt>
-<dd><p>a named list containing constants.</p></dd>
+<dt>simulation_constants</dt>
+<dd><p>a named list containing simulation constants.</p></dd>
 
 
 <dt>item_index_by_stimulus</dt>
@@ -98,14 +104,14 @@
 <dd><p>a (<em>n_segment</em>, <em>ni</em>) matrix of 1 and 0 values.</p></dd>
 
   <dt><code>s</code></dt>
-<dd><p>a (<em>n_segment</em>, <em>ns</em>) matrix of 1 and 0 values. Only returned when <code>constants$group_by_stimulus</code> is <code>TRUE</code>.</p></dd>
+<dd><p>a (<em>n_segment</em>, <em>ns</em>) matrix of 1 and 0 values. Only returned when <code>simulation_constants$group_by_stimulus</code> is <code>TRUE</code>.</p></dd>
 
 
 </dl><p>In each matrix,
-1 indicates the item/set is eligible to be selected in a shadow test, and
-0 indicates the item/set is not eligible to be selected in a shadow test.
+1 indicates the item/set is eligible to be selected in a shadowtest, and
+0 indicates the item/set is not eligible to be selected in a shadowtest.
 The higher the observed exposure rate, the more likely the item/set will be flagged as 0.
-The rows represent theta segments, and the flags in the row corresponding to the examinee's current interim theta estimate is used for the shadow test assembly.</p>
+The rows represent theta segments, and the flags in the row corresponding to the examinee's current interim theta estimate is used for the shadowtest assembly.</p>
     </div>
 
   </div>

@@ -74,7 +74,7 @@ The function marks items/sets marked as ineligibile to be formally excluded in t
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">applyEligibilityConstraintsToXdata</span><span class="op">(</span></span>
 <span>  <span class="va">xdata</span>,</span>
 <span>  <span class="va">eligibility_flag_in_current_theta_segment</span>,</span>
-<span>  <span class="va">constants</span>,</span>
+<span>  <span class="va">simulation_constants</span>,</span>
 <span>  <span class="va">constraints</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -89,12 +89,12 @@ The function marks items/sets marked as ineligibile to be formally excluded in t
 <dd><p>a list containing eligibility flags for the current theta segment.</p></dd>
 
 
-<dt>constants</dt>
-<dd><p>a named list containing constants.</p></dd>
+<dt>simulation_constants</dt>
+<dd><p>a named list containing simulation constants.</p></dd>
 
 
 <dt>constraints</dt>
-<dd><p>a list containing constants.</p></dd>
+<dd><p>a <code><a href="constraints-class.html">constraints</a></code> object representing test specifications. Use <code><a href="loadConstraints.html">loadConstraints</a></code> for this.</p></dd>
 
 </dl></div>
     <div id="value">

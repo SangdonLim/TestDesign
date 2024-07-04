@@ -206,8 +206,8 @@
 <dd><p>accepts the following signatures:</p><ul><li><p><code><a href="item_pool-class.html">item_pool</a></code>: plot information and expected scores.</p></li>
 <li><p><code><a href="constraints-class.html">constraints</a></code>: plot information range based on the test length constraint.</p></li>
 <li><p><code><a href="output_Static-class.html">output_Static</a></code>: plot information and expected scores based on the fixed assembly solution.</p></li>
-<li><p><code><a href="output_Shadow_all-class.html">output_Shadow_all</a></code>: plot audit trail, shadow test chart, and exposure rates from the adaptive assembly solution.</p></li>
-<li><p><code><a href="output_Shadow-class.html">output_Shadow</a></code>: plot audit trail and shadow test chart from the adaptive assembly solution.</p></li>
+<li><p><code><a href="output_Shadow_all-class.html">output_Shadow_all</a></code>: plot audit trail, shadowtest chart, and exposure rates from the adaptive assembly solution.</p></li>
+<li><p><code><a href="output_Shadow-class.html">output_Shadow</a></code>: plot audit trail and shadowtest chart from the adaptive assembly solution.</p></li>
 </ul></dd>
 
 
@@ -219,7 +219,7 @@
 <dd><p>the type of plot.</p><ul><li><p><code>info</code> plots information from <code><a href="item_pool-class.html">item_pool</a></code>, <code><a href="output_Static-class.html">output_Static</a></code>, and <code><a href="output_Shadow_all-class.html">output_Shadow_all</a></code>.</p></li>
 <li><p><code>score</code> plots expected scores from <code><a href="item_pool-class.html">item_pool</a></code> and <code><a href="output_Static-class.html">output_Static</a></code>.</p></li>
 <li><p><code>audit</code> plots audit trail from <code><a href="output_Shadow_all-class.html">output_Shadow_all</a></code> and <code><a href="output_Shadow-class.html">output_Shadow</a></code>.</p></li>
-<li><p><code>shadow</code> plots shadow test chart from <code><a href="output_Shadow_all-class.html">output_Shadow_all</a></code> and <code><a href="output_Shadow-class.html">output_Shadow</a></code>.</p></li>
+<li><p><code>shadow</code> plots shadowtest chart from <code><a href="output_Shadow_all-class.html">output_Shadow_all</a></code> and <code><a href="output_Shadow-class.html">output_Shadow</a></code>.</p></li>
 <li><p><code>exposure</code> plots exposure rates from <code><a href="output_Shadow_all-class.html">output_Shadow_all</a></code>.</p></li>
 </ul></dd>
 
@@ -333,11 +333,10 @@
 <span class="r-in"><span><span class="va">cfg</span> <span class="op">&lt;-</span> <span class="fu"><a href="createShadowTestConfig.html">createShadowTestConfig</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">solution</span> <span class="op">&lt;-</span> <span class="fu"><a href="Shadow-methods.html">Shadow</a></span><span class="op">(</span><span class="va">cfg</span>, <span class="va">constraints_science</span>, true_theta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in incrementRho(exposure_record, segments_to_apply, segment_prob,     eligibility_flag, theta_is_feasible, constants):</span> object 'o' not found</span>
 <span class="r-in"><span><span class="fu">plot</span><span class="op">(</span><span class="va">solution</span>, type <span class="op">=</span> <span class="st">'audit'</span> , examinee_id <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .local(x, y, ...):</span> object 'vec_sub' not found</span>
+<span class="r-plt img"><img src="plot-methods-8.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu">plot</span><span class="op">(</span><span class="va">solution</span>, type <span class="op">=</span> <span class="st">'shadow'</span>, examinee_id <span class="op">=</span> <span class="fl">1</span>, simple <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .local(x, y, ...):</span> object 'vec_sub' not found</span>
+<span class="r-plt img"><img src="plot-methods-9.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## plot(solution, type = 'exposure')</span></span></span>
 <span class="r-in"><span></span></span>

@@ -222,18 +222,17 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">cfg</span> <span class="op">&lt;-</span> <span class="fu"><a href="createShadowTestConfig.html">createShadowTestConfig</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">solution</span> <span class="op">&lt;-</span> <span class="fu"><a href="Shadow-methods.html">Shadow</a></span><span class="op">(</span><span class="va">cfg</span>, <span class="va">constraints_science</span>, true_theta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in incrementRho(exposure_record, segments_to_apply, segment_prob,     eligibility_flag, theta_is_feasible, constants):</span> object 'o' not found</span>
 <span class="r-in"><span><span class="fu">summary</span><span class="op">(</span><span class="va">solution</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Static assembly</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Shadow assembly</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          # of targets:       3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     type of objective: MaxInfo</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   # of selected items:      30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   # of simulees : 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     test length : 30</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      theta      info     score</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       -1.2    11.225    10.376</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        0.0    19.166    24.741</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        1.2    10.995    38.875</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   theta estimation statistics</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             MSE :  0.015141</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            bias : -0.065749</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            corr :  0.995142</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Average SE :  0.237613</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  CONSTRAINT_ID      TYPE WHAT                                CONDITION LB UB</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             C1    NUMBER ITEM                                          30 30</span>
@@ -272,54 +271,54 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>            C34   INCLUDE ITEM          ID %in% c("SC00003", "SC00004")      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            C35   EXCLUDE ITEM                             PTBIS &lt; 0.15      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            C36 ALLORNONE ITEM          ID %in% c("SC00005", "SC00006")      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ONOFF COUNT solution</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         1000       30</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          342       10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          335       10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          323       10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          689       19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          141        7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          170        4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           83        3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          196        6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          228        5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          141        4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           30        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           20        2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           34        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           39        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           21        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           25        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           64        3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           64        2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           43        0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          381       13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           42        3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           97        2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           70        2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          449       15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           21        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           34        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           72        3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          117        2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           32        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          205        5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            2        0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            2        2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           18        0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            2        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ONOFF COUNT   mean    sd min max</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         1000     30     0  30  30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          342     10     0  10  10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          335     10     0  10  10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          323     10     0  10  10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          689     19     0  19  19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          141      7     0   7   7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          170      4     0   4   4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           83  2.667 0.577   2   3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          196      6     0   6   6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          228  5.333 0.577   5   6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          141      4     0   4   4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           30      1     0   1   1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           20      2     0   2   2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           34      1     0   1   1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           39      1     0   1   1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           21      1     0   1   1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           25      1     0   1   1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           64      3     0   3   3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           64      2     0   2   2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           43      0     0   0   0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          381 12.333 0.577  12  13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           42  2.667 0.577   2   3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           97  2.333 0.577   2   3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           70  2.667 1.155   2   4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          449 14.333 1.155  13  15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           21      1     0   1   1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           34      1     0   1   1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           72      3     0   3   3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          117      2     0   2   2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           32      1     0   1   1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          205      5     0   5   5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            2      0     0   0   0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            2      2     0   2   2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           18      0     0   0   0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            2      0     0   0   0</span>
 <span class="r-in"><span><span class="fu">summary</span><span class="op">(</span><span class="va">solution</span>, simple <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Static assembly</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Shadow assembly</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          # of targets:       3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     type of objective: MaxInfo</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   # of selected items:      30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   # of simulees : 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     test length : 30</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      theta      info     score</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       -1.2    11.225    10.376</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        0.0    19.166    24.741</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        1.2    10.995    38.875</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   theta estimation statistics</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             MSE :  0.015141</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            bias : -0.065749</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            corr :  0.995142</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Average SE :  0.237613</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

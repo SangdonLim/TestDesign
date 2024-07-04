@@ -69,7 +69,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">getEligibilityFlagInSegment</span><span class="op">(</span><span class="va">eligiblity_flag</span>, <span class="va">segment</span>, <span class="va">constants</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">getEligibilityFlagInSegment</span><span class="op">(</span><span class="va">eligiblity_flag</span>, <span class="va">segment</span>, <span class="va">simulation_constants</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -82,8 +82,8 @@
 <dd><p>the segment index to read from.</p></dd>
 
 
-<dt>constants</dt>
-<dd><p>a named list containing constants.</p></dd>
+<dt>simulation_constants</dt>
+<dd><p>a named list containing simulation constants.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -94,12 +94,12 @@
 <dd><p>a length-<em>ni</em>) vector of 1 and 0 values.</p></dd>
 
   <dt><code>s</code></dt>
-<dd><p>a length-<em>ns</em>) vector of 1 and 0 values. Only returned when <code>constants$group_by_stimulus</code> is <code>TRUE</code>.</p></dd>
+<dd><p>a length-<em>ns</em>) vector of 1 and 0 values. Only returned when <code>simulation_constants$group_by_stimulus</code> is <code>TRUE</code>.</p></dd>
 
 
 </dl><p>In each vector,
-1 indicates the item/set is eligible to be selected in a shadow test, and
-0 indicates the item/set is not eligible to be selected in a shadow test.
+1 indicates the item/set is eligible to be selected in a shadowtest, and
+0 indicates the item/set is not eligible to be selected in a shadowtest.
 The higher the observed exposure rate, the more likely the item/set will be flagged as 0.</p>
     </div>
 
