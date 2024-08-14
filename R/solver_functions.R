@@ -384,7 +384,13 @@ runMIP <- function(
 
     binary_vec <- which(types == "B")
 
-    MIP <- lpSolve::lp(direction = ifelse(maximize, "max", "min"), obj, mat, dir, rhs, binary.vec = binary_vec, presolve = TRUE)
+    MIP <- lpSolve::lp(
+      direction = ifelse(maximize, "max", "min"),
+      obj, mat, dir, rhs,
+      binary.vec = binary_vec,
+      presolve = TRUE,
+      timeout = time_limit
+    )
 
     return(MIP)
 
